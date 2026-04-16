@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #3498db;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .hotel-list {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .hotel-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .hotel-item:last-child {
+            border-bottom: none;
+        }
+
+        .hotel-item a {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        .hotel-item a:hover {
+            text-decoration: underline;
+        }
+
+        .hotel-info {
+            flex-grow: 1;
+        }
+
+        .hotel-price, .hotel-rating {
+            font-weight: bold;
+        }
+
+        footer {
+            background-color: #3498db;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Hotels in {{ city.name }}</h1>
+</header>
+
+<div class="hotel-list">
+    {% for hotel in hotels %}
+        <div class="hotel-item">
+            <div class="hotel-info">
+                <a href="{% url 'hotel_detail' hotel.pk %}">{{ hotel.name }}</a>
+                <p>Rating: {{ hotel.rating }} / 5</p>
+            </div>
+            <div class="hotel-price">${{ hotel.price_per_night }}</div>
+        </div>
+    {% endfor %}
+</div>
+
+<footer>
+    <p>TrippyBD - Hotels</p>
+</footer>
+
+</body>
+</html>

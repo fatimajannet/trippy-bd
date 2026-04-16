@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ attraction.name }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            color: #1f2937;
+        }
+
+        .wrapper {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .detail-card {
+            background: #fff;
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: 0 18px 40px rgba(15,23,42,0.12);
+        }
+
+        /* Placeholder image */
+        .attraction-image {
+            width: 100%;
+            height: 400px;
+            border-radius: 20px;
+            object-fit: cover;
+            background: #d1d5db;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #475569;
+            margin-bottom: 24px;
+        }
+
+        /* Region badge */
+        .city-tag {
+            display: inline-block;
+            font-weight: 700;
+            border-radius: 999px;
+            padding: 8px 16px;
+            margin-bottom: 16px;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .Dhaka { background: linear-gradient(135deg,#2563eb,#1e40af); }
+        .Chattogram { background: linear-gradient(135deg,#047857,#065f46); }
+        .Rajshahi { background: linear-gradient(135deg,#b45309,#78350f); }
+        .Khulna { background: linear-gradient(135deg,#9333ea,#6b21a8); }
+        .Barisal { background: linear-gradient(135deg,#b91c1c,#7f1d1d); }
+        .Sylhet { background: linear-gradient(135deg,#0c8599,#064e52); }
+        .Rangpur { background: linear-gradient(135deg,#365314,#1e3a00); }
+        .Mymensingh { background: linear-gradient(135deg,#78350f,#452a0f); }
+
+        h1 {
+            margin: 0 0 16px;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .description {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 16px;
+            max-height: 120px;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .description.expanded { max-height: 1000px; }
+
+        .read-more {
+            color: #2563eb;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-block;
+            margin-bottom: 24px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .info-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 14px;
+        }
+
+        .info-box h3 {
+            margin: 0;
+            font-size: 0.95rem;
+            color: #64748b;
+        }
+
+        .info-box p {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .info-box .icon { font-size: 1.2rem; color: #2563eb; }
+
+        /* Map Placeholder */
+        .map-placeholder {
+            width: 100%;
+            height: 300px;
+            border-radius: 16px;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #475569;
+            font-weight: 600;
+            margin-top: 24px;
+        }
+
+        @media(max-width:640px){
+            h1 { font-size:1.8rem; }
+            .attraction-image { height: 250px; }
+            .map-placeholder { height: 200px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="detail-card">
+
+            <!-- Placeholder Image -->
+            <div class="attraction-image">
+                Image Placeholder
+            </div>
+
+            <!-- Region Badge -->
+            <div class="city-tag {{ attraction.city.region }}">
+                {{ attraction.city.name }} ({{ attraction.city.region }})
+            </div>
+
+            <h1>{{ attraction.name }}</h1>
+
+            <!-- Description -->
+            <div class="description" id="desc">{{ attraction.description }}</div>
+            <span class="read-more" id="readMore">Read More</span>
+
+            <!-- Info Grid -->
+            <div class="info-grid">
+                <div class="info-box">
+                    <span class="icon">💰</span>
+                    <div>
+                        <h3>Entry Fee</h3>
+                        <p>৳{{ attraction.entry_fee }}</p>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <span class="icon">⏰</span>
+                    <div>
+                        <h3>Opening Hours</h3>
+                        <p>{{ attraction.opening_hours }}</p>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <span class="icon">🏙️</span>
+                    <div>
+                        <h3>City</h3>
+                        <p>{{ attraction.city.name }}</p>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <span class="icon">📍</span>
+                    <div>
+                        <h3>Region</h3>
+                        <p>{{ attraction.city.region }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Map Placeholder -->
+            <div class="map-placeholder">
+                Map location not available
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const readMoreBtn = document.getElementById('readMore');
+        const desc = document.getElementById('desc');
+        readMoreBtn.addEventListener('click', () => {
+            desc.classList.toggle('expanded');
+            readMoreBtn.textContent = desc.classList.contains('expanded') ? 'Read Less' : 'Read More';
+        });
+    </script>
+</body>
+</html>
