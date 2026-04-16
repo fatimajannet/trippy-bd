@@ -1,0 +1,715 @@
+[
+  {
+    "model": "hotels.hotel",
+    "pk": 1,
+    "fields": {
+      "city": 1,
+    "name": "The Westin Dhaka",
+    "description": "Luxury hotel with modern amenities.",
+    "price_per_night": 150.00,
+    "rating": 4.5
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 2,
+    "fields": {
+      "city": 1,
+    "name": "Pan Pacific Sonargaon Dhaka",
+    "description": "Well-reviewed mid-luxury hotel.",
+    "price_per_night": 120.00,
+    "rating": 4.2
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 3,
+    "fields": {
+      "city": 1,
+    "name": "Sky City Hotel Dhaka",
+    "description": "Good mid-range hotel.",
+    "price_per_night": 60.00,
+    "rating": 3.5
+    }
+  },
+
+  {
+    "model": "hotels.hotel",
+    "pk": 4,
+    "fields": {
+      "city": 2,
+    "name": "Radisson Blu Hotel, Chattogram Bay View",
+    "description": "Upscale business hotel with great views.",
+    "price_per_night": 120.00,
+    "rating": 4.2
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 5,
+    "fields": {
+      "city": 2,
+    "name": "The Peninsula Chittagong",
+    "description": "Popular 4-star hotel.",
+    "price_per_night": 80.00,
+    "rating": 4.0
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 6,
+    "fields": {
+      "city": 2,
+    "name": "Well Park Residence",
+    "description": "Good mid-range choice.",
+    "price_per_night": 50.00,
+    "rating": 3.5
+    }
+  },
+
+  {
+    "model": "hotels.hotel",
+    "pk": 7,
+    "fields": {
+      "city": 3,
+    "name": "Grand Sylhet Hotel & Resort",
+    "description": "High-end resort with a golf course and spa.",
+    "price_per_night": 180.00,
+    "rating": 4.7
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 8,
+    "fields": {
+      "city": 3,
+    "name": "Rose View Hotel Sylhet",
+    "description": "Mid-range hotel.",
+    "price_per_night": 90.00,
+    "rating": 4.0
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 9,
+    "fields": {
+      "city": 3,
+    "name": "Hotel Noorjahan Grand",
+    "description": "Commonly listed 3-star.",
+    "price_per_night": 50.00,
+    "rating": 3.2
+    }
+  },
+
+  {
+    "model": "hotels.hotel",
+    "pk": 10,
+    "fields": {
+      "city": 4,
+    "name": "The Crest Inn",
+    "description": "Mid-range hotel with comfortable rooms.",
+    "price_per_night": 75.00,
+    "rating": 3.8
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 11,
+    "fields": {
+      "city": 4,
+    "name": "Hotel Skyway",
+    "description": "4-star rated.",
+    "price_per_night": 90.00,
+    "rating": 4.1
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 12,
+    "fields": {
+      "city": 4,
+    "name": "Hotel Puthia",
+    "description": "Simple 3-star hotel.",
+    "price_per_night": 50.00,
+    "rating": 3.3
+    }
+  },
+
+  {
+    "model": "hotels.hotel",
+    "pk": 13,
+    "fields": {
+      "city": 5,
+      "name": "Momo Inn",
+      "description": "Highest category hotel in Bogura with excellent facilities.",
+      "price_per_night": 130.00,
+      "rating": 4.5
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 14,
+    "fields": {
+      "city": 5,
+      "name": "Hotel Naz Garden",
+      "description": "A great 4-star hotel in the heart of Bogura.",
+      "price_per_night": 85.00,
+      "rating": 4.0
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 15,
+    "fields": {
+      "city": 5,
+      "name": "Annex Suites Bogura",
+      "description": "Affordable 3-star hotel with quality services.",
+      "price_per_night": 50.00,
+      "rating": 3.3
+    }
+  },
+
+  {
+    "model": "hotels.hotel",
+    "pk": 16,
+    "fields": {
+      "city": 6,
+    "name": "Hotel City Inn",
+    "description": "Convenient and affordable hotel for business travelers.",
+    "price_per_night": 60.00,
+    "rating": 3.5
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 17,
+    "fields": {
+      "city": 6,
+    "name": "Hotel Center Point",
+    "description": "Mid-range hotel.",
+    "price_per_night": 70.00,
+    "rating": 4.0
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 18,
+    "fields": {
+      "city": 6,
+    "name": "Hotel Royal International",
+    "description": "Popular 3-star hotel.",
+    "price_per_night": 50.00,
+    "rating": 3.2
+    }
+  },
+
+  {
+    "model": "hotels.hotel",
+    "pk": 19,
+    "fields": {
+      "city": 7,
+    "name": "Hotel The Comilla International",
+    "description": "Simple hotel with essential services.",
+    "price_per_night": 50.00,
+    "rating": 3.0
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 20,
+    "fields": {
+      "city": 7,
+    "name": "Hotel Crimson",
+    "description": "Budget-friendly mid-range option.",
+    "price_per_night": 40.00,
+    "rating": 3.2
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 21,
+    "fields": {
+      "city": 7,
+    "name": "Hotel New Shaheen",
+    "description": "Basic 3-star hotel.",
+    "price_per_night": 30.00,
+    "rating": 3.0
+    }
+  },
+
+  {
+    "model": "hotels.hotel",
+    "pk": 22,
+    "fields": {
+      "city": 8,
+      "name": "Hotel Samrat",
+      "description": "5-star luxury hotel in Barisal.",
+      "price_per_night": 150.00,
+      "rating": 4.6
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 23,
+    "fields": {
+      "city": 8,
+      "name": "Hotel Nabila",
+      "description": "4-star hotel with a good range of services.",
+      "price_per_night": 95.00,
+      "rating": 4.1
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 24,
+    "fields": {
+      "city": 8,
+      "name": "Hotel Shapla",
+      "description": "3-star hotel offering a comfortable stay.",
+      "price_per_night": 60.00,
+      "rating": 3.4
+    }
+  },
+
+  {
+    "model": "hotels.hotel",
+    "pk": 25,
+    "fields": {
+      "city": 9,
+    "name": "Hotel The Grand Mymensingh",
+    "description": "Luxurious hotel in Mymensingh.",
+    "price_per_night": 120.00,
+    "rating": 4.3
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 26,
+    "fields": {
+      "city": 9,
+    "name": "Hotel Sohana",
+    "description": "4-star hotel offering good facilities.",
+    "price_per_night": 75.00,
+    "rating": 3.9
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 27,
+    "fields": {
+      "city": 9,
+    "name": "Hotel Royal Mymensingh",
+    "description": "3-star hotel with standard services.",
+    "price_per_night": 40.00,
+    "rating": 3.1
+    }
+  },
+
+  {
+    "model": "hotels.hotel",
+    "pk": 28,
+    "fields": {
+      "city": 10,
+    "name": "Hotel Rangpur Plaza",
+    "description": "5-star luxury hotel.",
+    "price_per_night": 150.00,
+    "rating": 4.5
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 29,
+    "fields": {
+      "city": 10,
+    "name": "Hotel City Inn",
+    "description": "Mid-range hotel in Rangpur.",
+    "price_per_night": 70.00,
+    "rating": 4.0
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 30,
+    "fields": {
+      "city": 10,
+    "name": "Hotel Green Park",
+    "description": "Popular 3-star hotel.",
+    "price_per_night": 45.00,
+    "rating": 3.2
+    }
+  },
+
+  {
+    "model": "hotels.hotel",
+    "pk": 31,
+    "fields": {
+      "city": 11,
+    "name": "Grand Sultan Tea Resort & Golf",
+    "description": "Luxury resort in Gazipur.",
+    "price_per_night": 180.00,
+    "rating": 4.8
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 32,
+    "fields": {
+      "city": 11,
+    "name": "Hotel Green View",
+    "description": "Good 4-star hotel with amenities.",
+    "price_per_night": 100.00,
+    "rating": 4.3
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 33,
+    "fields": {
+      "city": 11,
+    "name": "Hotel Kazi",
+    "description": "Affordable 3-star hotel.",
+    "price_per_night": 60.00,
+    "rating": 3.4
+    }
+  },
+
+  {
+    "model": "hotels.hotel",
+    "pk": 34,
+    "fields": {
+      "city": 12,
+    "name": "Hotel Executive International",
+    "description": "Business-friendly 5-star hotel.",
+    "price_per_night": 160.00,
+    "rating": 4.6
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 35,
+    "fields": {
+      "city": 12,
+    "name": "Hotel Narayanganj Plaza",
+    "description": "4-star hotel for business travelers.",
+    "price_per_night": 90.00,
+    "rating": 4.1
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 36,
+    "fields": {
+      "city": 12,
+    "name": "Hotel Orchid",
+    "description": "Comfortable 3-star hotel.",
+    "price_per_night": 50.00,
+    "rating": 3.2
+    }
+  },
+
+  {
+    "model": "hotels.hotel",
+    "pk": 37,
+    "fields": {
+      "city": 13,
+    "name": "Hotel Silver Park",
+    "description": "Luxury 5-star hotel.",
+    "price_per_night": 150.00,
+    "rating": 4.6
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 38,
+    "fields": {
+      "city": 13,
+    "name": "Hotel Sharif Plaza",
+    "description": "4-star hotel.",
+    "price_per_night": 90.00,
+    "rating": 4.0
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 39,
+    "fields": {
+      "city": 13,
+    "name": "Hotel Rubel International",
+    "description": "3-star hotel.",
+    "price_per_night": 50.00,
+    "rating": 3.3
+    }
+  },
+
+  {
+    "model": "hotels.hotel",
+    "pk": 40,
+    "fields": {
+      "city": 14,
+    "name": "Hotel Sirajganj Palace",
+    "description": "Luxury 5-star hotel.",
+    "price_per_night": 120.00,
+    "rating": 4.7
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 41,
+    "fields": {
+      "city": 14,
+    "name": "Hotel Ashraf",
+    "description": "4-star hotel.",
+    "price_per_night": 75.00,
+    "rating": 4.1
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 42,
+    "fields": {
+      "city": 14,
+    "name": "Hotel Sima",
+    "description": "3-star hotel.",
+    "price_per_night": 45.00,
+    "rating": 3.5
+    }
+  },
+
+  {
+    "model": "hotels.hotel",
+    "pk": 43,
+    "fields": {
+      "city": 15,
+    "name": "Hotel Pabna International",
+    "description": "5-star hotel.",
+    "price_per_night": 140.00,
+    "rating": 4.6
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 44,
+    "fields": {
+      "city": 15,
+    "name": "Hotel Pabna Royal",
+    "description": "4-star hotel.",
+    "price_per_night": 80.00,
+    "rating": 4.0
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 45,
+    "fields": {
+      "city": 15,
+    "name": "Hotel Shonali",
+    "description": "3-star hotel.",
+    "price_per_night": 50.00,
+    "rating": 3.2
+    }
+  },
+
+  {
+    "model": "hotels.hotel",
+    "pk": 46,
+    "fields": {
+      "city": 16,
+    "name": "Hotel Chandpur City",
+    "description": "5-star hotel.",
+    "price_per_night": 160.00,
+    "rating": 4.5
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 47,
+    "fields": {
+      "city": 16,
+    "name": "Hotel Bay View",
+    "description": "4-star hotel.",
+    "price_per_night": 95.00,
+    "rating": 4.2
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 48,
+    "fields": {
+      "city": 16,
+    "name": "Hotel Sunrise",
+    "description": "3-star hotel.",
+    "price_per_night": 55.00,
+    "rating": 3.3
+    }
+  },
+
+  {
+    "model": "hotels.hotel",
+    "pk": 49,
+    "fields": {
+      "city": 17,
+    "name": "Hotel Feni Grand",
+    "description": "5-star hotel.",
+    "price_per_night": 150.00,
+    "rating": 4.7
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 50,
+    "fields": {
+      "city": 17,
+    "name": "Hotel New Feni",
+    "description": "4-star hotel.",
+    "price_per_night": 90.00,
+    "rating": 4.1
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 51,
+    "fields": {
+      "city": 17,
+    "name": "Hotel Shubho",
+    "description": "3-star hotel.",
+    "price_per_night": 50.00,
+    "rating": 3.2
+    }
+  },
+
+  {
+    "model": "hotels.hotel",
+    "pk": 52,
+    "fields": {
+      "city": 18,
+    "name": "Hotel Dinajpur Plaza",
+    "description": "5-star hotel.",
+    "price_per_night": 170.00,
+    "rating": 4.8
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 53,
+    "fields": {
+      "city": 18,
+    "name": "Hotel Raja Palace",
+    "description": "4-star hotel.",
+    "price_per_night": 85.00,
+    "rating": 4.0
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 54,
+    "fields": {
+      "city": 18,
+    "name": "Hotel Golden Star",
+    "description": "3-star hotel.",
+    "price_per_night": 50.00,
+    "rating": 3.1
+    }
+  },
+
+  {
+    "model": "hotels.hotel",
+    "pk": 55,
+    "fields": {
+      "city": 19,
+    "name": "Hotel Jamalpur International",
+    "description": "5-star hotel.",
+    "price_per_night": 130.00,
+    "rating": 4.6
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 56,
+    "fields": {
+      "city": 19,
+    "name": "Hotel Mitali",
+    "description": "4-star hotel.",
+    "price_per_night": 70.00,
+    "rating": 4.0
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 57,
+    "fields": {
+      "city": 19,
+    "name": "Hotel Jagannath",
+    "description": "3-star hotel.",
+    "price_per_night": 45.00,
+    "rating": 3.3
+    }
+  },
+
+  {
+    "model": "hotels.hotel",
+    "pk": 58,
+    "fields": {
+      "city": 20,
+    "name": "Hotel Satkhira International",
+    "description": "Luxury hotel in Satkhira with modern amenities.",
+    "price_per_night": 150.00,
+    "rating": 4.5
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 59,
+    "fields": {
+      "city": 20,
+    "name": "Hotel Green View",
+    "description": "4-star hotel with a peaceful environment.",
+    "price_per_night": 85.00,
+    "rating": 4.0
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 60,
+    "fields": {
+      "city": 20,
+    "name": "Hotel Shanta",
+    "description": "Affordable 3-star hotel offering good services.",
+    "price_per_night": 50.00,
+    "rating": 3.3
+    }
+  },
+
+  {
+    "model": "hotels.hotel",
+    "pk": 61,
+    "fields": {
+      "city": 21,
+    "name": "Kushtia Grand Hotel",
+    "description": "5-star luxury hotel with comfortable rooms.",
+    "price_per_night": 140.00,
+    "rating": 4.7
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 62,
+    "fields": {
+      "city": 21,
+    "name": "Hotel City Plaza",
+    "description": "4-star hotel with great amenities for business travelers.",
+    "price_per_night": 100.00,
+    "rating": 4.2
+    }
+  },
+  {
+    "model": "hotels.hotel",
+    "pk": 63,
+    "fields": {
+      "city": 21,
+    "name": "Hotel Kushtia Comfort",
+    "description": "3-star hotel with basic facilities.",
+    "price_per_night": 55.00,
+    "rating": 3.4
+    }
+  }
+]

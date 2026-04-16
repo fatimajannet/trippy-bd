@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ hotel.name }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #3498db;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .hotel-detail {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 30px;
+            background-color: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .hotel-info {
+            margin-bottom: 20px;
+        }
+
+        .hotel-info p {
+            margin: 10px 0;
+        }
+
+        .hotel-description {
+            margin: 20px 0;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .hotel-price {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #e67e22;
+        }
+
+        .hotel-rating {
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+
+        .hotel-rating span {
+            font-weight: bold;
+            color: #f39c12;
+        }
+
+        footer {
+            background-color: #3498db;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>{{ hotel.name }}</h1>
+</header>
+
+<div class="hotel-detail">
+    <div class="hotel-info">
+        <p><strong>Description:</strong></p>
+        <p class="hotel-description">{{ hotel.description }}</p>
+        <p><strong>Price per Night:</strong> <span class="hotel-price">${{ hotel.price_per_night }}</span></p>
+        <p><strong>Rating:</strong> <span class="hotel-rating">{{ hotel.rating }} / 5</span></p>
+    </div>
+</div>
+
+<footer>
+    <h3>TrippyBD - Hotels</h3>
+</footer>
+
+</body>
+</html>

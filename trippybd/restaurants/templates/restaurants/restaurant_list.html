@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Restaurants in {{ city.name }}</title>
+</head>
+<body>
+    <h1>Restaurants in {{ city.name }}</h1>
+    <ul>
+        {% for restaurant in restaurants %}
+            <li>
+                <a href="{% url 'restaurant_detail' restaurant.pk %}">
+                    {{ restaurant.name }} - {{ restaurant.cuisine_type }} - ${{ restaurant.average_price }} - Rating: {{ restaurant.rating }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Attractions List</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            color: #1f2937;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 40px 0 20px 0;
+            font-size: 2.4rem;
+            color: #1e40af;
+        }
+
+        .legend {
+            max-width: 1200px;
+            margin: 0 auto 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+        }
+
+        .toolbar {
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .toolbar input, .toolbar select {
+            padding: 10px 14px;
+            font-size: 1rem;
+            border-radius: 12px;
+            border: 1px solid #d1d5db;
+            outline: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 0 20px 50px;
+        }
+
+        .card {
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 6px 18px rgba(15, 23, 42, 0.1);
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+
+        .Dhaka { background-color: #e3f2fd; }
+        .Chattogram { background-color: #e8f5e9; }
+        .Rajshahi { background-color: #fff3e0; }
+        .Khulna { background-color: #f3e5f5; }
+        .Barisal { background-color: #ffebee; }
+        .Sylhet { background-color: #e0f7fa; }
+        .Rangpur { background-color: #f9fbe7; }
+        .Mymensingh { background-color: #fffde7; }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.15);
+        }
+
+        .card h2 {
+            margin: 0 0 10px;
+            font-size: 1.3rem;
+            color: #111827;
+        }
+
+        .card p {
+            margin: 6px 0;
+            font-size: 0.95rem;
+            color: #475569;
+        }
+
+        .card a {
+            display: inline-block;
+            margin-top: 12px;
+            text-decoration: none;
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: 0.2s ease;
+        }
+
+        .card a:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
+        }
+
+        @media (max-width: 640px) {
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Attractions in Bangladesh</h1>
+
+    <!-- Region Legend -->
+    <div class="legend">
+        <div class="legend-item"><div class="legend-color" style="background-color:#e3f2fd;"></div> Dhaka</div>
+        <div class="legend-item"><div class="legend-color" style="background-color:#e8f5e9;"></div> Chattogram</div>
+        <div class="legend-item"><div class="legend-color" style="background-color:#fff3e0;"></div> Rajshahi</div>
+        <div class="legend-item"><div class="legend-color" style="background-color:#f3e5f5;"></div> Khulna</div>
+        <div class="legend-item"><div class="legend-color" style="background-color:#ffebee;"></div> Barisal</div>
+        <div class="legend-item"><div class="legend-color" style="background-color:#e0f7fa;"></div> Sylhet</div>
+        <div class="legend-item"><div class="legend-color" style="background-color:#f9fbe7;"></div> Rangpur</div>
+        <div class="legend-item"><div class="legend-color" style="background-color:#fffde7;"></div> Mymensingh</div>
+    </div>
+
+    <!-- Filters -->
+    <div class="toolbar">
+        <input type="text" id="searchInput" placeholder="Search attractions...">
+        <select id="cityFilter">
+            <option value="">All Cities</option>
+            {% for city in cities %}
+                <option value="{{ city.name }}">{{ city.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- Attraction Cards -->
+    <div class="container" id="attractionsContainer">
+        {% for attraction in attractions %}
+        <div class="card {{ attraction.city.region }}" 
+             data-city="{{ attraction.city.name|lower }}" 
+             data-name="{{ attraction.name|lower }}">
+            <h2>{{ attraction.name }}</h2>
+            <p><strong>City:</strong> {{ attraction.city.name }}</p>
+            <p><strong>Entry Fee:</strong> ৳{{ attraction.entry_fee }}</p>
+            <p><strong>Opening Hours:</strong> {{ attraction.opening_hours }}</p>
+            <a href="{% url 'attraction_detail' attraction.pk %}">View Details</a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        const cityFilter = document.getElementById('cityFilter');
+        const searchInput = document.getElementById('searchInput');
+        const cards = Array.from(document.querySelectorAll('.card'));
+
+        function filterCards() {
+            const city = cityFilter.value.toLowerCase();
+            const query = searchInput.value.toLowerCase().trim();
+
+            cards.forEach(card => {
+                const cardCity = card.dataset.city;
+                const cardName = card.dataset.name;
+                const matchCity = city === '' || cardCity === city;
+                const matchName = cardName.includes(query);
+                card.style.display = (matchCity && matchName) ? 'block' : 'none';
+            });
+        }
+
+        cityFilter.addEventListener('change', filterCards);
+        searchInput.addEventListener('input', filterCards);
+    </script>
+</body>
+</html>

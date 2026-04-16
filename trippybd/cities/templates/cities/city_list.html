@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cities of Bangladesh</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        .controls {
+            max-width: 1200px;
+            margin: 20px auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .controls input, .controls select, .controls button {
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .controls button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .controls button:hover {
+            background-color: #0056b3;
+        }
+
+        .legend {
+            max-width: 1200px;
+            margin: 10px auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9em;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 5px;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .card {
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+        }
+
+        .card h2 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+
+        .card p {
+            margin: 5px 0;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        .population {
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .region {
+            font-style: italic;
+            color: #6c757d;
+        }
+
+        /* Region base colors */
+        .Dhaka { background-color: #e3f2fd; }
+        .Chattogram { background-color: #e8f5e9; }
+        .Rajshahi { background-color: #fff3e0; }
+        .Khulna { background-color: #f3e5f5; }
+        .Barisal { background-color: #ffebee; }
+        .Sylhet { background-color: #e0f7fa; }
+        .Rangpur { background-color: #f9fbe7; }
+        .Mymensingh { background-color: #fffde7; }
+
+        @media (max-width: 600px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Cities of Bangladesh</h1>
+    </header>
+
+    <div class="controls">
+        <input type="text" id="searchInput" placeholder="Search by city name...">
+        <select id="regionFilter">
+            <option value="">All Regions</option>
+            <option value="Dhaka">Dhaka</option>
+            <option value="Chattogram">Chattogram</option>
+            <option value="Rajshahi">Rajshahi</option>
+            <option value="Khulna">Khulna</option>
+            <option value="Barisal">Barisal</option>
+            <option value="Sylhet">Sylhet</option>
+            <option value="Rangpur">Rangpur</option>
+            <option value="Mymensingh">Mymensingh</option>
+        </select>
+        <button id="sortAsc">Sort Population ↑</button>
+        <button id="sortDesc">Sort Population ↓</button>
+    </div>
+
+    <div class="legend">
+        <div class="legend-item"><div class="legend-color" style="background-color:#e3f2fd;"></div> Dhaka</div>
+        <div class="legend-item"><div class="legend-color" style="background-color:#e8f5e9;"></div> Chattogram</div>
+        <div class="legend-item"><div class="legend-color" style="background-color:#fff3e0;"></div> Rajshahi</div>
+        <div class="legend-item"><div class="legend-color" style="background-color:#f3e5f5;"></div> Khulna</div>
+        <div class="legend-item"><div class="legend-color" style="background-color:#ffebee;"></div> Barisal</div>
+        <div class="legend-item"><div class="legend-color" style="background-color:#e0f7fa;"></div> Sylhet</div>
+        <div class="legend-item"><div class="legend-color" style="background-color:#f9fbe7;"></div> Rangpur</div>
+        <div class="legend-item"><div class="legend-color" style="background-color:#fffde7;"></div> Mymensingh</div>
+    </div>
+
+    <div class="container" id="cityContainer">
+        {% for city in cities %}
+        <div class="card {{ city.region }}" data-name="{{ city.name }}" data-region="{{ city.region }}" data-population="{{ city.population }}">
+            <h2>{{ city.name }}</h2>
+            <p>{{ city.description }}</p>
+            <p>Population: <span class="population">{{ city.population }}</span></p>
+            <p>Region: <span class="region">{{ city.region }}</span></p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const regionFilter = document.getElementById('regionFilter');
+        const sortAsc = document.getElementById('sortAsc');
+        const sortDesc = document.getElementById('sortDesc');
+        const container = document.getElementById('cityContainer');
+        const cards = Array.from(container.children);
+
+        function filterAndSort() {
+            const searchValue = searchInput.value.toLowerCase();
+            const regionValue = regionFilter.value;
+            let filtered = cards.filter(card => {
+                const name = card.dataset.name.toLowerCase();
+                const region = card.dataset.region;
+                return name.includes(searchValue) && (regionValue === '' || region === regionValue);
+            });
+
+            container.style.opacity = 0;
+            setTimeout(() => {
+                container.innerHTML = '';
+                filtered.forEach(card => container.appendChild(card));
+                container.style.opacity = 1;
+            }, 150);
+        }
+
+        searchInput.addEventListener('input', filterAndSort);
+        regionFilter.addEventListener('change', filterAndSort);
+
+        sortAsc.addEventListener('click', () => {
+            const sorted = Array.from(container.children).sort((a,b) => parseInt(a.dataset.population) - parseInt(b.dataset.population));
+            container.style.opacity = 0;
+            setTimeout(() => {
+                sorted.forEach(card => container.appendChild(card));
+                container.style.opacity = 1;
+            }, 150);
+        });
+
+        sortDesc.addEventListener('click', () => {
+            const sorted = Array.from(container.children).sort((a,b) => parseInt(b.dataset.population) - parseInt(a.dataset.population));
+            container.style.opacity = 0;
+            setTimeout(() => {
+                sorted.forEach(card => container.appendChild(card));
+                container.style.opacity = 1;
+            }, 150);
+        });
+    </script>
+</body>
+</html>
