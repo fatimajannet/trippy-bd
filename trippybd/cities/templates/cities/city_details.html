@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
+            background-color: #f4f4f9;
             margin: 0;
             padding: 0;
         }
@@ -32,6 +32,31 @@
             background-color: #007bff;
             color: white;
         }
+
+        .hotel-list {
+            margin-top: 20px;
+        }
+
+        .hotel-item {
+            background-color: #f9f9f9;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .hotel-item h3 {
+            color: #333;
+        }
+
+        .hotel-item p {
+            color: #666;
+        }
+
+        .hotel-item .price {
+            font-weight: bold;
+            color: #4CAF50;
+        }
     </style>
 </head>
 <body>
@@ -45,6 +70,30 @@
         <p><strong>Description:</strong> {{ city.description }}</p>
         <p><strong>Population:</strong> {{ city.population }}</p>
         <p><strong>Region:</strong> {{ city.region }}</p>
+        
+        <!-- Displaying related hotels -->
+        <div class="Details">
+            <h3><a href="{% url 'hotel_list' city.id %}">Hotels in {{ city.name }}</a></h3>
+            <h3><a href="{% url 'restaurant_list' city.id %}">Restaurants in {{ city.name }}</a></h3>
+
+
+            <!-- <h3>Hotels in {{ city.name }}</h3>
+            {% if hotels %}
+                <ul>
+                    {% for hotel in hotels %}
+                    <li class="hotel-item">
+                        <h3>{{ hotel.name }}</h3>
+                        <p>{{ hotel.description }}</p>
+                        <p>Price per night: <span class="price">${{ hotel.price_per_night }}</span></p>
+                        <p>Rating: {{ hotel.rating }} stars</p>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No hotels found for this city.</p>
+            {% endif %} -->
+
+        </div>
     </section>
 
     <footer>
