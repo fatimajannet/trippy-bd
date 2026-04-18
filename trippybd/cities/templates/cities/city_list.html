@@ -169,7 +169,10 @@
     <div class="container" id="cityContainer">
         {% for city in cities %}
         <div class="card {{ city.region }}" data-name="{{ city.name }}" data-region="{{ city.region }}" data-population="{{ city.population }}">
-            <h2>{{ city.name }}</h2>
+            <h2>
+                <!-- Add a link to the city details page -->
+                <a href="{% url 'city_details' city.id %}">{{ city.name }}</a>
+            </h2>
             <p>{{ city.description }}</p>
             <p>Population: <span class="population">{{ city.population }}</span></p>
             <p>Region: <span class="region">{{ city.region }}</span></p>
