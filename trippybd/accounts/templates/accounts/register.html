@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% block title %}Register — TrIppyBD{% endblock %}
+
+{% block content %}
+<style>
+  .register-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 16px;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  }
+  .register-card {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 48px 40px;
+    width: 100%;
+    max-width: 520px;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+  }
+  .brand-logo   { text-align:center; font-size:2.4rem; margin-bottom:4px; }
+  .brand-title  { text-align:center; font-size:1.7rem; font-weight:700; color:#fff; margin-bottom:4px; }
+  .brand-title span { color:#38bdf8; }
+  .brand-sub    { text-align:center; color:rgba(255,255,255,0.45); font-size:0.88rem; margin-bottom:32px; }
+  .form-label   { color:rgba(255,255,255,0.75); font-size:0.85rem; font-weight:500; margin-bottom:6px; }
+  .form-control {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 10px;
+    color: #fff;
+    padding: 11px 16px;
+    font-size: 0.95rem;
+    width: 100%;
+    transition: all 0.25s;
+    font-family: 'Poppins', sans-serif;
+  }
+  .form-control:focus {
+    background: rgba(255,255,255,0.12);
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 3px rgba(56,189,248,0.2);
+    color: #fff;
+    outline: none;
+  }
+  .form-control::placeholder { color: rgba(255,255,255,0.3); }
+  .error-text { color:#fca5a5; font-size:0.8rem; margin-top:4px; }
+  .btn-register {
+    width:100%; padding:12px;
+    background: linear-gradient(135deg, #0ea5e9, #2563eb);
+    border:none; border-radius:10px;
+    color:#fff; font-weight:600; font-size:1rem;
+    cursor:pointer; transition:all 0.3s; margin-top:8px;
+    font-family: 'Poppins', sans-serif;
+  }
+  .btn-register:hover { opacity:0.9; transform:translateY(-1px); }
+  .login-link { text-align:center; color:rgba(255,255,255,0.5); font-size:0.9rem; margin-top:20px; }
+  .login-link a { color:#38bdf8; text-decoration:none; font-weight:600; }
+  .login-link a:hover { text-decoration:underline; }
+  .mb-16 { margin-bottom:16px; }
+  .row-2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .row-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+  .alert-error {
+    background:rgba(239,68,68,0.15);
+    border:1px solid rgba(239,68,68,0.35);
+    border-radius:10px; color:#fca5a5;
+    padding:10px 16px; font-size:0.85rem; margin-bottom:20px;
+  }
+</style>
+
+<div class="register-wrapper">
+  <div class="register-card">
+    <div class="brand-logo">✈️</div>
+    <div class="brand-title">Trippy<span>BD</span></div>
+    <div class="brand-sub">Create your free account</div>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert-error">⚠️ {{ message }}</div>
+      {% endfor %}
+    {% endif %}
+
+    <form method="POST" action="{% url 'register' %}">
+      {% csrf_token %}
+
+      <!-- Username -->
+      <div class="mb-16">
+        <label class="form-label">Username *</label>
+        <input type="text" name="username" class="form-control"
+               placeholder="Choose a username" required
+               value="{{ form.username.value|default:'' }}">
+        {% if form.username.errors %}
+          <div class="error-text">{{ form.username.errors|join:", " }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Name Row -->
+      <div class="row-3 mb-16">
+        <div>
+          <label class="form-label">First Name *</label>
+          <input type="text" name="fname" class="form-control"
+                 placeholder="First" required
+                 value="{{ form.fname.value|default:'' }}">
+          {% if form.fname.errors %}
+            <div class="error-text">{{ form.fname.errors|join:", " }}</div>
+          {% endif %}
+        </div>
+        <div>
+          <label class="form-label">Middle Name</label>
+          <input type="text" name="mname" class="form-control"
+                 placeholder="Middle"
+                 value="{{ form.mname.value|default:'' }}">
+        </div>
+        <div>
+          <label class="form-label">Last Name *</label>
+          <input type="text" name="lname" class="form-control"
+                 placeholder="Last" required
+                 value="{{ form.lname.value|default:'' }}">
+          {% if form.lname.errors %}
+            <div class="error-text">{{ form.lname.errors|join:", " }}</div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="mb-16">
+        <label class="form-label">Email *</label>
+        <input type="email" name="email" class="form-control"
+               placeholder="your@email.com" required
+               value="{{ form.email.value|default:'' }}">
+        {% if form.email.errors %}
+          <div class="error-text">{{ form.email.errors|join:", " }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Location -->
+      <div class="mb-16">
+        <label class="form-label">Location</label>
+        <input type="text" name="u_location" class="form-control"
+               placeholder="e.g. Dhaka, Bangladesh"
+               value="{{ form.u_location.value|default:'' }}">
+      </div>
+
+      <!-- Password Row -->
+      <div class="row-2 mb-16">
+        <div>
+          <label class="form-label">Password *</label>
+          <input type="password" name="password1" class="form-control"
+                 placeholder="Password" required>
+          {% if form.password1.errors %}
+            <div class="error-text">{{ form.password1.errors|join:", " }}</div>
+          {% endif %}
+        </div>
+        <div>
+          <label class="form-label">Confirm Password *</label>
+          <input type="password" name="password2" class="form-control"
+                 placeholder="Confirm" required>
+          {% if form.password2.errors %}
+            <div class="error-text">{{ form.password2.errors|join:", " }}</div>
+          {% endif %}
+        </div>
+      </div>
+
+      <button type="submit" class="btn-register">Create Account →</button>
+    </form>
+
+    <div class="login-link">
+      Already have an account? <a href="{% url 'login' %}">Sign in</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

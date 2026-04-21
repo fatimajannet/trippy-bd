@@ -1,98 +1,141 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotel List</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-        }
+{% extends 'base.html' %}
+{% block title %}Hotels — TrIppyBD{% endblock %}
 
-        header {
-            background-color: #3498db;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
+{% block content %}
+<style>
+  .page-hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
+    padding: 60px 0 40px; border-bottom: 1px solid rgba(255,255,255,0.07);
+    position: relative; overflow: hidden;
+  }
+  .page-hero::before {
+    content: ''; position: absolute; width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(56,189,248,0.1) 0%, transparent 70%);
+    top: -100px; right: -100px; border-radius: 50%;
+  }
+  .page-hero-content { position: relative; z-index: 2; }
+  .page-badge {
+    display: inline-block; background: rgba(56,189,248,0.12);
+    border: 1px solid rgba(56,189,248,0.3); color: #38bdf8;
+    font-size: 0.78rem; font-weight: 600; padding: 5px 16px;
+    border-radius: 50px; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 1px;
+  }
+  .page-title { font-size: 2.4rem; font-weight: 800; color: #fff; margin-bottom: 10px; }
+  .page-title span { color: #38bdf8; }
+  .page-subtitle { color: rgba(255,255,255,0.5); font-size: 1rem; }
 
-        h1 {
-            margin: 0;
-        }
+  .filter-bar {
+    background: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.07);
+    padding: 18px 0; position: sticky; top: 57px; z-index: 100; backdrop-filter: blur(10px);
+  }
+  .filter-scroll { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+  .filter-scroll::-webkit-scrollbar { display: none; }
+  .filter-btn {
+    flex-shrink: 0; padding: 7px 18px; border-radius: 50px; font-size: 0.83rem;
+    font-weight: 500; border: 1px solid rgba(255,255,255,0.12); background: transparent;
+    color: rgba(255,255,255,0.6); cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    font-family: 'Poppins', sans-serif;
+  }
+  .filter-btn:hover { border-color: #38bdf8; color: #38bdf8; }
+  .filter-btn.active { background: #38bdf8; border-color: #38bdf8; color: #0f172a; font-weight: 600; }
 
-        .hotel-list {
-            max-width: 1000px;
-            margin: 30px auto;
-            padding: 20px;
-            background-color: white;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }
+  .hotels-section { padding: 50px 0 120px; flex: 1; }
+  .results-info { color: rgba(255,255,255,0.4); font-size: 0.88rem; margin-bottom: 28px; }
+  .results-info span { color: #38bdf8; font-weight: 600; }
 
-        .hotel-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 15px;
-            border-bottom: 1px solid #ddd;
-        }
+  .hotel-card {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; overflow: hidden; transition: all 0.3s;
+    height: 100%; display: flex; flex-direction: column;
+  }
+  .hotel-card:hover {
+    background: rgba(56,189,248,0.06); border-color: rgba(56,189,248,0.25);
+    transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  }
+  .card-top {
+    background: linear-gradient(135deg, rgba(14,165,233,0.15), rgba(37,99,235,0.15));
+    padding: 26px 22px 18px; border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .card-emoji { font-size: 2rem; display: block; margin-bottom: 10px; }
+  .card-name { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  .card-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tag { display: inline-flex; align-items: center; gap: 4px; font-size: 0.72rem; font-weight: 500; padding: 3px 9px; border-radius: 50px; }
+  .tag-city { background: rgba(56,189,248,0.12); border: 1px solid rgba(56,189,248,0.2); color: #38bdf8; }
+  .tag-stars { background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.2); color: #fbbf24; }
 
-        .hotel-item:last-child {
-            border-bottom: none;
-        }
+  .card-body-custom { padding: 18px 22px; flex: 1; display: flex; flex-direction: column; }
+  .card-description { color: rgba(255,255,255,0.5); font-size: 0.84rem; line-height: 1.7; margin-bottom: 16px; flex: 1; }
+  .card-meta {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 16px;
+  }
+  .meta-price { font-size: 1rem; font-weight: 700; color: #fff; }
+  .meta-price span { font-size: 0.75rem; color: rgba(255,255,255,0.35); font-weight: 400; }
+  .meta-rating { display: flex; align-items: center; gap: 5px; }
+  .rating-num { font-size: 0.88rem; font-weight: 600; color: #fbbf24; }
+  .btn-card-detail {
+    display: block; text-align: center;
+    background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.25);
+    color: #38bdf8; padding: 9px 0; border-radius: 8px;
+    font-size: 0.85rem; font-weight: 600; text-decoration: none; transition: all 0.2s;
+  }
+  .btn-card-detail:hover { background: #38bdf8; color: #0f172a; }
+</style>
 
-        .hotel-item a {
-            text-decoration: none;
-            color: #3498db;
-            font-weight: bold;
-        }
-
-        .hotel-item a:hover {
-            text-decoration: underline;
-        }
-
-        .hotel-info {
-            flex-grow: 1;
-        }
-
-        .hotel-price, .hotel-rating {
-            font-weight: bold;
-        }
-
-        footer {
-            background-color: #3498db;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-        }
-    </style>
-</head>
-<body>
-
-<header>
-    <h1>Hotels in {{ city.name }}</h1>
-</header>
-
-<div class="hotel-list">
-    {% for hotel in hotels %}
-        <div class="hotel-item">
-            <div class="hotel-info">
-                <a href="{% url 'hotel_detail' hotel.pk %}">{{ hotel.name }}</a>
-                <p>Rating: {{ hotel.rating }} / 5</p>
-            </div>
-            <div class="hotel-price">${{ hotel.price_per_night }}</div>
-        </div>
-    {% endfor %}
+<div class="page-hero">
+  <div class="container page-hero-content">
+    <div class="page-badge">🏨 Stay</div>
+    <h1 class="page-title">Best <span>Hotels</span></h1>
+    <p class="page-subtitle">
+      {% if selected_city %}Showing hotels in <strong style="color:#fff;">{{ selected_city.name }}</strong>
+      {% else %}Explore {{ hotels|length }} hotels across Bangladesh{% endif %}
+    </p>
+  </div>
 </div>
 
-<footer>
-    <p>TrippyBD - Hotels</p>
-</footer>
+<div class="filter-bar">
+  <div class="container">
+    <div class="filter-scroll">
+      <a href="{% url 'hotel_list' %}" class="filter-btn {% if not selected_city %}active{% endif %}">🌍 All Cities</a>
+      {% for city in cities %}
+      <a href="{% url 'hotel_list_by_city' city.id %}"
+         class="filter-btn {% if selected_city.id == city.id %}active{% endif %}">{{ city.name }}</a>
+      {% endfor %}
+    </div>
+  </div>
+</div>
 
-</body>
-</html>
+<div class="hotels-section">
+  <div class="container">
+    <p class="results-info">
+      Showing <span>{{ hotels|length }}</span> hotel{{ hotels|length|pluralize }}
+      {% if selected_city %}in <span>{{ selected_city.name }}</span>{% endif %}
+    </p>
+    <div class="row g-4">
+      {% for hotel in hotels %}
+      <div class="col-sm-6 col-lg-4">
+        <div class="hotel-card h-100">
+          <div class="card-top">
+            <span class="card-emoji">🏨</span>
+            <div class="card-name">{{ hotel.name }}</div>
+            <div class="card-tags">
+              <span class="tag tag-city">📍 {{ hotel.city.name }}</span>
+              <span class="tag tag-stars">{% for i in "12345" %}{% if forloop.counter <= hotel.stars %}⭐{% endif %}{% endfor %}</span>
+            </div>
+          </div>
+          <div class="card-body-custom">
+            <p class="card-description">{{ hotel.description }}</p>
+            <div class="card-meta">
+              <div class="meta-price">USD {{ hotel.price_per_night }} <span>/night</span></div>
+              <div class="meta-rating"><span class="rating-num">⭐ {{ hotel.rating }}</span></div>
+            </div>
+            <a href="{% url 'hotel_detail' hotel.pk %}" class="btn-card-detail">View Details →</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

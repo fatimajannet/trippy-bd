@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <h2>Welcome, {{ user.fname }} 👋</h2>
+
+  <div class="row mt-4">
+    <div class="col-md-5">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">My Profile</h5>
+        </div>
+        <div class="card-body">
+          <table class="table table-borderless mb-0">
+            <tr>
+              <th>User ID</th>
+              <td><code>{{ user.u_id }}</code></td>
+            </tr>
+            <tr>
+              <th>Username</th>
+              <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+              <th>Full Name</th>
+              <td>{{ user.get_full_name }}</td>
+            </tr>
+            <tr>
+              <th>Email</th>
+              <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+              <th>Location</th>
+              <td>{{ user.u_location|default:"Not set" }}</td>
+            </tr>
+            <tr>
+              <th>Member Since</th>
+              <td>{{ user.date_joined|date:"M d, Y" }}</td>
+            </tr>
+          </table>
+        </div>
+        <div class="card-footer">
+          <a href="{% url 'update_profile' %}" class="btn btn-sm btn-outline-primary">
+            ✏️ Edit Profile
+          </a>
+          <a href="{% url 'logout' %}" class="btn btn-sm btn-outline-danger float-end">
+            🚪 Logout
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Explore Links -->
+    <div class="col-md-7">
+      <div class="card shadow-sm">
+        <div class="card-header bg-secondary text-white">
+          <h5 class="mb-0">Explore TrIppyBD</h5>
+        </div>
+        <div class="card-body p-0">
+          <div class="list-group list-group-flush">
+            <a href="/cities/"      class="list-group-item list-group-item-action">🏙️ Cities</a>
+            <a href="/hotels/"      class="list-group-item list-group-item-action">🏨 Hotels</a>
+            <a href="/restaurants/" class="list-group-item list-group-item-action">🍽️ Restaurants</a>
+            <a href="/attractions/" class="list-group-item list-group-item-action">🎡 Attractions</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

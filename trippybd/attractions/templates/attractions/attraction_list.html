@@ -1,188 +1,286 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Attractions List</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
-            margin: 0;
-            padding: 0;
-            color: #1f2937;
-        }
-
-        h1 {
-            text-align: center;
-            margin: 40px 0 20px 0;
-            font-size: 2.4rem;
-            color: #1e40af;
-        }
-
-        .legend {
-            max-width: 1200px;
-            margin: 0 auto 20px;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.9rem;
-        }
-
-        .legend-color {
-            width: 20px;
-            height: 20px;
-            border-radius: 6px;
-        }
-
-        .toolbar {
-            max-width: 1200px;
-            margin: 0 auto 30px;
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .toolbar input, .toolbar select {
-            padding: 10px 14px;
-            font-size: 1rem;
-            border-radius: 12px;
-            border: 1px solid #d1d5db;
-            outline: none;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            padding: 0 20px 50px;
-        }
-
-        .card {
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 6px 18px rgba(15, 23, 42, 0.1);
-            transition: transform 0.25s, box-shadow 0.25s;
-        }
-
-        .Dhaka { background-color: #e3f2fd; }
-        .Chattogram { background-color: #e8f5e9; }
-        .Rajshahi { background-color: #fff3e0; }
-        .Khulna { background-color: #f3e5f5; }
-        .Barisal { background-color: #ffebee; }
-        .Sylhet { background-color: #e0f7fa; }
-        .Rangpur { background-color: #f9fbe7; }
-        .Mymensingh { background-color: #fffde7; }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.15);
-        }
-
-        .card h2 {
-            margin: 0 0 10px;
-            font-size: 1.3rem;
-            color: #111827;
-        }
-
-        .card p {
-            margin: 6px 0;
-            font-size: 0.95rem;
-            color: #475569;
-        }
-
-        .card a {
-            display: inline-block;
-            margin-top: 12px;
-            text-decoration: none;
-            background: linear-gradient(135deg, #2563eb, #1e40af);
-            color: white;
-            padding: 10px 14px;
-            border-radius: 10px;
-            font-weight: 600;
-            transition: 0.2s ease;
-        }
-
-        .card a:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
-        }
-
-        @media (max-width: 640px) {
-            h1 { font-size: 1.8rem; }
-        }
-    </style>
-</head>
-<body>
-    <h1>Attractions in Bangladesh</h1>
-
-    <!-- Region Legend -->
-    <div class="legend">
-        <div class="legend-item"><div class="legend-color" style="background-color:#e3f2fd;"></div> Dhaka</div>
-        <div class="legend-item"><div class="legend-color" style="background-color:#e8f5e9;"></div> Chattogram</div>
-        <div class="legend-item"><div class="legend-color" style="background-color:#fff3e0;"></div> Rajshahi</div>
-        <div class="legend-item"><div class="legend-color" style="background-color:#f3e5f5;"></div> Khulna</div>
-        <div class="legend-item"><div class="legend-color" style="background-color:#ffebee;"></div> Barisal</div>
-        <div class="legend-item"><div class="legend-color" style="background-color:#e0f7fa;"></div> Sylhet</div>
-        <div class="legend-item"><div class="legend-color" style="background-color:#f9fbe7;"></div> Rangpur</div>
-        <div class="legend-item"><div class="legend-color" style="background-color:#fffde7;"></div> Mymensingh</div>
+{% extends 'base.html' %}
+{% block title %}Attractions — TrIppyBD{% endblock %}
+{% block content %}
+<style>
+  .page-hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
+    padding: 60px 0 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    position: relative;
+    overflow: hidden;
+  }
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(56,189,248,0.1) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    border-radius: 50%;
+  }
+  .page-hero-content { position: relative; z-index: 2; }
+  .page-badge {
+    display: inline-block;
+    background: rgba(56,189,248,0.12);
+    border: 1px solid rgba(56,189,248,0.3);
+    color: #38bdf8;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 5px 16px;
+    border-radius: 50px;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .page-title {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+  .page-title span { color: #38bdf8; }
+  .page-subtitle {
+    color: rgba(255,255,255,0.5);
+    font-size: 1rem;
+  }
+  /* ── FILTER BAR ── */
+  .filter-bar {
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    padding: 18px 0;
+    position: sticky;
+    top: 57px;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+  }
+  .filter-scroll {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+  .filter-scroll::-webkit-scrollbar { display: none; }
+  .filter-btn {
+    flex-shrink: 0;
+    padding: 7px 18px;
+    border-radius: 50px;
+    font-size: 0.83rem;
+    font-weight: 500;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: transparent;
+    color: rgba(255,255,255,0.6);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .filter-btn:hover {
+    border-color: #38bdf8;
+    color: #38bdf8;
+  }
+  .filter-btn.active {
+    background: #38bdf8;
+    border-color: #38bdf8;
+    color: #0f172a;
+    font-weight: 600;
+  }
+  /* ── MAIN CONTENT ── */
+  .attractions-section { padding: 50px 0 80px; }
+  .results-info {
+    color: rgba(255,255,255,0.4);
+    font-size: 0.88rem;
+    margin-bottom: 28px;
+  }
+  .results-info span { color: #38bdf8; font-weight: 600; }
+  /* ── ATTRACTION CARD ── */
+  .attraction-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .attraction-card:hover {
+    background: rgba(56,189,248,0.06);
+    border-color: rgba(56,189,248,0.25);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  }
+  .card-top {
+    background: linear-gradient(135deg, rgba(14,165,233,0.15), rgba(37,99,235,0.15));
+    padding: 28px 24px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+  }
+  .card-emoji {
+    font-size: 2.2rem;
+    display: block;
+    margin-bottom: 12px;
+  }
+  .card-name {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+  .card-city-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(56,189,248,0.12);
+    border: 1px solid rgba(56,189,248,0.2);
+    color: #38bdf8;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 50px;
+  }
+  .card-body-custom {
+    padding: 20px 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .card-description {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.85rem;
+    line-height: 1.7;
+    margin-bottom: 18px;
+    flex: 1;
+  }
+  .card-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.45);
+  }
+  .meta-item .icon { font-size: 0.9rem; }
+  .meta-item .value { color: rgba(255,255,255,0.7); }
+  .fee-free {
+    color: #4ade80 !important;
+    font-weight: 600;
+  }
+  .btn-card-detail {
+    display: block;
+    text-align: center;
+    background: rgba(56,189,248,0.1);
+    border: 1px solid rgba(56,189,248,0.25);
+    color: #38bdf8;
+    padding: 9px 0;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-card-detail:hover {
+    background: #38bdf8;
+    color: #0f172a;
+  }
+  /* ── EMPTY STATE ── */
+  .empty-state {
+    text-align: center;
+    padding: 80px 20px;
+    color: rgba(255,255,255,0.3);
+  }
+  .empty-state .icon { font-size: 4rem; margin-bottom: 16px; display: block; }
+  .empty-state h3 { color: rgba(255,255,255,0.5); margin-bottom: 8px; }
+</style>
+<!-- ── PAGE HERO ── -->
+<div class="page-hero">
+  <div class="container page-hero-content">
+    <div class="page-badge">🎡 Discover</div>
+    <h1 class="page-title">Top <span>Attractions</span></h1>
+    <p class="page-subtitle">
+      {% if selected_city %}
+        Showing attractions in <strong style="color:#fff;">{{ selected_city.name }}</strong>
+      {% else %}
+        Explore {{ attractions|length }} attractions across Bangladesh
+      {% endif %}
+    </p>
+  </div>
+</div>
+<!-- ── CITY FILTER BAR ── -->
+<div class="filter-bar">
+  <div class="container">
+    <div class="filter-scroll">
+      <a href="{% url 'attraction_list' %}"
+         class="filter-btn {% if not selected_city %}active{% endif %}">
+        🌍 All Cities
+      </a>
+      {% for city in cities %}
+      <a href="{% url 'attraction_list_by_city' city.id %}"
+         class="filter-btn {% if selected_city.id == city.id %}active{% endif %}">
+        {{ city.name }}
+      </a>
+      {% endfor %}
     </div>
-
-    <!-- Filters -->
-    <div class="toolbar">
-        <input type="text" id="searchInput" placeholder="Search attractions...">
-        <select id="cityFilter">
-            <option value="">All Cities</option>
-            {% for city in cities %}
-                <option value="{{ city.name }}">{{ city.name }}</option>
-            {% endfor %}
-        </select>
-    </div>
-
-    <!-- Attraction Cards -->
-    <div class="container" id="attractionsContainer">
-        {% for attraction in attractions %}
-        <div class="card {{ attraction.city.region }}" 
-             data-city="{{ attraction.city.name|lower }}" 
-             data-name="{{ attraction.name|lower }}">
-            <h2>{{ attraction.name }}</h2>
-            <p><strong>City:</strong> {{ attraction.city.name }}</p>
-            <p><strong>Entry Fee:</strong> ৳{{ attraction.entry_fee }}</p>
-            <p><strong>Opening Hours:</strong> {{ attraction.opening_hours }}</p>
-            <a href="{% url 'attraction_detail' attraction.pk %}">View Details</a>
+  </div>
+</div>
+<!-- ── ATTRACTIONS GRID ── -->
+<div class="attractions-section">
+  <div class="container">
+    <p class="results-info">
+      Showing <span>{{ attractions|length }}</span> attraction{{ attractions|length|pluralize }}
+      {% if selected_city %}in <span>{{ selected_city.name }}</span>{% endif %}
+    </p>
+    {% if attractions %}
+    <div class="row g-4">
+      {% for attraction in attractions %}
+      <div class="col-sm-6 col-lg-4 col-xl-3">
+        <div class="attraction-card">
+          <div class="card-top">
+            <span class="card-emoji">🎡</span>
+            <div class="card-name">{{ attraction.name }}</div>
+            <span class="card-city-tag">📍 {{ attraction.city.name }}</span>
+          </div>
+          <div class="card-body-custom">
+            <p class="card-description">{{ attraction.description }}</p>
+            <div class="card-meta">
+              <div class="meta-item">
+                <span class="icon">🎟️</span>
+                <span>Entry Fee:</span>
+                {% if attraction.entry_fee == 0 or attraction.entry_fee == "0.00" %}
+                  <span class="value fee-free">Free</span>
+                {% else %}
+                  <span class="value">৳{{ attraction.entry_fee }}</span>
+                {% endif %}
+              </div>
+              <div class="meta-item">
+                <span class="icon">🕐</span>
+                <span>Hours:</span>
+                <span class="value">{{ attraction.opening_hours }}</span>
+              </div>
+            </div>
+            <a href="{% url 'attraction_detail' attraction.pk %}" class="btn-card-detail">
+              View Details →
+            </a>
+          </div>
         </div>
-        {% endfor %}
+      </div>
+      {% endfor %}
     </div>
-
-    <script>
-        const cityFilter = document.getElementById('cityFilter');
-        const searchInput = document.getElementById('searchInput');
-        const cards = Array.from(document.querySelectorAll('.card'));
-
-        function filterCards() {
-            const city = cityFilter.value.toLowerCase();
-            const query = searchInput.value.toLowerCase().trim();
-
-            cards.forEach(card => {
-                const cardCity = card.dataset.city;
-                const cardName = card.dataset.name;
-                const matchCity = city === '' || cardCity === city;
-                const matchName = cardName.includes(query);
-                card.style.display = (matchCity && matchName) ? 'block' : 'none';
-            });
-        }
-
-        cityFilter.addEventListener('change', filterCards);
-        searchInput.addEventListener('input', filterCards);
-    </script>
-</body>
-</html>
+    {% else %}
+    <div class="empty-state">
+      <span class="icon">🔍</span>
+      <h3>No attractions found</h3>
+      <p>Try selecting a different city from the filter above.</p>
+      <a href="{% url 'attraction_list' %}" class="btn-card-detail" style="display:inline-block; padding: 10px 28px; margin-top:16px;">
+        View All Attractions
+      </a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

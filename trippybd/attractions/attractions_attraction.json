@@ -1,44 +1,398 @@
 [
-{"type":"header","version":"5.2.1","comment":"Export to JSON plugin for PHPMyAdmin"},
-{"type":"database","name":"trippybd_db"},
-{"type":"table","name":"attractions_attraction","database":"trippybd_db","data":
-[
-{"id":"1","name":"Lalbagh Fort","description":"17th-century Mughal fort complex with museum.","entry_fee":"40.00","opening_hours":"9:00 AM - 5:00 PM","city_id":"1"},
-{"id":"2","name":"Ahsan Manzil","description":"Historic pink palace along Buriganga River.","entry_fee":"50.00","opening_hours":"10:00 AM - 6:00 PM","city_id":"1"},
-{"id":"3","name":"Liberation War Museum","description":"Museum documenting Bangladesh Liberation War.","entry_fee":"30.00","opening_hours":"9:30 AM - 5:30 PM","city_id":"1"},
-{"id":"4","name":"Patenga Beach","description":"Popular beach near the city; scenic sunset spot.","entry_fee":"0.00","opening_hours":"Open 24 hours","city_id":"2"},
-{"id":"5","name":"Foy’s Lake","description":"Artificial lake with amusement park and boat rides.","entry_fee":"150.00","opening_hours":"9:00 AM - 6:00 PM","city_id":"2"},
-{"id":"6","name":"Kaptai Lake","description":"Largest man-made lake in Bangladesh with boating.","entry_fee":"0.00","opening_hours":"6:00 AM - 6:00 PM","city_id":"2"},
-{"id":"7","name":"Jaflong","description":"Scenic stone collection point near India border.","entry_fee":"0.00","opening_hours":"8:00 AM - 6:00 PM","city_id":"3"},
-{"id":"8","name":"Ratargul Swamp Forest","description":"Freshwater swamp forest and boat tours.","entry_fee":"50.00","opening_hours":"8:00 AM - 5:00 PM","city_id":"3"},
-{"id":"9","name":"Madhabkunda Waterfall","description":"Tallest waterfall in Bangladesh.","entry_fee":"20.00","opening_hours":"8:00 AM - 6:00 PM","city_id":"3"},
-{"id":"10","name":"Puthia Temple Complex","description":"Hindu temple complex with architectural significance.","entry_fee":"30.00","opening_hours":"9:00 AM - 5:00 PM","city_id":"4"},
-{"id":"11","name":"Varendra Research Museum","description":"Archaeological and historical museum.","entry_fee":"25.00","opening_hours":"10:00 AM - 5:00 PM","city_id":"4"},
-{"id":"12","name":"Padma Riverfront","description":"Scenic riverfront area for leisure and photography.","entry_fee":"0.00","opening_hours":"Open 24 hours","city_id":"4"},
-{"id":"13","name":"Mahasthangarh","description":"Ancient archaeological site with ruins.","entry_fee":"40.00","opening_hours":"9:00 AM - 5:00 PM","city_id":"5"},
-{"id":"14","name":"Bogura Museum","description":"Local history museum with artifacts.","entry_fee":"20.00","opening_hours":"10:00 AM - 5:00 PM","city_id":"5"},
-{"id":"15","name":"Sundarbans National Park","description":"World Heritage mangrove forest, tiger reserve.","entry_fee":"200.00","opening_hours":"6:00 AM - 4:00 PM","city_id":"6"},
-{"id":"16","name":"Shat Gambuj Masjid","description":"Historic mosque with seven domes.","entry_fee":"10.00","opening_hours":"7:00 AM - 5:00 PM","city_id":"6"},
-{"id":"17","name":"Mainamati Ruins","description":"Ancient Buddhist archaeological site.","entry_fee":"30.00","opening_hours":"9:00 AM - 5:00 PM","city_id":"7"},
-{"id":"18","name":"Lalmai Hills","description":"Hilly area with historical sites.","entry_fee":"0.00","opening_hours":"6:00 AM - 6:00 PM","city_id":"7"},
-{"id":"19","name":"Kuakata Sea Beach","description":"Panoramic beach with sunrise and sunset views.","entry_fee":"0.00","opening_hours":"Open 24 hours","city_id":"8"},
-{"id":"20","name":"Durga Sagar","description":"Largest pond in Barisal with historic temple nearby.","entry_fee":"0.00","opening_hours":"Open 24 hours","city_id":"8"},
-{"id":"21","name":"Brahmaputra Riverbank","description":"Scenic riverside area popular for walks.","entry_fee":"0.00","opening_hours":"Open 24 hours","city_id":"9"},
-{"id":"22","name":"Shoshi Lodge","description":"Historic colonial lodge and gardens.","entry_fee":"15.00","opening_hours":"9:00 AM - 5:00 PM","city_id":"9"},
-{"id":"23","name":"Tajhat Palace","description":"Historic palace with museum and gardens.","entry_fee":"30.00","opening_hours":"9:00 AM - 5:00 PM","city_id":"10"},
-{"id":"24","name":"Carmichael College","description":"Heritage college building with historic significance.","entry_fee":"0.00","opening_hours":"8:00 AM - 5:00 PM","city_id":"10"},
-{"id":"25","name":"Bhawal National Park","description":"Forest park for wildlife and picnic.","entry_fee":"20.00","opening_hours":"8:00 AM - 6:00 PM","city_id":"11"},
-{"id":"26","name":"Sonargaon Folk Art Museum","description":"Museum of traditional Bangladeshi art and crafts.","entry_fee":"30.00","opening_hours":"9:00 AM - 5:00 PM","city_id":"12"},
-{"id":"27","name":"Tangail Saree Workshops","description":"Visit traditional handloom saree workshops.","entry_fee":"0.00","opening_hours":"9:00 AM - 5:00 PM","city_id":"13"},
-{"id":"28","name":"Jamuna Riverbank","description":"Riverside area popular for leisure and boat rides.","entry_fee":"0.00","opening_hours":"Open 24 hours","city_id":"14"},
-{"id":"29","name":"Shat Gombuj Masjid","description":"Historic mosque with architectural significance.","entry_fee":"10.00","opening_hours":"7:00 AM - 5:00 PM","city_id":"15"},
-{"id":"30","name":"Padma-Meghna River Confluence","description":"Scenic meeting point of two major rivers.","entry_fee":"0.00","opening_hours":"Open 24 hours","city_id":"16"},
-{"id":"31","name":"Feni Bridge views","description":"Popular local spot for river views and photography.","entry_fee":"0.00","opening_hours":"Open 24 hours","city_id":"17"},
-{"id":"32","name":"Kantajew Temple","description":"18th-century terracotta temple.","entry_fee":"20.00","opening_hours":"8:00 AM - 5:00 PM","city_id":"18"},
-{"id":"33","name":"Jamalpur Railway Workshop","description":"Historic railway facility and museum.","entry_fee":"0.00","opening_hours":"8:00 AM - 5:00 PM","city_id":"19"},
-{"id":"34","name":"Sundarbans Mangrove Areas","description":"Mangrove forests, wildlife exploration.","entry_fee":"200.00","opening_hours":"6:00 AM - 4:00 PM","city_id":"20"},
-{"id":"35","name":"Lalon Shah Shrine","description":"Shrine of the famous mystic poet and philosopher.","entry_fee":"0.00","opening_hours":"6:00 AM - 8:00 PM","city_id":"21"},
-{"id":"36","name":"Shilaidaha Kuthibari","description":"Historical residence of Rabindranath Tagore.","entry_fee":"20.00","opening_hours":"9:00 AM - 5:00 PM","city_id":"21"}
-]
-}
+  {
+    "model": "attractions.attraction",
+    "pk": 1,
+    "fields": {
+      "name": "Lalbagh Fort",
+      "description": "17th-century Mughal fort complex with museum.",
+      "entry_fee": "40.00",
+      "opening_hours": "9:00 AM - 5:00 PM",
+      "city_id": 1
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 2,
+    "fields": {
+      "name": "Ahsan Manzil",
+      "description": "Historic pink palace along Buriganga River.",
+      "entry_fee": "50.00",
+      "opening_hours": "10:00 AM - 6:00 PM",
+      "city_id": 1
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 3,
+    "fields": {
+      "name": "Liberation War Museum",
+      "description": "Museum documenting Bangladesh Liberation War.",
+      "entry_fee": "30.00",
+      "opening_hours": "9:30 AM - 5:30 PM",
+      "city_id": 1
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 4,
+    "fields": {
+      "name": "Patenga Beach",
+      "description": "Popular beach near the city; scenic sunset spot.",
+      "entry_fee": "0.00",
+      "opening_hours": "Open 24 hours",
+      "city_id": 2
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 5,
+    "fields": {
+      "name": "Foy's Lake",
+      "description": "Artificial lake with amusement park and boat rides.",
+      "entry_fee": "150.00",
+      "opening_hours": "9:00 AM - 6:00 PM",
+      "city_id": 2
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 6,
+    "fields": {
+      "name": "Kaptai Lake",
+      "description": "Largest man-made lake in Bangladesh with boating.",
+      "entry_fee": "0.00",
+      "opening_hours": "6:00 AM - 6:00 PM",
+      "city_id": 2
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 7,
+    "fields": {
+      "name": "Jaflong",
+      "description": "Scenic stone collection point near India border.",
+      "entry_fee": "0.00",
+      "opening_hours": "8:00 AM - 6:00 PM",
+      "city_id": 3
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 8,
+    "fields": {
+      "name": "Ratargul Swamp Forest",
+      "description": "Freshwater swamp forest and boat tours.",
+      "entry_fee": "50.00",
+      "opening_hours": "8:00 AM - 5:00 PM",
+      "city_id": 3
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 9,
+    "fields": {
+      "name": "Madhabkunda Waterfall",
+      "description": "Tallest waterfall in Bangladesh.",
+      "entry_fee": "20.00",
+      "opening_hours": "8:00 AM - 6:00 PM",
+      "city_id": 3
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 10,
+    "fields": {
+      "name": "Puthia Temple Complex",
+      "description": "Hindu temple complex with architectural significance.",
+      "entry_fee": "30.00",
+      "opening_hours": "9:00 AM - 5:00 PM",
+      "city_id": 4
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 11,
+    "fields": {
+      "name": "Varendra Research Museum",
+      "description": "Archaeological and historical museum.",
+      "entry_fee": "25.00",
+      "opening_hours": "10:00 AM - 5:00 PM",
+      "city_id": 4
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 12,
+    "fields": {
+      "name": "Padma Riverfront",
+      "description": "Scenic riverfront area for leisure and photography.",
+      "entry_fee": "0.00",
+      "opening_hours": "Open 24 hours",
+      "city_id": 4
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 13,
+    "fields": {
+      "name": "Mahasthangarh",
+      "description": "Ancient archaeological site with ruins.",
+      "entry_fee": "40.00",
+      "opening_hours": "9:00 AM - 5:00 PM",
+      "city_id": 5
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 14,
+    "fields": {
+      "name": "Bogura Museum",
+      "description": "Local history museum with artifacts.",
+      "entry_fee": "20.00",
+      "opening_hours": "10:00 AM - 5:00 PM",
+      "city_id": 5
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 15,
+    "fields": {
+      "name": "Sundarbans National Park",
+      "description": "World Heritage mangrove forest, tiger reserve.",
+      "entry_fee": "200.00",
+      "opening_hours": "6:00 AM - 4:00 PM",
+      "city_id": 6
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 16,
+    "fields": {
+      "name": "Shat Gambuj Masjid",
+      "description": "Historic mosque with seven domes.",
+      "entry_fee": "10.00",
+      "opening_hours": "7:00 AM - 5:00 PM",
+      "city_id": 6
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 17,
+    "fields": {
+      "name": "Mainamati Ruins",
+      "description": "Ancient Buddhist archaeological site.",
+      "entry_fee": "30.00",
+      "opening_hours": "9:00 AM - 5:00 PM",
+      "city_id": 7
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 18,
+    "fields": {
+      "name": "Lalmai Hills",
+      "description": "Hilly area with historical sites.",
+      "entry_fee": "0.00",
+      "opening_hours": "6:00 AM - 6:00 PM",
+      "city_id": 7
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 19,
+    "fields": {
+      "name": "Kuakata Sea Beach",
+      "description": "Panoramic beach with sunrise and sunset views.",
+      "entry_fee": "0.00",
+      "opening_hours": "Open 24 hours",
+      "city_id": 8
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 20,
+    "fields": {
+      "name": "Durga Sagar",
+      "description": "Largest pond in Barisal with historic temple nearby.",
+      "entry_fee": "0.00",
+      "opening_hours": "Open 24 hours",
+      "city_id": 8
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 21,
+    "fields": {
+      "name": "Brahmaputra Riverbank",
+      "description": "Scenic riverside area popular for walks.",
+      "entry_fee": "0.00",
+      "opening_hours": "Open 24 hours",
+      "city_id": 9
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 22,
+    "fields": {
+      "name": "Shoshi Lodge",
+      "description": "Historic colonial lodge and gardens.",
+      "entry_fee": "15.00",
+      "opening_hours": "9:00 AM - 5:00 PM",
+      "city_id": 9
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 23,
+    "fields": {
+      "name": "Tajhat Palace",
+      "description": "Historic palace with museum and gardens.",
+      "entry_fee": "30.00",
+      "opening_hours": "9:00 AM - 5:00 PM",
+      "city_id": 10
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 24,
+    "fields": {
+      "name": "Carmichael College",
+      "description": "Heritage college building with historic significance.",
+      "entry_fee": "0.00",
+      "opening_hours": "8:00 AM - 5:00 PM",
+      "city_id": 10
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 25,
+    "fields": {
+      "name": "Bhawal National Park",
+      "description": "Forest park for wildlife and picnic.",
+      "entry_fee": "20.00",
+      "opening_hours": "8:00 AM - 6:00 PM",
+      "city_id": 11
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 26,
+    "fields": {
+      "name": "Sonargaon Folk Art Museum",
+      "description": "Museum of traditional Bangladeshi art and crafts.",
+      "entry_fee": "30.00",
+      "opening_hours": "9:00 AM - 5:00 PM",
+      "city_id": 12
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 27,
+    "fields": {
+      "name": "Tangail Saree Workshops",
+      "description": "Visit traditional handloom saree workshops.",
+      "entry_fee": "0.00",
+      "opening_hours": "9:00 AM - 5:00 PM",
+      "city_id": 13
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 28,
+    "fields": {
+      "name": "Jamuna Riverbank",
+      "description": "Riverside area popular for leisure and boat rides.",
+      "entry_fee": "0.00",
+      "opening_hours": "Open 24 hours",
+      "city_id": 14
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 29,
+    "fields": {
+      "name": "Shat Gombuj Masjid",
+      "description": "Historic mosque with architectural significance.",
+      "entry_fee": "10.00",
+      "opening_hours": "7:00 AM - 5:00 PM",
+      "city_id": 15
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 30,
+    "fields": {
+      "name": "Padma-Meghna River Confluence",
+      "description": "Scenic meeting point of two major rivers.",
+      "entry_fee": "0.00",
+      "opening_hours": "Open 24 hours",
+      "city_id": 16
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 31,
+    "fields": {
+      "name": "Feni Bridge views",
+      "description": "Popular local spot for river views and photography.",
+      "entry_fee": "0.00",
+      "opening_hours": "Open 24 hours",
+      "city_id": 17
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 32,
+    "fields": {
+      "name": "Kantajew Temple",
+      "description": "18th-century terracotta temple.",
+      "entry_fee": "20.00",
+      "opening_hours": "8:00 AM - 5:00 PM",
+      "city_id": 18
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 33,
+    "fields": {
+      "name": "Jamalpur Railway Workshop",
+      "description": "Historic railway facility and museum.",
+      "entry_fee": "0.00",
+      "opening_hours": "8:00 AM - 5:00 PM",
+      "city_id": 19
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 34,
+    "fields": {
+      "name": "Sundarbans Mangrove Areas",
+      "description": "Mangrove forests, wildlife exploration.",
+      "entry_fee": "200.00",
+      "opening_hours": "6:00 AM - 4:00 PM",
+      "city_id": 20
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 35,
+    "fields": {
+      "name": "Lalon Shah Shrine",
+      "description": "Shrine of the famous mystic poet and philosopher.",
+      "entry_fee": "0.00",
+      "opening_hours": "6:00 AM - 8:00 PM",
+      "city_id": 21
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 36,
+    "fields": {
+      "name": "Shilaidaha Kuthibari",
+      "description": "Historical residence of Rabindranath Tagore.",
+      "entry_fee": "20.00",
+      "opening_hours": "9:00 AM - 5:00 PM",
+      "city_id": 21
+    }
+  }
 ]

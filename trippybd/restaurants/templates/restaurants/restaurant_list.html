@@ -1,19 +1,222 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Restaurants in {{ city.name }}</title>
-</head>
-<body>
-    <h1>Restaurants in {{ city.name }}</h1>
-    <ul>
-        {% for restaurant in restaurants %}
-            <li>
-                <a href="{% url 'restaurant_detail' restaurant.pk %}">
-                    {{ restaurant.name }} - {{ restaurant.cuisine_type }} - ${{ restaurant.average_price }} - Rating: {{ restaurant.rating }}
-                </a>
-            </li>
+{% extends 'base.html' %}
+{% block title %}Restaurants — TrIppyBD{% endblock %}
+
+{% block content %}
+<style>
+  .page-hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
+    padding: 60px 0 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    position: relative; overflow: hidden;
+  }
+  .page-hero::before {
+    content: ''; position: absolute;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(56,189,248,0.1) 0%, transparent 70%);
+    top: -100px; right: -100px; border-radius: 50%;
+  }
+  .page-hero-content { position: relative; z-index: 2; }
+  .page-badge {
+    display: inline-block;
+    background: rgba(56,189,248,0.12);
+    border: 1px solid rgba(56,189,248,0.3);
+    color: #38bdf8; font-size: 0.78rem; font-weight: 600;
+    padding: 5px 16px; border-radius: 50px; margin-bottom: 14px;
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+  .page-title { font-size: 2.4rem; font-weight: 800; color: #fff; margin-bottom: 10px; }
+  .page-title span { color: #38bdf8; }
+  .page-subtitle { color: rgba(255,255,255,0.5); font-size: 1rem; }
+
+  .filter-bar {
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    padding: 18px 0; position: sticky; top: 57px;
+    z-index: 100; backdrop-filter: blur(10px);
+  }
+  .filter-scroll {
+    display: flex; gap: 10px; overflow-x: auto;
+    padding-bottom: 4px; scrollbar-width: none;
+  }
+  .filter-scroll::-webkit-scrollbar { display: none; }
+  .filter-btn {
+    flex-shrink: 0; padding: 7px 18px; border-radius: 50px;
+    font-size: 0.83rem; font-weight: 500;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: transparent; color: rgba(255,255,255,0.6);
+    cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    font-family: 'Poppins', sans-serif;
+  }
+  .filter-btn:hover { border-color: #38bdf8; color: #38bdf8; }
+  .filter-btn.active { background: #38bdf8; border-color: #38bdf8; color: #0f172a; font-weight: 600; }
+
+  .restaurants-section { padding: 50px 0 120px; flex: 1; }
+
+  .results-info { color: rgba(255,255,255,0.4); font-size: 0.88rem; margin-bottom: 28px; }
+  .results-info span { color: #38bdf8; font-weight: 600; }
+
+  .search-wrap { position: relative; max-width: 360px; }
+  .search-wrap input {
+    width: 100%; background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12); border-radius: 10px;
+    color: #fff; padding: 9px 16px 9px 38px; font-size: 0.88rem;
+    outline: none; transition: all 0.25s; font-family: 'Poppins', sans-serif;
+  }
+  .search-wrap input:focus { border-color: #38bdf8; background: rgba(255,255,255,0.09); }
+  .search-wrap input::placeholder { color: rgba(255,255,255,0.3); }
+  .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.3); pointer-events: none; }
+
+  .restaurant-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; overflow: hidden;
+    transition: all 0.3s; height: 100%;
+    display: flex; flex-direction: column;
+  }
+  .restaurant-card:hover {
+    background: rgba(56,189,248,0.06);
+    border-color: rgba(56,189,248,0.25);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  }
+  .card-top {
+    background: linear-gradient(135deg, rgba(14,165,233,0.15), rgba(37,99,235,0.15));
+    padding: 26px 22px 18px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .card-emoji { font-size: 2rem; display: block; margin-bottom: 10px; }
+  .card-name { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 8px; line-height: 1.3; }
+  .card-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 0.72rem; font-weight: 500; padding: 3px 9px; border-radius: 50px;
+  }
+  .tag-city { background: rgba(56,189,248,0.12); border: 1px solid rgba(56,189,248,0.2); color: #38bdf8; }
+  .tag-cuisine { background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.2); color: #fbbf24; }
+
+  .card-body-custom { padding: 18px 22px; flex: 1; display: flex; flex-direction: column; }
+  .card-description { color: rgba(255,255,255,0.5); font-size: 0.84rem; line-height: 1.7; margin-bottom: 16px; flex: 1; }
+
+  .card-meta {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 16px;
+  }
+  .meta-price { font-size: 1rem; font-weight: 700; color: #fff; }
+  .meta-price span { font-size: 0.75rem; color: rgba(255,255,255,0.35); font-weight: 400; }
+  .meta-rating { display: flex; align-items: center; gap: 5px; }
+  .rating-stars { color: #fbbf24; font-size: 0.85rem; }
+  .rating-num { font-size: 0.88rem; font-weight: 600; color: #fff; }
+
+  .btn-card-detail {
+    display: block; text-align: center;
+    background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.25);
+    color: #38bdf8; padding: 9px 0; border-radius: 8px;
+    font-size: 0.85rem; font-weight: 600; text-decoration: none; transition: all 0.2s;
+  }
+  .btn-card-detail:hover { background: #38bdf8; color: #0f172a; }
+
+  #emptyState { text-align: center; padding: 80px 20px; }
+  #emptyState .icon { font-size: 4rem; display: block; margin-bottom: 16px; }
+  #emptyState h3 { color: rgba(255,255,255,0.5); margin-bottom: 8px; }
+  #emptyState p { color: rgba(255,255,255,0.3); }
+</style>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="container page-hero-content">
+    <div class="page-badge">🍽️ Discover</div>
+    <h1 class="page-title">Best <span>Restaurants</span></h1>
+    <p class="page-subtitle">
+      {% if selected_city %}
+        Showing restaurants in <strong style="color:#fff;">{{ selected_city.name }}</strong>
+      {% else %}
+        Explore {{ restaurants|length }} restaurants across Bangladesh
+      {% endif %}
+    </p>
+  </div>
+</div>
+
+<!-- CITY FILTER + SEARCH -->
+<div class="filter-bar">
+  <div class="container">
+    <div class="d-flex align-items-center gap-3 flex-wrap">
+      <div class="filter-scroll">
+        <a href="{% url 'restaurant_list' %}"
+           class="filter-btn {% if not selected_city %}active{% endif %}">🌍 All Cities</a>
+        {% for city in cities %}
+        <a href="{% url 'restaurant_list_by_city' city.id %}"
+           class="filter-btn {% if selected_city.id == city.id %}active{% endif %}">
+          {{ city.name }}
+        </a>
         {% endfor %}
-    </ul>
-</body>
-</html>
+      </div>
+      <div class="search-wrap ms-auto">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="restSearch" placeholder="Search restaurants..." oninput="searchRestaurants()">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GRID -->
+<div class="restaurants-section">
+  <div class="container">
+    <p class="results-info">
+      Showing <span id="resultCount">{{ restaurants|length }}</span> restaurant{{ restaurants|length|pluralize }}
+      {% if selected_city %}in <span>{{ selected_city.name }}</span>{% endif %}
+    </p>
+
+    <div class="row g-4" id="restGrid">
+      {% for restaurant in restaurants %}
+      <div class="col-sm-6 col-lg-4 rest-item" data-name="{{ restaurant.name|lower }}">
+        <div class="restaurant-card h-100">
+          <div class="card-top">
+            <span class="card-emoji">🍽️</span>
+            <div class="card-name">{{ restaurant.name }}</div>
+            <div class="card-tags">
+              <span class="tag tag-city">📍 {{ restaurant.city.name }}</span>
+              <span class="tag tag-cuisine">{{ restaurant.cuisine_type }}</span>
+            </div>
+          </div>
+          <div class="card-body-custom">
+            <p class="card-description">{{ restaurant.description }}</p>
+            <div class="card-meta">
+              <div class="meta-price">৳{{ restaurant.average_price }} <span>/person</span></div>
+              <div class="meta-rating">
+                <span class="rating-stars">⭐</span>
+                <span class="rating-num">{{ restaurant.rating }}</span>
+              </div>
+            </div>
+            <a href="{% url 'restaurant_detail' restaurant.pk %}" class="btn-card-detail">
+              View Details →
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div id="emptyState" style="display:none;">
+      <span class="icon">🔍</span>
+      <h3>No restaurants found</h3>
+      <p>Try a different city or search term.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function searchRestaurants() {
+    const q = document.getElementById('restSearch').value.toLowerCase();
+    const items = document.querySelectorAll('.rest-item');
+    let count = 0;
+    items.forEach(item => {
+      const match = item.dataset.name.includes(q);
+      item.style.display = match ? '' : 'none';
+      if (match) count++;
+    });
+    document.getElementById('resultCount').textContent = count;
+    document.getElementById('emptyState').style.display = count === 0 ? 'block' : 'none';
+  }
+</script>
+{% endblock %}

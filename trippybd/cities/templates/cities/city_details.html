@@ -1,104 +1,360 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ city.name }} - Details</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-        }
+{% extends 'base.html' %}
+{% block title %}{{ city.name }} — TrIppyBD{% endblock %}
 
-        header {
-            background-color: #007bff;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
+{% block content %}
+<style>
+  .detail-hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 60%, #0f172a 100%);
+    padding: 60px 0 50px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    position: relative;
+    overflow: hidden;
+  }
+  .detail-hero::before {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(56,189,248,0.1) 0%, transparent 70%);
+    top: -150px; right: -100px;
+    border-radius: 50%;
+  }
+  .detail-hero::after {
+    content: '';
+    position: absolute;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(37,99,235,0.1) 0%, transparent 70%);
+    bottom: -80px; left: -80px;
+    border-radius: 50%;
+  }
+  .detail-hero-content { position: relative; z-index: 2; }
 
-        section {
-            padding: 20px;
-            background-color: white;
-            margin: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: rgba(255,255,255,0.45);
+    font-size: 0.85rem;
+    text-decoration: none;
+    margin-bottom: 28px;
+    transition: color 0.2s;
+    padding: 6px 14px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.04);
+  }
+  .back-btn:hover { color: #38bdf8; border-color: rgba(56,189,248,0.3); }
 
-        footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #007bff;
-            color: white;
-        }
+  .detail-emoji { font-size: 3.5rem; display: block; margin-bottom: 18px; }
 
-        .hotel-list {
-            margin-top: 20px;
-        }
+  .detail-region-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(56,189,248,0.12);
+    border: 1px solid rgba(56,189,248,0.25);
+    color: #38bdf8;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 50px;
+    margin-bottom: 18px;
+  }
+  .detail-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 14px;
+    line-height: 1.2;
+  }
+  .detail-description {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.85;
+    max-width: 680px;
+    margin-bottom: 32px;
+  }
 
-        .hotel-item {
-            background-color: #f9f9f9;
-            padding: 20px;
-            margin: 10px 0;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+  /* ── STATS ROW ── */
+  .hero-stats {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .stat-box {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 16px 24px;
+    text-align: center;
+    min-width: 120px;
+  }
+  .stat-num { font-size: 1.4rem; font-weight: 700; color: #38bdf8; display: block; }
+  .stat-lbl { font-size: 0.75rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.8px; }
 
-        .hotel-item h3 {
-            color: #333;
-        }
+  /* ── MAIN SECTION ── */
+  .detail-section { padding: 60px 0 120px; flex: 1; }
 
-        .hotel-item p {
-            color: #666;
-        }
+  /* ── INFO CARD ── */
+  .info-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 24px;
+  }
+  .info-card-title {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .info-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .info-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .info-icon {
+    font-size: 1.2rem;
+    width: 40px; height: 40px;
+    background: rgba(56,189,248,0.1);
+    border: 1px solid rgba(56,189,248,0.15);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .info-label { font-size: 0.75rem; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
+  .info-value { font-size: 0.95rem; font-weight: 600; color: #fff; }
 
-        .hotel-item .price {
-            font-weight: bold;
-            color: #4CAF50;
-        }
-    </style>
-</head>
-<body>
+  /* ── HOTEL CARDS ── */
+  .hotel-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    transition: all 0.2s;
+    margin-bottom: 12px;
+  }
+  .hotel-card:hover {
+    background: rgba(56,189,248,0.06);
+    border-color: rgba(56,189,248,0.2);
+    transform: translateX(4px);
+  }
+  .hotel-icon {
+    font-size: 1.4rem;
+    width: 46px; height: 46px;
+    background: rgba(56,189,248,0.08);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .hotel-name { font-size: 0.92rem; font-weight: 600; color: #fff; margin-bottom: 3px; }
+  .hotel-meta { font-size: 0.78rem; color: rgba(255,255,255,0.4); }
+  .hotel-arrow { margin-left: auto; color: rgba(255,255,255,0.2); }
 
-    <header>
-        <h1>{{ city.name }} - City Details</h1>
-    </header>
+  /* ── EXPLORE CTA ── */
+  .explore-cta {
+    background: linear-gradient(135deg, rgba(14,165,233,0.08), rgba(37,99,235,0.08));
+    border: 1px solid rgba(56,189,248,0.15);
+    border-radius: 16px;
+    padding: 32px;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .explore-cta h5 { color: #fff; font-weight: 700; margin-bottom: 8px; }
+  .explore-cta p  { color: rgba(255,255,255,0.45); font-size: 0.88rem; margin-bottom: 20px; }
 
-    <section>
-        <h2>About {{ city.name }}</h2>
-        <p><strong>Description:</strong> {{ city.description }}</p>
-        <p><strong>Population:</strong> {{ city.population }}</p>
-        <p><strong>Region:</strong> {{ city.region }}</p>
-        
-        <!-- Displaying related hotels -->
-        <div class="Details">
-            <h3><a href="{% url 'hotel_list' city.id %}">Hotels in {{ city.name }}</a></h3>
-            <h3><a href="{% url 'restaurant_list' city.id %}">Restaurants in {{ city.name }}</a></h3>
+  .btn-primary-custom {
+    display: inline-block;
+    background: linear-gradient(135deg, #0ea5e9, #2563eb);
+    color: #fff;
+    padding: 10px 28px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s;
+    margin: 4px;
+  }
+  .btn-primary-custom:hover { opacity: 0.9; transform: translateY(-2px); color: #fff; }
 
+  .btn-outline-custom {
+    display: inline-block;
+    background: transparent;
+    color: #38bdf8;
+    border: 1.5px solid #38bdf8;
+    padding: 10px 28px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s;
+    margin: 4px;
+  }
+  .btn-outline-custom:hover { background: #38bdf8; color: #0f172a; transform: translateY(-2px); }
 
-            <!-- <h3>Hotels in {{ city.name }}</h3>
-            {% if hotels %}
-                <ul>
-                    {% for hotel in hotels %}
-                    <li class="hotel-item">
-                        <h3>{{ hotel.name }}</h3>
-                        <p>{{ hotel.description }}</p>
-                        <p>Price per night: <span class="price">${{ hotel.price_per_night }}</span></p>
-                        <p>Rating: {{ hotel.rating }} stars</p>
-                    </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p>No hotels found for this city.</p>
-            {% endif %} -->
+  /* ── ATTRACTIONS MINI LIST ── */
+  .attraction-mini {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    transition: all 0.2s;
+    margin-bottom: 10px;
+  }
+  .attraction-mini:hover {
+    background: rgba(56,189,248,0.06);
+    border-color: rgba(56,189,248,0.2);
+    transform: translateX(4px);
+  }
+  .attraction-mini-name { font-size: 0.88rem; font-weight: 600; color: #fff; }
+  .attraction-mini-fee {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.05);
+    padding: 3px 10px;
+    border-radius: 50px;
+  }
+  .fee-free-tag { color: #4ade80 !important; }
+</style>
+
+<!-- ── HERO ── -->
+<div class="detail-hero">
+  <div class="container detail-hero-content">
+
+    <a href="{% url 'city_list' %}" class="back-btn">← Back to Cities</a>
+
+    <span class="detail-emoji">🏙️</span>
+    <span class="detail-region-tag">📍 {{ city.region }} Division</span>
+
+    <h1 class="detail-title">{{ city.name }}</h1>
+    <p class="detail-description">{{ city.description }}</p>
+
+    <div class="hero-stats">
+      <div class="stat-box">
+        <span class="stat-num">{{ city.population|floatformat:0 }}</span>
+        <span class="stat-lbl">Population</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">{{ city.attraction_set.count }}</span>
+        <span class="stat-lbl">Attractions</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">{{ hotels|length }}</span>
+        <span class="stat-lbl">Hotels</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── MAIN CONTENT ── -->
+<div class="detail-section">
+  <div class="container">
+    <div class="row g-4">
+
+      <!-- Left: City Info + Attractions -->
+      <div class="col-lg-8">
+
+        <!-- City Details -->
+        <div class="info-card">
+          <div class="info-card-title">📋 City Information</div>
+
+          <div class="info-row">
+            <div class="info-icon">🏙️</div>
+            <div>
+              <div class="info-label">City Name</div>
+              <div class="info-value">{{ city.name }}</div>
+            </div>
+          </div>
+
+          <div class="info-row">
+            <div class="info-icon">🗺️</div>
+            <div>
+              <div class="info-label">Division / Region</div>
+              <div class="info-value">{{ city.region }} Division</div>
+            </div>
+          </div>
+
+          <div class="info-row">
+            <div class="info-icon">👥</div>
+            <div>
+              <div class="info-label">Population</div>
+              <div class="info-value">{{ city.population|floatformat:0 }}</div>
+            </div>
+          </div>
 
         </div>
-    </section>
 
-    <footer>
-        <p>© 2026 My Website</p>
-    </footer>
+        <!-- Attractions in this city -->
+        <div class="info-card">
+          <div class="info-card-title">🎡 Attractions in {{ city.name }}</div>
+          {% for attraction in city.attraction_set.all %}
+            <a href="{% url 'attraction_detail' attraction.pk %}" class="attraction-mini">
+              <span class="attraction-mini-name">🎡 {{ attraction.name }}</span>
+              {% if attraction.entry_fee == 0 or attraction.entry_fee == "0.00" %}
+                <span class="attraction-mini-fee fee-free-tag">Free</span>
+              {% else %}
+                <span class="attraction-mini-fee">৳{{ attraction.entry_fee }}</span>
+              {% endif %}
+            </a>
+          {% empty %}
+            <p style="color:rgba(255,255,255,0.35); font-size:0.88rem;">No attractions listed yet.</p>
+          {% endfor %}
+        </div>
 
-</body>
-</html>
+      </div>
+
+      <!-- Right: Hotels + CTA -->
+      <div class="col-lg-4">
+
+        <!-- Hotels -->
+        <div class="info-card mb-4">
+          <div class="info-card-title">🏨 Hotels in {{ city.name }}</div>
+          {% for hotel in hotels %}
+          <a href="{% url 'hotel_detail' hotel.pk %}" class="hotel-link" style="text-decoration: none; color: inherit;">
+            <div class="hotel-card">
+              <div class="hotel-icon">🏨</div>
+              <div>
+                <div class="hotel-name">{{ hotel.name }}</div>
+              </div>
+              <span class="hotel-arrow">→</span>
+            </div>
+          </a>
+          {% empty %}
+            <p style="color:rgba(255,255,255,0.35); font-size:0.85rem;">No hotels listed yet.</p>
+          {% endfor %}
+        </div>
+
+        <!-- CTA -->
+        <div class="explore-cta">
+          <h5>🗺️ Explore More</h5>
+          <p>Find restaurants and attractions in {{ city.name }}</p>
+          <a href="/attractions/city/{{ city.id }}/" class="btn-primary-custom">🎡 Attractions</a>
+          <a href="/restaurants/city/{{ city.id }}/" class="btn-outline-custom">🍽️ Restaurants</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

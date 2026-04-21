@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'attractions',
     'hotels',
     'restaurants',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -92,14 +93,17 @@ pymysql.install_as_MySQLdb()
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  # Change this to MySQL
-        'NAME': 'trippybd_db',  # Your MySQL database name
-        'USER': 'saifsahed',  # Your MySQL username
-        'PASSWORD': 'S1234',  # Your MySQL password
+        'NAME': 'trippybd',  # Your MySQL database name
+        'USER': 'root',  # Your MySQL username
+        'PASSWORD': '',  # Your MySQL password
         'HOST': 'localhost',  # Use 'localhost' for a local database
         'PORT': '3306',  # Default MySQL port
+        'OPTIONS': {
+            'sql_mode': 'STRICT_TRANS_TABLES',
+
+        }
     }
 }
-
 
 
 
@@ -143,3 +147,12 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+#login details
+LOGIN_REDIRECT_URL = '/accounts/dashboard/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
+LOGIN_URL = '/accounts/login/'
+
+AUTH_USER_MODEL = 'accounts.User'

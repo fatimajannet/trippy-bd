@@ -1,172 +1,468 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to My Website</title>
-    
-    <style>
-        /* Resetting some default browser styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* Body styles */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f9;
-            line-height: 1.6;
-            color: #333;
-        }
-
-        /* Header styles */
-        header {
-            background-color: #134cc9;
-            color: white;
-            padding: 60px 20px;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            border-bottom: 5px solid #080169;
-        }
-
-        header h1 {
-            font-size: 36px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        /* Navigation styles */
-        nav ul {
-            list-style: none;
-            padding: 20px 0;
-        }
-
-        nav ul li {
-            display: inline-block;
-            margin: 0 20px;
-        }
-
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-size: 20px;
-            text-transform: uppercase;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-
-        nav ul li a:hover {
-            color: #000000;
-        }
-
-        /* Section styles */
-        section {
-            padding: 60px 20px;
-            margin: 40px auto;
-            max-width: 1100px;
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        
-        section h2 {
-            font-size: 32px;
-            margin-bottom: 15px;
-            color: #333;
-        }
-
-        section p {
-            font-size: 20px;
-            line-height: 1.8;
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        /* Call to Action Button */
-        .cta-button {
-            display: inline-block;
-            padding: 15px 30px;
-            background-color: #000000;
-            color: white;
-            text-decoration: none;
-            font-size: 18px;
-            font-weight: bold;
-            border-radius: 8px;
-            transition: background-color 0.3s, transform 0.3s;
-        }
-
-        .cta-button:hover {
-            background-color: #00095c;
-            transform: translateY(-5px);
-        }
-
-        /* Footer styles */
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 20px 0;
-            font-size: 18px;
-        }
-
-        footer h1 {
-            font-size: 20px;
-            font-weight: 400;
-        }
-
-        /* Mobile responsiveness */
-        @media (max-width: 600px) {
-            header h1 {
-                font-size: 28px;
-            }
-
-            nav ul li {
-                margin: 0 10px;
-            }
-
-            section h2 {
-                font-size: 28px;
-            }
-
-            .cta-button {
-                padding: 12px 25px;
-                font-size: 16px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TrippyBD — Explore Bangladesh</title>
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    * { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background-color: #0f172a;
+      color: #e2e8f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    /* ── NAVBAR ── */
+    .navbar-custom {
+      background: rgba(15, 23, 42, 0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 14px 0;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+    .navbar-brand-custom {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff !important;
+      text-decoration: none;
+      letter-spacing: 1px;
+    }
+    .navbar-brand-custom span { color: #38bdf8; }
+    .nav-link-custom {
+      color: rgba(255,255,255,0.65) !important;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 6px 14px !important;
+      border-radius: 8px;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    .nav-link-custom:hover { color: #fff !important; background: rgba(255,255,255,0.08); }
+    .btn-nav-login {
+      border: 1.5px solid #38bdf8;
+      color: #38bdf8 !important;
+      border-radius: 8px;
+      padding: 6px 20px !important;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.25s;
+      text-decoration: none;
+    }
+    .btn-nav-login:hover { background: #38bdf8; color: #0f172a !important; }
+    .btn-nav-register {
+      background: linear-gradient(135deg, #0ea5e9, #2563eb);
+      border: none;
+      color: #fff !important;
+      border-radius: 8px;
+      padding: 6px 20px !important;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.25s;
+      text-decoration: none;
+    }
+    .btn-nav-register:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-nav-dashboard {
+      background: rgba(56,189,248,0.12);
+      border: 1.5px solid rgba(56,189,248,0.3);
+      color: #38bdf8 !important;
+      border-radius: 8px;
+      padding: 6px 20px !important;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.25s;
+      text-decoration: none;
+    }
+    .btn-nav-dashboard:hover { background: rgba(56,189,248,0.22); }
+    .navbar-toggler { border-color: rgba(255,255,255,0.2); }
+    .navbar-toggler-icon { filter: invert(1); }
+    /* ── HERO ── */
+    .hero {
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
+      padding: 80px 20px;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(56,189,248,0.12) 0%, transparent 70%);
+      top: -100px; left: -100px;
+      border-radius: 50%;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(37,99,235,0.15) 0%, transparent 70%);
+      bottom: -80px; right: -80px;
+      border-radius: 50%;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 780px; }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(56,189,248,0.15);
+      border: 1px solid rgba(56,189,248,0.3);
+      color: #38bdf8;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 6px 18px;
+      border-radius: 50px;
+      margin-bottom: 24px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      font-size: 3.8rem;
+      font-weight: 800;
+      line-height: 1.15;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+    .hero h1 span { color: #38bdf8; }
+    .hero p {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 40px;
+      line-height: 1.8;
+    }
+    .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-hero-primary {
+      background: linear-gradient(135deg, #0ea5e9, #2563eb);
+      color: #fff;
+      border: none;
+      padding: 14px 36px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s;
+      box-shadow: 0 8px 24px rgba(14,165,233,0.35);
+    }
+    .btn-hero-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(14,165,233,0.5);
+      color: #fff;
+    }
+    .btn-hero-outline {
+      background: transparent;
+      color: #fff;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      padding: 14px 36px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .btn-hero-outline:hover {
+      border-color: #38bdf8;
+      color: #38bdf8;
+      transform: translateY(-3px);
+    }
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      margin-top: 56px;
+      flex-wrap: wrap;
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #38bdf8;
+      display: block;
+    }
+    .stat-label {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.45);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    /* ── EXPLORE CARDS ── */
+    .explore-section {
+      padding: 90px 0;
+      background: #0f172a;
+    }
+    .section-label {
+      display: inline-block;
+      background: rgba(56,189,248,0.1);
+      border: 1px solid rgba(56,189,248,0.25);
+      color: #38bdf8;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 5px 16px;
+      border-radius: 50px;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .section-subtitle {
+      color: rgba(255,255,255,0.45);
+      font-size: 1rem;
+      margin-bottom: 50px;
+    }
+    .explore-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 36px 28px;
+      text-align: center;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: block;
+      height: 100%;
+    }
+    .explore-card:hover {
+      background: rgba(56,189,248,0.08);
+      border-color: rgba(56,189,248,0.3);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+    .card-icon {
+      font-size: 2.8rem;
+      margin-bottom: 18px;
+      display: block;
+    }
+    .card-title-custom {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .card-desc {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.7;
+    }
+    .card-arrow {
+      display: inline-block;
+      margin-top: 18px;
+      color: #38bdf8;
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+    /* ── AUTH CTA SECTION ── */
+    .auth-cta-section {
+      padding: 90px 0;
+      background: linear-gradient(135deg, rgba(14,165,233,0.08), rgba(37,99,235,0.08));
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .auth-cta-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(56,189,248,0.2);
+      border-radius: 20px;
+      padding: 56px 48px;
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .auth-cta-card h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 14px;
+    }
+    .auth-cta-card p {
+      color: rgba(255,255,255,0.5);
+      font-size: 1rem;
+      margin-bottom: 36px;
+      line-height: 1.8;
+    }
+    .auth-cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn-cta-primary {
+      background: linear-gradient(135deg, #0ea5e9, #2563eb);
+      color: #fff;
+      border: none;
+      padding: 13px 34px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .btn-cta-primary:hover { opacity: 0.9; transform: translateY(-2px); color: #fff; }
+    .btn-cta-outline {
+      background: transparent;
+      color: #38bdf8;
+      border: 1.5px solid #38bdf8;
+      padding: 13px 34px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .btn-cta-outline:hover { background: #38bdf8; color: #0f172a; transform: translateY(-2px); }
+    /* ── FOOTER ── */
+    footer {
+      background: rgba(15,23,42,0.98);
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 28px 0;
+      text-align: center;
+      color: rgba(255,255,255,0.35);
+      font-size: 0.85rem;
+      margin-top: auto;
+    }
+    footer a { color: #38bdf8; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.4rem; }
+      .hero-stats { gap: 24px; }
+      .auth-cta-card { padding: 36px 24px; }
+    }
+  </style>
 </head>
 <body>
-
-    <!-- Header Section -->
-    <header>
-        <h1>🔥💀 Welcome to TrippyBD 💀🔥</h1>
-        <h2></h2>
-        <!-- <nav>
-            <ul>
-                <li><a href="/cities/">Cities</a></li>
-                <li><a href="/attractions/">Attractions</a></li>
-                <li><a href="/hotels/">Hotels</a></li>
-                <li><a href="/restaurants/">Restaurants</a></li>
-            </ul>
-        </nav> -->
-    </header>
-
-    <!-- Main Content Section -->
-    <section>
-        <h2>About This Site</h2>
-        <p>Click below to see the cities in Bangladesh. Also you can navigate to the Top Attractions!</p>
-        <a href="/cities/" class="cta-button">Explore Cities</a>
-        <a href="/attractions/" class="cta-button">Explore Top Attractions</a>
-    </section>
-
-    <!-- Footer Section -->
-    <footer>
-        <h1></h1>
-    </footer>
-
+  <!-- ── NAVBAR ── -->
+  <nav class="navbar-custom">
+    <div class="container d-flex align-items-center justify-content-between flex-wrap gap-3">
+      <a class="navbar-brand-custom" href="/">✈️ Trippy<span>BD</span></a>
+      <button class="navbar-toggler d-lg-none" type="button" id="navToggle">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="d-flex align-items-center gap-2 flex-wrap" id="navLinks">
+        <a class="nav-link-custom" href="/cities/">🏙️ Cities</a>
+        <a class="nav-link-custom" href="/hotels/">🏨 Hotels</a>
+        <a class="nav-link-custom" href="/restaurants/">🍽️ Restaurants</a>
+        <a class="nav-link-custom" href="/attractions/">🎡 Attractions</a>
+        <div style="width:1px; height:24px; background:rgba(255,255,255,0.12); margin: 0 6px;"></div>
+        {% if user.is_authenticated %}
+          <a class="btn-nav-dashboard" href="{% url 'dashboard' %}">👤 {{ user.fname }}'s Dashboard</a>
+          <a class="btn-nav-login" href="{% url 'logout' %}">Logout</a>
+        {% else %}
+          <a class="btn-nav-login"    href="{% url 'login' %}">Login</a>
+          <a class="btn-nav-register" href="{% url 'register' %}">Get Started</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">Welcome to Trippy</div>
+      <h1>Discover the Beauty<br>of <span>Bangladesh</span></h1>
+      <p>Your ultimate travel companion for exploring cities, attractions,<br>
+         hotels and restaurants across Bangladesh.</p>
+      <div class="hero-buttons">
+        <a href="/cities/" class="btn-hero-primary">🏙️ Explore Cities</a>
+        <a href="/attractions/" class="btn-hero-primary">🎡 Top Attractions</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-num">21+</span>
+          <span class="stat-label">Cities</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">100+</span>
+          <span class="stat-label">Attractions</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">200+</span>
+          <span class="stat-label">Hotels</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">300+</span>
+          <span class="stat-label">Restaurants</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ── EXPLORE CARDS ── -->
+  <section class="explore-section">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-label">What we offer</span>
+        <h2 class="section-title">Everything You Need to Explore</h2>
+        <p class="section-subtitle">Browse through our curated database of Bangladesh's finest destinations</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3">
+          <a href="/cities/" class="explore-card">
+            <span class="card-icon">🏙️</span>
+            <div class="card-title-custom">Cities</div>
+            <p class="card-desc">Explore 21+ cities across all regions of Bangladesh with detailed info.</p>
+            <span class="card-arrow">Browse Cities →</span>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <a href="/attractions/" class="explore-card">
+            <span class="card-icon">🎡</span>
+            <div class="card-title-custom">Attractions</div>
+            <p class="card-desc">Discover top-rated tourist spots, landmarks and hidden gems.</p>
+            <span class="card-arrow">See Attractions →</span>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <a href="/hotels/" class="explore-card">
+            <span class="card-icon">🏨</span>
+            <div class="card-title-custom">Hotels</div>
+            <p class="card-desc">Find the best hotels and accommodations for your stay.</p>
+            <span class="card-arrow">Find Hotels →</span>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <a href="/restaurants/" class="explore-card">
+            <span class="card-icon">🍽️</span>
+            <div class="card-title-custom">Restaurants</div>
+            <p class="card-desc">From street food to fine dining — find the best places to eat.</p>
+            <span class="card-arrow">Find Restaurants →</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ── AUTH CTA (only shown when logged out) ── -->
+  {% if not user.is_authenticated %}
+  <section class="auth-cta-section">
+    <div class="container">
+      <div class="auth-cta-card">
+        <div style="font-size:3rem; margin-bottom:16px;">🗺️</div>
+        <h2>Start Your Journey Today</h2>
+        <p>Create a free account to save your favourite cities, hotels and attractions.
+           Your personalised travel dashboard is just one click away.</p>
+        <div class="auth-cta-buttons">
+          <a href="{% url 'register' %}" class="btn-cta-primary">Create Free Account</a>
+          <a href="{% url 'login' %}"    class="btn-cta-outline">Sign In</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="container">
+      <p>© 2025 <strong>TrippyBD</strong> — Explore the beauty of Bangladesh 🇧🇩</p>
+    </div>
+  </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Mobile nav toggle
+    document.getElementById('navToggle')?.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.toggle('d-none');
+    });
+  </script>
 </body>
 </html>

@@ -1,14 +1,221 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ restaurant.name }}</title>
-</head>
-<body>
-    <h1>{{ restaurant.name }}</h1>
-    <p>{{ restaurant.description }}</p>
-    <p>Cuisine Type: {{ restaurant.cuisine_type }}</p>
-    <p>Average Price: ${{ restaurant.average_price }}</p>
-    <p>Rating: {{ restaurant.rating }}</p>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title %}{{ restaurant.name }} — TrIppyBD{% endblock %}
+
+{% block content %}
+<style>
+  .detail-hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 60%, #0f172a 100%);
+    padding: 60px 0 50px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    position: relative; overflow: hidden;
+  }
+  .detail-hero::before {
+    content: ''; position: absolute; width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(56,189,248,0.1) 0%, transparent 70%);
+    top: -150px; right: -100px; border-radius: 50%;
+  }
+  .detail-hero-content { position: relative; z-index: 2; }
+
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    color: rgba(255,255,255,0.45); font-size: 0.85rem;
+    text-decoration: none; margin-bottom: 28px;
+    padding: 6px 14px; border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px; background: rgba(255,255,255,0.04); transition: all 0.2s;
+  }
+  .back-btn:hover { color: #38bdf8; border-color: rgba(56,189,248,0.3); }
+
+  .detail-emoji { font-size: 3.5rem; display: block; margin-bottom: 16px; }
+  .detail-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+  .dtag {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 0.82rem; font-weight: 600; padding: 5px 14px; border-radius: 50px;
+  }
+  .dtag-city { background: rgba(56,189,248,0.12); border: 1px solid rgba(56,189,248,0.25); color: #38bdf8; text-decoration: none; transition: all 0.2s; }
+  .dtag-city:hover { background: rgba(56,189,248,0.22); color: #38bdf8; }
+  .dtag-cuisine { background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.2); color: #fbbf24; }
+
+  .detail-title { font-size: 2.5rem; font-weight: 800; color: #fff; margin-bottom: 12px; line-height: 1.2; }
+  .detail-description { font-size: 1.05rem; color: rgba(255,255,255,0.55); line-height: 1.85; max-width: 680px; margin-bottom: 28px; }
+
+  .hero-stats { display: flex; gap: 20px; flex-wrap: wrap; }
+  .stat-box {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px; padding: 14px 22px; text-align: center; min-width: 110px;
+  }
+  .stat-num { font-size: 1.4rem; font-weight: 700; color: #38bdf8; display: block; }
+  .stat-lbl { font-size: 0.72rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.8px; }
+
+  .detail-section { padding: 60px 0 120px; flex: 1; }
+
+  .info-card {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; padding: 32px; margin-bottom: 24px;
+  }
+  .info-card-title {
+    font-size: 0.78rem; font-weight: 600; color: rgba(255,255,255,0.35);
+    text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px;
+    padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .info-row {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .info-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .info-icon {
+    font-size: 1.2rem; width: 40px; height: 40px;
+    background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.15);
+    border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .info-label { font-size: 0.75rem; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
+  .info-value { font-size: 0.95rem; font-weight: 600; color: #fff; }
+  .info-value.highlight { color: #38bdf8; }
+  .info-value.price { color: #4ade80; }
+  .info-value.rating { color: #fbbf24; }
+
+  /* Nearby card */
+  .nearby-card {
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px; padding: 14px 18px;
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none; transition: all 0.2s; margin-bottom: 10px;
+  }
+  .nearby-card:hover { background: rgba(56,189,248,0.06); border-color: rgba(56,189,248,0.2); transform: translateX(4px); }
+  .nearby-icon {
+    font-size: 1.3rem; width: 42px; height: 42px;
+    background: rgba(56,189,248,0.08); border-radius: 10px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .nearby-name { font-size: 0.88rem; font-weight: 600; color: #fff; margin-bottom: 2px; }
+  .nearby-meta { font-size: 0.75rem; color: rgba(255,255,255,0.4); }
+  .nearby-arrow { margin-left: auto; color: rgba(255,255,255,0.2); }
+
+  .explore-cta {
+    background: linear-gradient(135deg, rgba(14,165,233,0.08), rgba(37,99,235,0.08));
+    border: 1px solid rgba(56,189,248,0.15);
+    border-radius: 16px; padding: 32px; text-align: center; margin-bottom: 40px;
+  }
+  .explore-cta h5 { color: #fff; font-weight: 700; margin-bottom: 8px; }
+  .explore-cta p  { color: rgba(255,255,255,0.45); font-size: 0.88rem; margin-bottom: 20px; }
+
+  .btn-primary-custom {
+    display: inline-block; background: linear-gradient(135deg, #0ea5e9, #2563eb);
+    color: #fff; padding: 10px 26px; border-radius: 10px;
+    font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: all 0.25s; margin: 4px;
+  }
+  .btn-primary-custom:hover { opacity: 0.9; transform: translateY(-2px); color: #fff; }
+  .btn-outline-custom {
+    display: inline-block; background: transparent; color: #38bdf8;
+    border: 1.5px solid #38bdf8; padding: 10px 26px; border-radius: 10px;
+    font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: all 0.25s; margin: 4px;
+  }
+  .btn-outline-custom:hover { background: #38bdf8; color: #0f172a; transform: translateY(-2px); }
+</style>
+
+<!-- HERO -->
+<div class="detail-hero">
+  <div class="container detail-hero-content">
+    <a href="{% url 'restaurant_list' %}" class="back-btn">← Back to Restaurants</a>
+    <span class="detail-emoji">🍽️</span>
+    <div class="detail-tags">
+      <a href="/restaurants/city/{{ restaurant.city.id }}/" class="dtag dtag-city">📍 {{ restaurant.city.name }}</a>
+      <span class="dtag dtag-cuisine">{{ restaurant.cuisine_type }}</span>
+    </div>
+    <h1 class="detail-title">{{ restaurant.name }}</h1>
+    <p class="detail-description">{{ restaurant.description }}</p>
+    <div class="hero-stats">
+      <div class="stat-box">
+        <span class="stat-num">৳{{ restaurant.average_price }}</span>
+        <span class="stat-lbl">Avg Price</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">⭐ {{ restaurant.rating }}</span>
+        <span class="stat-lbl">Rating</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">{{ restaurant.city.name }}</span>
+        <span class="stat-lbl">City</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="detail-section">
+  <div class="container">
+    <div class="row g-4">
+
+      <!-- Left: Details -->
+      <div class="col-lg-8">
+        <div class="info-card">
+          <div class="info-card-title">📋 Restaurant Details</div>
+          <div class="info-row">
+            <div class="info-icon">📍</div>
+            <div>
+              <div class="info-label">Location</div>
+              <div class="info-value">{{ restaurant.city.name }}, {{ restaurant.city.region }}</div>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-icon">🍜</div>
+            <div>
+              <div class="info-label">Cuisine Type</div>
+              <div class="info-value highlight">{{ restaurant.cuisine_type }}</div>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-icon">💰</div>
+            <div>
+              <div class="info-label">Average Price per Person</div>
+              <div class="info-value price">৳{{ restaurant.average_price }}</div>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-icon">⭐</div>
+            <div>
+              <div class="info-label">Rating</div>
+              <div class="info-value rating">{{ restaurant.rating }} / 5.0</div>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-icon">🗺️</div>
+            <div>
+              <div class="info-label">Region</div>
+              <div class="info-value">{{ restaurant.city.region }} Division</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Nearby + CTA -->
+      <div class="col-lg-4">
+        <div class="info-card mb-4">
+          <div class="info-card-title">🍽️ More in {{ restaurant.city.name }}</div>
+          {% for nearby in restaurant.city.restaurant_set.all %}
+            {% if nearby.pk != restaurant.pk %}
+            <a href="{% url 'restaurant_detail' nearby.pk %}" class="nearby-card">
+              <div class="nearby-icon">🍽️</div>
+              <div>
+                <div class="nearby-name">{{ nearby.name }}</div>
+                <div class="nearby-meta">৳{{ nearby.average_price }} · ⭐ {{ nearby.rating }}</div>
+              </div>
+              <span class="nearby-arrow">→</span>
+            </a>
+            {% endif %}
+          {% empty %}
+            <p style="color:rgba(255,255,255,0.35); font-size:0.85rem;">No other restaurants in this city.</p>
+          {% endfor %}
+        </div>
+
+        <div class="explore-cta">
+          <h5>🗺️ Explore More</h5>
+          <p>Discover attractions and hotels in {{ restaurant.city.name }}</p>
+          <a href="/attractions/city/{{ restaurant.city.id }}/" class="btn-primary-custom">🎡 Attractions</a>
+          <a href="/hotels/" class="btn-outline-custom">🏨 Hotels</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

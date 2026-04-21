@@ -1,211 +1,336 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ attraction.name }}</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f0f2f5;
-            margin: 0;
-            padding: 0;
-            color: #1f2937;
-        }
+{% extends 'base.html' %}
+{% block title %}{{ attraction.name }} — TrIppyBD{% endblock %}
 
-        .wrapper {
-            max-width: 900px;
-            margin: 50px auto;
-            padding: 0 20px;
-        }
+{% block content %}
+<style>
+  .detail-hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 60%, #0f172a 100%);
+    padding: 60px 0 50px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    position: relative;
+    overflow: hidden;
+  }
+  .detail-hero::before {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(56,189,248,0.1) 0%, transparent 70%);
+    top: -150px; right: -100px;
+    border-radius: 50%;
+  }
+  .detail-hero::after {
+    content: '';
+    position: absolute;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(37,99,235,0.1) 0%, transparent 70%);
+    bottom: -80px; left: -80px;
+    border-radius: 50%;
+  }
+  .detail-hero-content { position: relative; z-index: 2; }
 
-        .detail-card {
-            background: #fff;
-            border-radius: 24px;
-            padding: 32px;
-            box-shadow: 0 18px 40px rgba(15,23,42,0.12);
-        }
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: rgba(255,255,255,0.45);
+    font-size: 0.85rem;
+    text-decoration: none;
+    margin-bottom: 28px;
+    transition: color 0.2s;
+    padding: 6px 14px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.04);
+  }
+  .back-btn:hover { color: #38bdf8; border-color: rgba(56,189,248,0.3); }
 
-        /* Placeholder image */
-        .attraction-image {
-            width: 100%;
-            height: 400px;
-            border-radius: 20px;
-            object-fit: cover;
-            background: #d1d5db;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            color: #475569;
-            margin-bottom: 24px;
-        }
+  .detail-emoji { font-size: 3.5rem; display: block; margin-bottom: 18px; }
 
-        /* Region badge */
-        .city-tag {
-            display: inline-block;
-            font-weight: 700;
-            border-radius: 999px;
-            padding: 8px 16px;
-            margin-bottom: 16px;
-            color: white;
-            font-size: 0.9rem;
-        }
+  .detail-city-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(56,189,248,0.12);
+    border: 1px solid rgba(56,189,248,0.25);
+    color: #38bdf8;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 50px;
+    margin-bottom: 18px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .detail-city-tag:hover { background: rgba(56,189,248,0.22); color: #38bdf8; }
 
-        .Dhaka { background: linear-gradient(135deg,#2563eb,#1e40af); }
-        .Chattogram { background: linear-gradient(135deg,#047857,#065f46); }
-        .Rajshahi { background: linear-gradient(135deg,#b45309,#78350f); }
-        .Khulna { background: linear-gradient(135deg,#9333ea,#6b21a8); }
-        .Barisal { background: linear-gradient(135deg,#b91c1c,#7f1d1d); }
-        .Sylhet { background: linear-gradient(135deg,#0c8599,#064e52); }
-        .Rangpur { background: linear-gradient(135deg,#365314,#1e3a00); }
-        .Mymensingh { background: linear-gradient(135deg,#78350f,#452a0f); }
+  .detail-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 14px;
+    line-height: 1.2;
+  }
+  .detail-description {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.85;
+    max-width: 680px;
+  }
 
-        h1 {
-            margin: 0 0 16px;
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: #0f172a;
-        }
+  /* ── INFO SECTION ── */
+  .info-section { padding: 60px 0 120px; }
 
-        .description {
-            font-size: 1rem;
-            line-height: 1.8;
-            color: #475569;
-            margin-bottom: 16px;
-            max-height: 120px;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
+  /* Ensure footer always clears content */
+  body { display: flex; flex-direction: column; min-height: 100vh; }
+  .info-section { flex: 1; }
 
-        .description.expanded { max-height: 1000px; }
+  .info-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 32px;
+    height: 100%;
+  }
+  .info-card-title {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
 
-        .read-more {
-            color: #2563eb;
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-block;
-            margin-bottom: 24px;
-        }
+  .info-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .info-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .info-icon {
+    font-size: 1.3rem;
+    width: 40px;
+    height: 40px;
+    background: rgba(56,189,248,0.1);
+    border: 1px solid rgba(56,189,248,0.15);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .info-label {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 4px;
+  }
+  .info-value {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #fff;
+  }
+  .info-value.free { color: #4ade80; }
+  .info-value.paid { color: #fbbf24; }
 
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
-            gap: 16px;
-            margin-bottom: 28px;
-        }
+  /* ── NEARBY SECTION ── */
+  .nearby-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    transition: all 0.2s;
+    margin-bottom: 10px;
+  }
+  .nearby-card:hover {
+    background: rgba(56,189,248,0.06);
+    border-color: rgba(56,189,248,0.2);
+    transform: translateX(4px);
+  }
+  .nearby-icon {
+    font-size: 1.4rem;
+    width: 44px;
+    height: 44px;
+    background: rgba(56,189,248,0.08);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .nearby-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 3px;
+  }
+  .nearby-fee {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.4);
+  }
+  .nearby-arrow {
+    margin-left: auto;
+    color: rgba(255,255,255,0.2);
+    font-size: 0.9rem;
+  }
 
-        .info-box {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: #f8fafc;
-            border-radius: 16px;
-            padding: 14px;
-        }
+  /* ── CTA ── */
+  .explore-cta {
+    background: linear-gradient(135deg, rgba(14,165,233,0.08), rgba(37,99,235,0.08));
+    border: 1px solid rgba(56,189,248,0.15);
+    border-radius: 16px;
+    padding: 32px;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 40px;
+  }
+  .explore-cta h5 { color: #fff; font-weight: 700; margin-bottom: 8px; }
+  .explore-cta p  { color: rgba(255,255,255,0.45); font-size: 0.88rem; margin-bottom: 20px; }
 
-        .info-box h3 {
-            margin: 0;
-            font-size: 0.95rem;
-            color: #64748b;
-        }
+  .btn-primary-custom {
+    display: inline-block;
+    background: linear-gradient(135deg, #0ea5e9, #2563eb);
+    color: #fff;
+    padding: 10px 28px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s;
+    margin: 4px;
+  }
+  .btn-primary-custom:hover { opacity: 0.9; transform: translateY(-2px); color: #fff; }
 
-        .info-box p {
-            margin: 0;
-            font-size: 1rem;
-            font-weight: 600;
-            color: #0f172a;
-        }
+  .btn-outline-custom {
+    display: inline-block;
+    background: transparent;
+    color: #38bdf8;
+    border: 1.5px solid #38bdf8;
+    padding: 10px 28px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s;
+    margin: 4px;
+  }
+  .btn-outline-custom:hover { background: #38bdf8; color: #0f172a; transform: translateY(-2px); }
+</style>
 
-        .info-box .icon { font-size: 1.2rem; color: #2563eb; }
+<!-- ── DETAIL HERO ── -->
+<div class="detail-hero">
+  <div class="container detail-hero-content">
 
-        /* Map Placeholder */
-        .map-placeholder {
-            width: 100%;
-            height: 300px;
-            border-radius: 16px;
-            background: #e2e8f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #475569;
-            font-weight: 600;
-            margin-top: 24px;
-        }
+    <a href="{% url 'attraction_list' %}" class="back-btn">← Back to Attractions</a>
 
-        @media(max-width:640px){
-            h1 { font-size:1.8rem; }
-            .attraction-image { height: 250px; }
-            .map-placeholder { height: 200px; }
-        }
-    </style>
-</head>
-<body>
-    <div class="wrapper">
-        <div class="detail-card">
+    <span class="detail-emoji">🎡</span>
 
-            <!-- Placeholder Image -->
-            <div class="attraction-image">
-                Image Placeholder
+    <a href="{% url 'attraction_list_by_city' attraction.city.id %}" class="detail-city-tag">
+      📍 {{ attraction.city.name }}
+    </a>
+
+    <h1 class="detail-title">{{ attraction.name }}</h1>
+    <p class="detail-description">{{ attraction.description }}</p>
+
+  </div>
+</div>
+
+<!-- ── INFO + SIDEBAR ── -->
+<div class="info-section">
+  <div class="container">
+    <div class="row g-4">
+
+      <!-- Left: Details -->
+      <div class="col-lg-8">
+        <div class="info-card">
+          <div class="info-card-title">📋 Attraction Details</div>
+
+          <div class="info-row">
+            <div class="info-icon">📍</div>
+            <div>
+              <div class="info-label">City / Location</div>
+              <div class="info-value">{{ attraction.city.name }}, {{ attraction.city.region }}</div>
             </div>
+          </div>
 
-            <!-- Region Badge -->
-            <div class="city-tag {{ attraction.city.region }}">
-                {{ attraction.city.name }} ({{ attraction.city.region }})
+          <div class="info-row">
+            <div class="info-icon">🎟️</div>
+            <div>
+              <div class="info-label">Entry Fee</div>
+              {% if attraction.entry_fee == 0 or attraction.entry_fee == "0.00" %}
+                <div class="info-value free">✅ Free Entry</div>
+              {% else %}
+                <div class="info-value paid">৳{{ attraction.entry_fee }} per person</div>
+              {% endif %}
             </div>
+          </div>
 
-            <h1>{{ attraction.name }}</h1>
-
-            <!-- Description -->
-            <div class="description" id="desc">{{ attraction.description }}</div>
-            <span class="read-more" id="readMore">Read More</span>
-
-            <!-- Info Grid -->
-            <div class="info-grid">
-                <div class="info-box">
-                    <span class="icon">💰</span>
-                    <div>
-                        <h3>Entry Fee</h3>
-                        <p>৳{{ attraction.entry_fee }}</p>
-                    </div>
-                </div>
-                <div class="info-box">
-                    <span class="icon">⏰</span>
-                    <div>
-                        <h3>Opening Hours</h3>
-                        <p>{{ attraction.opening_hours }}</p>
-                    </div>
-                </div>
-                <div class="info-box">
-                    <span class="icon">🏙️</span>
-                    <div>
-                        <h3>City</h3>
-                        <p>{{ attraction.city.name }}</p>
-                    </div>
-                </div>
-                <div class="info-box">
-                    <span class="icon">📍</span>
-                    <div>
-                        <h3>Region</h3>
-                        <p>{{ attraction.city.region }}</p>
-                    </div>
-                </div>
+          <div class="info-row">
+            <div class="info-icon">🕐</div>
+            <div>
+              <div class="info-label">Opening Hours</div>
+              <div class="info-value">{{ attraction.opening_hours }}</div>
             </div>
+          </div>
 
-            <!-- Map Placeholder -->
-            <div class="map-placeholder">
-                Map location not available
+          <div class="info-row">
+            <div class="info-icon">🗺️</div>
+            <div>
+              <div class="info-label">Region</div>
+              <div class="info-value">{{ attraction.city.region }} Division</div>
             </div>
+          </div>
 
         </div>
-    </div>
+      </div>
 
-    <script>
-        const readMoreBtn = document.getElementById('readMore');
-        const desc = document.getElementById('desc');
-        readMoreBtn.addEventListener('click', () => {
-            desc.classList.toggle('expanded');
-            readMoreBtn.textContent = desc.classList.contains('expanded') ? 'Read Less' : 'Read More';
-        });
-    </script>
-</body>
-</html>
+      <!-- Right: Sidebar -->
+      <div class="col-lg-4">
+
+        <!-- More in same city -->
+        <div class="info-card mb-4">
+          <div class="info-card-title">🏙️ More in {{ attraction.city.name }}</div>
+          {% for nearby in attraction.city.attraction_set.all %}
+            {% if nearby.pk != attraction.pk %}
+            <a href="{% url 'attraction_detail' nearby.pk %}" class="nearby-card">
+              <div class="nearby-icon">🎡</div>
+              <div>
+                <div class="nearby-name">{{ nearby.name }}</div>
+                <div class="nearby-fee">
+                  {% if nearby.entry_fee == 0 or nearby.entry_fee == "0.00" %}
+                    Free Entry
+                  {% else %}
+                    ৳{{ nearby.entry_fee }}
+                  {% endif %}
+                </div>
+              </div>
+              <span class="nearby-arrow">→</span>
+            </a>
+            {% endif %}
+          {% empty %}
+            <p style="color:rgba(255,255,255,0.35); font-size:0.85rem;">No other attractions in this city.</p>
+          {% endfor %}
+        </div>
+
+        <!-- CTA -->
+        <div class="explore-cta">
+          <h5>🗺️ Explore More</h5>
+          <p>Discover hotels and restaurants in {{ attraction.city.name }}</p>
+          <a href="/hotels/" class="btn-primary-custom">🏨 Hotels</a>
+          <a href="/restaurants/" class="btn-outline-custom">🍽️ Restaurants</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -17,15 +17,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
+from cities import views  
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('cities/', include('cities.urls')),
-    path('', include('attractions.urls')),
-    path('', include('hotels.urls')),
-    path('', include('restaurants.urls')),
-    path('', TemplateView.as_view(template_name='index.html')),
-]
+    path('admin/',       admin.site.urls),
+    path('accounts/',    include('accounts.urls')),
+    path('cities/',      include('cities.urls')), 
+    path('attractions/', include('attractions.urls')),
+    path('hotels/',      include('hotels.urls')),       # ✅ fixed prefix
+    path('restaurants/', include('restaurants.urls')),  # ✅ fixed prefix
+    path('',             views.home, name='home'),
 
+]
 from django.conf import settings
 from django.conf.urls.static import static

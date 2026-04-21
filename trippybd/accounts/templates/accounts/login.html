@@ -1,0 +1,299 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Inline styles scoped to login page -->
+<style>
+  body {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    min-height: 100vh;
+  }
+  .login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 16px;
+  }
+  .login-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    padding: 48px 40px;
+    width: 100%;
+    max-width: 440px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+  }
+  .brand-logo {
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .brand-logo span {
+    font-size: 2.4rem;
+  }
+  .brand-title {
+    text-align: center;
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .brand-title span {
+    color: #38bdf8;
+  }
+  .brand-subtitle {
+    text-align: center;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.88rem;
+    margin-bottom: 32px;
+  }
+  .form-label {
+    color: rgba(255,255,255,0.75);
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .form-control {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 10px;
+    color: #ffffff;
+    padding: 11px 16px;
+    font-size: 0.95rem;
+    transition: all 0.25s;
+  }
+  .form-control:focus {
+    background: rgba(255,255,255,0.12);
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 3px rgba(56,189,248,0.2);
+    color: #ffffff;
+    outline: none;
+  }
+  .form-control::placeholder {
+    color: rgba(255,255,255,0.3);
+  }
+  .input-icon-wrap {
+    position: relative;
+  }
+  .input-icon-wrap .icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255,255,255,0.35);
+    font-size: 1rem;
+    pointer-events: none;
+  }
+  .input-icon-wrap .form-control {
+    padding-left: 42px;
+  }
+  .toggle-password {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.4);
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0;
+    transition: color 0.2s;
+  }
+  .toggle-password:hover {
+    color: #38bdf8;
+  }
+  .btn-login {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #0ea5e9, #2563eb);
+    border: none;
+    border-radius: 10px;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 8px;
+  }
+  .btn-login:hover {
+    background: linear-gradient(135deg, #38bdf8, #3b82f6);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(56, 189, 248, 0.35);
+  }
+  .btn-login:active {
+    transform: translateY(0px);
+  }
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 24px 0;
+  }
+  .divider hr {
+    flex: 1;
+    border-color: rgba(255,255,255,0.12);
+  }
+  .divider span {
+    color: rgba(255,255,255,0.35);
+    font-size: 0.8rem;
+  }
+  .register-link {
+    text-align: center;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.9rem;
+    margin-top: 20px;
+  }
+  .register-link a {
+    color: #38bdf8;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+  }
+  .register-link a:hover {
+    color: #7dd3fc;
+    text-decoration: underline;
+  }
+  .alert-danger-custom {
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    border-radius: 10px;
+    color: #fca5a5;
+    padding: 10px 16px;
+    font-size: 0.88rem;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .alert-success-custom {
+    background: rgba(34, 197, 94, 0.15);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    border-radius: 10px;
+    color: #86efac;
+    padding: 10px 16px;
+    font-size: 0.88rem;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .remember-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .remember-row label {
+    color: rgba(255,255,255,0.55);
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    cursor: pointer;
+  }
+  .remember-row input[type="checkbox"] {
+    accent-color: #38bdf8;
+    width: 15px;
+    height: 15px;
+  }
+  .forgot-link {
+    color: #38bdf8;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .forgot-link:hover {
+    color: #7dd3fc;
+  }
+  .mb-20 { margin-bottom: 20px; }
+  .mb-16 { margin-bottom: 16px; }
+</style>
+<div class="login-wrapper">
+  <div class="login-card">
+    <!-- Brand -->
+    <div class="brand-logo"><span>✈️</span></div>
+    <div class="brand-title">Trippy<span>BD</span></div>
+    <div class="brand-subtitle">Sign in to explore Bangladesh</div>
+    <!-- Flash Messages -->
+    {% if messages %}
+      {% for message in messages %}
+        {% if message.tags == 'error' or message.tags == 'danger' %}
+          <div class="alert-danger-custom">⚠️ {{ message }}</div>
+        {% else %}
+          <div class="alert-success-custom">✅ {{ message }}</div>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    <!-- Login Form -->
+    <form method="POST" action="{% url 'login' %}">
+      {% csrf_token %}
+      <!-- Username -->
+      <div class="mb-16">
+        <label class="form-label">Username</label>
+        <div class="input-icon-wrap">
+          <span class="icon">👤</span>
+          <input
+            type="text"
+            name="username"
+            class="form-control"
+            placeholder="Enter your username"
+            required
+            autofocus
+          >
+        </div>
+      </div>
+      <!-- Password -->
+      <div class="mb-20">
+        <label class="form-label">Password</label>
+        <div class="input-icon-wrap">
+          <span class="icon">🔒</span>
+          <input
+            type="password"
+            name="password"
+            id="passwordInput"
+            class="form-control"
+            placeholder="Enter your password"
+            required
+          >
+          <button type="button" class="toggle-password" onclick="togglePassword()">
+            <span id="eyeIcon">👁️</span>
+          </button>
+        </div>
+      </div>
+      <!-- Remember Me + Forgot -->
+      <div class="remember-row">
+        <label>
+          <input type="checkbox" name="remember_me"> Remember me
+        </label>
+        <a href="#" class="forgot-link">Forgot password?</a>
+      </div>
+      <!-- Submit -->
+      <button type="submit" class="btn-login">Sign In →</button>
+    </form>
+    <!-- Divider -->
+    <div class="divider">
+      <hr><span>don't have an account?</span><hr>
+    </div>
+    <!-- Register Link -->
+    <div class="register-link">
+      <a href="{% url 'register' %}">Create a new account</a>
+    </div>
+  </div>
+</div>
+<script>
+  function togglePassword() {
+    const input = document.getElementById('passwordInput');
+    const icon  = document.getElementById('eyeIcon');
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.textContent = '🙈';
+    } else {
+      input.type = 'password';
+      icon.textContent = '👁️';
+    }
+  }
+</script>
+{% endblock %}

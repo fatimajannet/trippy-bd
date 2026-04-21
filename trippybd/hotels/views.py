@@ -1,14 +1,25 @@
-# hotels/views.py
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Hotel
+from cities.models import City
 
-# View for listing hotels based on the city
-def hotel_list(request, city_id):
-    hotels = Hotel.objects.filter(city_id=city_id)
-    city = hotels.first().city if hotels else None
-    return render(request, 'hotels/hotel_list.html', {'hotels': hotels, 'city': city})
+def hotel_list(request):
+    hotels = Hotel.objects.select_related('city').all()
+    cities = City.objects.all()
+    return render(request, 'hotels/hotel_list.html', {
+        'hotels': hotels,
+        'cities': cities,
+    })
 
-# View for showing details of a single hotel
+def hotel_list_by_city(request, city_id):
+    city   = get_object_or_404(City, pk=city_id)
+    hotels = Hotel.objects.filter(city=city).select_related('city')
+    cities = City.objects.all()
+    return render(request, 'hotels/hotel_list.html', {
+        'hotels':        hotels,
+        'selected_city': city,
+        'cities':        cities,
+    })
+
 def hotel_detail(request, pk):
-    hotel = Hotel.objects.get(pk=pk)  # Get the hotel by its primary key (ID)
+    hotel = get_object_or_404(Hotel.objects.select_related('city'), pk=pk)
     return render(request, 'hotels/hotel_detail.html', {'hotel': hotel})

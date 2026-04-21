@@ -1,230 +1,342 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Cities of Bangladesh</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
-            margin: 0;
-            padding: 0;
-        }
+{% extends 'base.html' %}
+{% block title %}Cities — TrIppyBD{% endblock %}
 
-        header {
-            background-color: #007bff;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
+{% block content %}
+<style>
+  .page-hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
+    padding: 60px 0 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    position: relative;
+    overflow: hidden;
+  }
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(56,189,248,0.1) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    border-radius: 50%;
+  }
+  .page-hero::after {
+    content: '';
+    position: absolute;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(37,99,235,0.1) 0%, transparent 70%);
+    bottom: -80px; left: -60px;
+    border-radius: 50%;
+  }
+  .page-hero-content { position: relative; z-index: 2; }
 
-        h1 {
-            margin: 0;
-            font-size: 2em;
-        }
+  .page-badge {
+    display: inline-block;
+    background: rgba(56,189,248,0.12);
+    border: 1px solid rgba(56,189,248,0.3);
+    color: #38bdf8;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 5px 16px;
+    border-radius: 50px;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .page-title {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+  .page-title span { color: #38bdf8; }
+  .page-subtitle { color: rgba(255,255,255,0.5); font-size: 1rem; }
 
-        .controls {
-            max-width: 1200px;
-            margin: 20px auto;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            justify-content: center;
-        }
+  /* ── REGION FILTER ── */
+  .filter-bar {
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    padding: 18px 0;
+    position: sticky;
+    top: 57px;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+  }
+  .filter-scroll {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+  .filter-scroll::-webkit-scrollbar { display: none; }
+  .filter-btn {
+    flex-shrink: 0;
+    padding: 7px 18px;
+    border-radius: 50px;
+    font-size: 0.83rem;
+    font-weight: 500;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: transparent;
+    color: rgba(255,255,255,0.6);
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .filter-btn:hover { border-color: #38bdf8; color: #38bdf8; }
+  .filter-btn.active {
+    background: #38bdf8;
+    border-color: #38bdf8;
+    color: #0f172a;
+    font-weight: 600;
+  }
 
-        .controls input, .controls select, .controls button {
-            padding: 10px;
-            font-size: 1em;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
+  /* ── CITIES SECTION ── */
+  .cities-section { padding: 50px 0 100px; flex: 1; }
 
-        .controls button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
+  .results-info {
+    color: rgba(255,255,255,0.4);
+    font-size: 0.88rem;
+    margin-bottom: 28px;
+  }
+  .results-info span { color: #38bdf8; font-weight: 600; }
 
-        .controls button:hover {
-            background-color: #0056b3;
-        }
+  /* ── CITY CARD ── */
+  .city-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+  }
+  .city-card:hover {
+    background: rgba(56,189,248,0.06);
+    border-color: rgba(56,189,248,0.25);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  }
+  .card-top {
+    background: linear-gradient(135deg, rgba(14,165,233,0.15), rgba(37,99,235,0.15));
+    padding: 28px 24px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .card-emoji { font-size: 2.2rem; display: block; margin-bottom: 12px; }
+  .card-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .card-region-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(56,189,248,0.12);
+    border: 1px solid rgba(56,189,248,0.2);
+    color: #38bdf8;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 50px;
+  }
+  .card-body-custom {
+    padding: 20px 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .card-description {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.85rem;
+    line-height: 1.7;
+    margin-bottom: 18px;
+    flex: 1;
+  }
+  .card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    padding: 12px 0;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .meta-stat { text-align: center; }
+  .meta-stat .num {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    display: block;
+  }
+  .meta-stat .lbl {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .btn-card-detail {
+    display: block;
+    text-align: center;
+    background: rgba(56,189,248,0.1);
+    border: 1px solid rgba(56,189,248,0.25);
+    color: #38bdf8;
+    padding: 9px 0;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-card-detail:hover { background: #38bdf8; color: #0f172a; }
 
-        .legend {
-            max-width: 1200px;
-            margin: 10px auto;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-        }
+  /* ── SEARCH BAR ── */
+  .search-wrap {
+    position: relative;
+    max-width: 420px;
+  }
+  .search-wrap input {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    color: #fff;
+    padding: 10px 16px 10px 40px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: all 0.25s;
+    font-family: 'Poppins', sans-serif;
+  }
+  .search-wrap input:focus {
+    border-color: #38bdf8;
+    background: rgba(255,255,255,0.09);
+    box-shadow: 0 0 0 3px rgba(56,189,248,0.15);
+  }
+  .search-wrap input::placeholder { color: rgba(255,255,255,0.3); }
+  .search-icon {
+    position: absolute;
+    left: 13px; top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255,255,255,0.3);
+    font-size: 0.95rem;
+    pointer-events: none;
+  }
+</style>
 
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 0.9em;
-        }
+<!-- ── PAGE HERO ── -->
+<div class="page-hero">
+  <div class="container page-hero-content">
+    <div class="page-badge">🏙️ Explore</div>
+    <h1 class="page-title">Cities of <span>Bangladesh</span></h1>
+    <p class="page-subtitle">Discover {{ cities|length }} cities across all regions</p>
+  </div>
+</div>
 
-        .legend-color {
-            width: 20px;
-            height: 20px;
-            border-radius: 5px;
-        }
-
-        .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            padding: 20px;
-            max-width: 1200px;
-            margin: auto;
-        }
-
-        .card {
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            padding: 20px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.2);
-        }
-
-        .card h2 {
-            margin: 0 0 10px 0;
-            color: #333;
-        }
-
-        .card p {
-            margin: 5px 0;
-            color: #555;
-            line-height: 1.4;
-        }
-
-        .population {
-            font-weight: bold;
-            color: #007bff;
-        }
-
-        .region {
-            font-style: italic;
-            color: #6c757d;
-        }
-
-        /* Region base colors */
-        .Dhaka { background-color: #e3f2fd; }
-        .Chattogram { background-color: #e8f5e9; }
-        .Rajshahi { background-color: #fff3e0; }
-        .Khulna { background-color: #f3e5f5; }
-        .Barisal { background-color: #ffebee; }
-        .Sylhet { background-color: #e0f7fa; }
-        .Rangpur { background-color: #f9fbe7; }
-        .Mymensingh { background-color: #fffde7; }
-
-        @media (max-width: 600px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <h1>Cities of Bangladesh</h1>
-    </header>
-
-    <div class="controls">
-        <input type="text" id="searchInput" placeholder="Search by city name...">
-        <select id="regionFilter">
-            <option value="">All Regions</option>
-            <option value="Dhaka">Dhaka</option>
-            <option value="Chattogram">Chattogram</option>
-            <option value="Rajshahi">Rajshahi</option>
-            <option value="Khulna">Khulna</option>
-            <option value="Barisal">Barisal</option>
-            <option value="Sylhet">Sylhet</option>
-            <option value="Rangpur">Rangpur</option>
-            <option value="Mymensingh">Mymensingh</option>
-        </select>
-        <button id="sortAsc">Sort Population ↑</button>
-        <button id="sortDesc">Sort Population ↓</button>
+<!-- ── REGION FILTER BAR ── -->
+<div class="filter-bar">
+  <div class="container">
+    <div class="d-flex align-items-center gap-3 flex-wrap">
+      <div class="filter-scroll" id="regionFilters">
+        <button class="filter-btn active" onclick="filterRegion('all', this)">🌍 All Regions</button>
+        <button class="filter-btn" onclick="filterRegion('Dhaka', this)">Dhaka</button>
+        <button class="filter-btn" onclick="filterRegion('Chattogram', this)">Chattogram</button>
+        <button class="filter-btn" onclick="filterRegion('Sylhet', this)">Sylhet</button>
+        <button class="filter-btn" onclick="filterRegion('Rajshahi', this)">Rajshahi</button>
+        <button class="filter-btn" onclick="filterRegion('Khulna', this)">Khulna</button>
+        <button class="filter-btn" onclick="filterRegion('Barisal', this)">Barisal</button>
+        <button class="filter-btn" onclick="filterRegion('Mymensingh', this)">Mymensingh</button>
+        <button class="filter-btn" onclick="filterRegion('Rangpur', this)">Rangpur</button>
+      </div>
+      <!-- Search -->
+      <div class="search-wrap ms-auto">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="citySearch" placeholder="Search cities..." oninput="searchCities()">
+      </div>
     </div>
+  </div>
+</div>
 
-    <div class="legend">
-        <div class="legend-item"><div class="legend-color" style="background-color:#e3f2fd;"></div> Dhaka</div>
-        <div class="legend-item"><div class="legend-color" style="background-color:#e8f5e9;"></div> Chattogram</div>
-        <div class="legend-item"><div class="legend-color" style="background-color:#fff3e0;"></div> Rajshahi</div>
-        <div class="legend-item"><div class="legend-color" style="background-color:#f3e5f5;"></div> Khulna</div>
-        <div class="legend-item"><div class="legend-color" style="background-color:#ffebee;"></div> Barisal</div>
-        <div class="legend-item"><div class="legend-color" style="background-color:#e0f7fa;"></div> Sylhet</div>
-        <div class="legend-item"><div class="legend-color" style="background-color:#f9fbe7;"></div> Rangpur</div>
-        <div class="legend-item"><div class="legend-color" style="background-color:#fffde7;"></div> Mymensingh</div>
-    </div>
+<!-- ── CITIES GRID ── -->
+<div class="cities-section">
+  <div class="container">
+    <p class="results-info">
+      Showing <span id="resultCount">{{ cities|length }}</span> cities
+    </p>
 
-    <div class="container" id="cityContainer">
-        {% for city in cities %}
-        <div class="card {{ city.region }}" data-name="{{ city.name }}" data-region="{{ city.region }}" data-population="{{ city.population }}">
-            <h2>
-                <!-- Add a link to the city details page -->
-                <a href="{% url 'city_details' city.id %}">{{ city.name }}</a>
-            </h2>
-            <p>{{ city.description }}</p>
-            <p>Population: <span class="population">{{ city.population }}</span></p>
-            <p>Region: <span class="region">{{ city.region }}</span></p>
+    <div class="row g-4" id="citiesGrid">
+      {% for city in cities %}
+      <div class="col-sm-6 col-lg-4 city-item"
+           data-region="{{ city.region }}"
+           data-name="{{ city.name|lower }}">
+        <div class="city-card h-100">
+          <div class="card-top">
+            <span class="card-emoji">🏙️</span>
+            <div class="card-name">{{ city.name }}</div>
+            <span class="card-region-tag">📍 {{ city.region }}</span>
+          </div>
+          <div class="card-body-custom">
+            <p class="card-description">{{ city.description }}</p>
+            <div class="card-meta">
+              <div class="meta-stat">
+                <span class="num">{{ city.population|floatformat:0 }}</span>
+                <span class="lbl">Population</span>
+              </div>
+              <div class="meta-stat">
+                <span class="num">{{ city.region }}</span>
+                <span class="lbl">Division</span>
+              </div>
+            </div>
+            <a href="{% url 'city_details' city.id %}" class="btn-card-detail">
+              View Details →
+            </a>
+          </div>
         </div>
-        {% endfor %}
+      </div>
+      {% endfor %}
     </div>
 
-    <script>
-        const searchInput = document.getElementById('searchInput');
-        const regionFilter = document.getElementById('regionFilter');
-        const sortAsc = document.getElementById('sortAsc');
-        const sortDesc = document.getElementById('sortDesc');
-        const container = document.getElementById('cityContainer');
-        const cards = Array.from(container.children);
+    <!-- Empty state -->
+    <div id="emptyState" style="display:none; text-align:center; padding:80px 20px;">
+      <span style="font-size:4rem; display:block; margin-bottom:16px;">🔍</span>
+      <h3 style="color:rgba(255,255,255,0.5);">No cities found</h3>
+      <p style="color:rgba(255,255,255,0.3);">Try a different search or filter.</p>
+    </div>
 
-        function filterAndSort() {
-            const searchValue = searchInput.value.toLowerCase();
-            const regionValue = regionFilter.value;
-            let filtered = cards.filter(card => {
-                const name = card.dataset.name.toLowerCase();
-                const region = card.dataset.region;
-                return name.includes(searchValue) && (regionValue === '' || region === regionValue);
-            });
+  </div>
+</div>
 
-            container.style.opacity = 0;
-            setTimeout(() => {
-                container.innerHTML = '';
-                filtered.forEach(card => container.appendChild(card));
-                container.style.opacity = 1;
-            }, 150);
-        }
+<script>
+  let activeRegion = 'all';
 
-        searchInput.addEventListener('input', filterAndSort);
-        regionFilter.addEventListener('change', filterAndSort);
+  function filterRegion(region, btn) {
+    activeRegion = region;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyFilters();
+  }
 
-        sortAsc.addEventListener('click', () => {
-            const sorted = Array.from(container.children).sort((a,b) => parseInt(a.dataset.population) - parseInt(b.dataset.population));
-            container.style.opacity = 0;
-            setTimeout(() => {
-                sorted.forEach(card => container.appendChild(card));
-                container.style.opacity = 1;
-            }, 150);
-        });
+  function searchCities() { applyFilters(); }
 
-        sortDesc.addEventListener('click', () => {
-            const sorted = Array.from(container.children).sort((a,b) => parseInt(b.dataset.population) - parseInt(a.dataset.population));
-            container.style.opacity = 0;
-            setTimeout(() => {
-                sorted.forEach(card => container.appendChild(card));
-                container.style.opacity = 1;
-            }, 150);
-        });
-    </script>
-</body>
-</html>
+  function applyFilters() {
+    const search = document.getElementById('citySearch').value.toLowerCase();
+    const items  = document.querySelectorAll('.city-item');
+    let count = 0;
+
+    items.forEach(item => {
+      const regionMatch = activeRegion === 'all' || item.dataset.region === activeRegion;
+      const searchMatch = item.dataset.name.includes(search);
+      if (regionMatch && searchMatch) {
+        item.style.display = '';
+        count++;
+      } else {
+        item.style.display = 'none';
+      }
+    });
+
+    document.getElementById('resultCount').textContent = count;
+    document.getElementById('emptyState').style.display = count === 0 ? 'block' : 'none';
+  }
+</script>
+
+{% endblock %}

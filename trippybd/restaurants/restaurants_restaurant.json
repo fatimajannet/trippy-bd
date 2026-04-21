@@ -1,0 +1,758 @@
+[
+  {
+    "model": "restaurants.restaurant",
+    "pk": 1,
+    "fields": {
+      "city": 1,
+      "name": "Star Kabab & Restaurant",
+      "description": "Famous for mutton kacchi and breakfast.",
+      "cuisine_type": "Traditional Desi",
+      "average_price": "400.00",
+      "rating": "4.5"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 2,
+    "fields": {
+      "city": 1,
+      "name": "Sultan's Dine",
+      "description": "Premium Kacchi Biryani known for its rich flavor.",
+      "cuisine_type": "Indian Mughlai",
+      "average_price": "550.00",
+      "rating": "4.7"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 3,
+    "fields": {
+      "city": 1,
+      "name": "Takeout",
+      "description": "Popular burger joint known for its spicy chicken burgers.",
+      "cuisine_type": "Fast Food",
+      "average_price": "350.00",
+      "rating": "4.4"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 4,
+    "fields": {
+      "city": 2,
+      "name": "Mezban Haile Aiyun",
+      "description": "The destination for authentic Mezban beef.",
+      "cuisine_type": "Traditional Desi",
+      "average_price": "450.00",
+      "rating": "4.8"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 5,
+    "fields": {
+      "city": 2,
+      "name": "Barcode Cafe",
+      "description": "Trendy cafe with a great urban atmosphere.",
+      "cuisine_type": "Cafe",
+      "average_price": "600.00",
+      "rating": "4.3"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 6,
+    "fields": {
+      "city": 2,
+      "name": "Handi",
+      "description": "Well-known for its North Indian and Mughlai dishes.",
+      "cuisine_type": "Indian Mughlai",
+      "average_price": "800.00",
+      "rating": "4.2"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 7,
+    "fields": {
+      "city": 3,
+      "name": "Panshi Restaurant",
+      "description": "Famous for local Sylheti food and a variety of bhartas.",
+      "cuisine_type": "Bengali",
+      "average_price": "300.00",
+      "rating": "4.6"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 8,
+    "fields": {
+      "city": 3,
+      "name": "Pach Bhai Restaurant",
+      "description": "Competitor to Panshi, also legendary for local cuisine.",
+      "cuisine_type": "Bengali",
+      "average_price": "320.00",
+      "rating": "4.5"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 9,
+    "fields": {
+      "city": 3,
+      "name": "Woondaal King Kebab",
+      "description": "Popular for grilled items and family dining.",
+      "cuisine_type": "Grill/Mughlai",
+      "average_price": "500.00",
+      "rating": "4.3"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 10,
+    "fields": {
+      "city": 4,
+      "name": "Chili's Rajshahi",
+      "description": "The go-to spot for Chinese and Thai fusion.",
+      "cuisine_type": "Chinese-Bangla",
+      "average_price": "600.00",
+      "rating": "4.2"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 11,
+    "fields": {
+      "city": 4,
+      "name": "Master Chef",
+      "description": "Known for quality biryani and traditional items.",
+      "cuisine_type": "Bengali",
+      "average_price": "350.00",
+      "rating": "4.0"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 12,
+    "fields": {
+      "city": 4,
+      "name": "River View Café",
+      "description": "Scenic spot by the Padma river for snacks.",
+      "cuisine_type": "Cafe",
+      "average_price": "250.00",
+      "rating": "4.4"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 13,
+    "fields": {
+      "city": 5,
+      "name": "Akboria Grand Hotel",
+      "description": "Historic eatery famous for Bogura curd.",
+      "cuisine_type": "Traditional",
+      "average_price": "200.00",
+      "rating": "4.4"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 14,
+    "fields": {
+      "city": 5,
+      "name": "Asia Hotel & Restaurant",
+      "description": "Serving authentic local breakfast and lunch.",
+      "cuisine_type": "Bengali",
+      "average_price": "250.00",
+      "rating": "4.1"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 15,
+    "fields": {
+      "city": 5,
+      "name": "Bogura Food Court",
+      "description": "A variety of fast food and local snacks.",
+      "cuisine_type": "Multi-cuisine",
+      "average_price": "400.00",
+      "rating": "4.0"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 16,
+    "fields": {
+      "city": 6,
+      "name": "Castle Salam",
+      "description": "Upscale dining with continental and local options.",
+      "cuisine_type": "Multi-cuisine",
+      "average_price": "1200.00",
+      "rating": "4.3"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 17,
+    "fields": {
+      "city": 6,
+      "name": "Mezban Bari",
+      "description": "Authentic beef mezban style dishes in Khulna.",
+      "cuisine_type": "Traditional",
+      "average_price": "450.00",
+      "rating": "4.2"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 18,
+    "fields": {
+      "city": 6,
+      "name": "Coffee Culture",
+      "description": "Popular hangout spot for youth and coffee lovers.",
+      "cuisine_type": "Cafe",
+      "average_price": "350.00",
+      "rating": "4.4"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 19,
+    "fields": {
+      "city": 7,
+      "name": "Matri Bhandar",
+      "description": "The iconic origin of Rasmalai.",
+      "cuisine_type": "Desserts",
+      "average_price": "200.00",
+      "rating": "4.9"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 20,
+    "fields": {
+      "city": 7,
+      "name": "Comilla Dine",
+      "description": "Quality traditional meals for families and travelers.",
+      "cuisine_type": "Bengali",
+      "average_price": "400.00",
+      "rating": "4.1"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 21,
+    "fields": {
+      "city": 7,
+      "name": "Red Roof Inn",
+      "description": "Offers a mix of Chinese-Bangla and Desi dishes.",
+      "cuisine_type": "Chinese-Bangla",
+      "average_price": "550.00",
+      "rating": "4.0"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 22,
+    "fields": {
+      "city": 8,
+      "name": "Garden Inn",
+      "description": "Quiet riverside dining with excellent local fish.",
+      "cuisine_type": "Bengali",
+      "average_price": "500.00",
+      "rating": "4.1"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 23,
+    "fields": {
+      "city": 8,
+      "name": "Hotel Arena Restaurant",
+      "description": "Multi-cuisine restaurant in a popular hotel.",
+      "cuisine_type": "Multi-cuisine",
+      "average_price": "700.00",
+      "rating": "4.2"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 24,
+    "fields": {
+      "city": 8,
+      "name": "Barisal Kitchen",
+      "description": "Specializing in local Barisal flavors and bhartas.",
+      "cuisine_type": "Bengali",
+      "average_price": "350.00",
+      "rating": "4.3"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 25,
+    "fields": {
+      "city": 9,
+      "name": "Sarinda Restaurant",
+      "description": "Well-known for Mughlai and Biryani.",
+      "cuisine_type": "Mughlai",
+      "average_price": "400.00",
+      "rating": "4.3"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 26,
+    "fields": {
+      "city": 9,
+      "name": "Mymensingh Food Village",
+      "description": "Popular stop for highway travelers.",
+      "cuisine_type": "Bengali",
+      "average_price": "450.00",
+      "rating": "4.0"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 27,
+    "fields": {
+      "city": 9,
+      "name": "Heritage Dine",
+      "description": "Colonial themed restaurant with local food.",
+      "cuisine_type": "Traditional",
+      "average_price": "500.00",
+      "rating": "4.2"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 28,
+    "fields": {
+      "city": 10,
+      "name": "Northview Restaurant",
+      "description": "Premier fine dining with a city view.",
+      "cuisine_type": "Continental",
+      "average_price": "900.00",
+      "rating": "4.4"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 29,
+    "fields": {
+      "city": 10,
+      "name": "Rudra Restaurant",
+      "description": "Specializes in traditional North Bengal dishes.",
+      "cuisine_type": "Bengali",
+      "average_price": "300.00",
+      "rating": "4.1"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 30,
+    "fields": {
+      "city": 10,
+      "name": "Rangpur Dine",
+      "description": "A clean and modern space for family meals.",
+      "cuisine_type": "Multi-cuisine",
+      "average_price": "550.00",
+      "rating": "4.2"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 31,
+    "fields": {
+      "city": 11,
+      "name": "Chuti Resort Restaurant",
+      "description": "Organic ingredients in a natural setting.",
+      "cuisine_type": "Fusion",
+      "average_price": "1500.00",
+      "rating": "4.5"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 32,
+    "fields": {
+      "city": 11,
+      "name": "Zinda Park Canteen",
+      "description": "Simple, fresh local food inside the park.",
+      "cuisine_type": "Bengali",
+      "average_price": "300.00",
+      "rating": "4.3"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 33,
+    "fields": {
+      "city": 11,
+      "name": "Nokkhottrobari Restaurant",
+      "description": "Premium dining experience within the resort.",
+      "cuisine_type": "Multi-cuisine",
+      "average_price": "1200.00",
+      "rating": "4.4"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 34,
+    "fields": {
+      "city": 12,
+      "name": "Heritage Restaurant",
+      "description": "Traditional cuisine in a colonial building.",
+      "cuisine_type": "Bengali",
+      "average_price": "700.00",
+      "rating": "4.2"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 35,
+    "fields": {
+      "city": 12,
+      "name": "Narayanganj Food Court",
+      "description": "Lively spot for various fast foods.",
+      "cuisine_type": "Fast Food",
+      "average_price": "400.00",
+      "rating": "4.0"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 36,
+    "fields": {
+      "city": 12,
+      "name": "Riverside Cafe",
+      "description": "Enjoy snacks with a view of the Shitalakshya.",
+      "cuisine_type": "Cafe",
+      "average_price": "300.00",
+      "rating": "4.1"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 37,
+    "fields": {
+      "city": 13,
+      "name": "Nirala Restaurant",
+      "description": "A historic stop for travelers in Tangail.",
+      "cuisine_type": "Traditional",
+      "average_price": "300.00",
+      "rating": "4.0"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 38,
+    "fields": {
+      "city": 13,
+      "name": "Tangail Ghoroa",
+      "description": "Specializes in local curries and Tangail sweets.",
+      "cuisine_type": "Bengali",
+      "average_price": "250.00",
+      "rating": "4.1"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 39,
+    "fields": {
+      "city": 13,
+      "name": "Food Park Tangail",
+      "description": "Modern fast food for the local crowd.",
+      "cuisine_type": "Fast Food",
+      "average_price": "350.00",
+      "rating": "4.2"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 40,
+    "fields": {
+      "city": 14,
+      "name": "Aristocrat Restaurant",
+      "description": "Elegant setting with Chinese and Thai specialties.",
+      "cuisine_type": "Thai/Chinese",
+      "average_price": "800.00",
+      "rating": "4.1"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 41,
+    "fields": {
+      "city": 14,
+      "name": "Highway Inn",
+      "description": "Popular stop for long-distance bus passengers.",
+      "cuisine_type": "Bengali",
+      "average_price": "450.00",
+      "rating": "4.3"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 42,
+    "fields": {
+      "city": 14,
+      "name": "Sirajganj Foodies",
+      "description": "Local favorite for pizza and burgers.",
+      "cuisine_type": "Fast Food",
+      "average_price": "400.00",
+      "rating": "4.0"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 43,
+    "fields": {
+      "city": 15,
+      "name": "Shishir Restaurant",
+      "description": "Known for fresh fish and local bhartas.",
+      "cuisine_type": "Bengali",
+      "average_price": "350.00",
+      "rating": "4.2"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 44,
+    "fields": {
+      "city": 15,
+      "name": "Pabna Food Court",
+      "description": "Variety of snacks and local delights.",
+      "cuisine_type": "Multi-cuisine",
+      "average_price": "300.00",
+      "rating": "4.1"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 45,
+    "fields": {
+      "city": 15,
+      "name": "Ratnodeep Resort Restaurant",
+      "description": "High-end dining experience in Pabna.",
+      "cuisine_type": "Multi-cuisine",
+      "average_price": "1000.00",
+      "rating": "4.4"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 46,
+    "fields": {
+      "city": 16,
+      "name": "Hilsa Kitchen",
+      "description": "Specializing in fresh Chandpur Hilsa.",
+      "cuisine_type": "Seafood",
+      "average_price": "650.00",
+      "rating": "4.7"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 47,
+    "fields": {
+      "city": 16,
+      "name": "River View Restaurant",
+      "description": "Dine by the river with local delicacies.",
+      "cuisine_type": "Bengali",
+      "average_price": "400.00",
+      "rating": "4.2"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 48,
+    "fields": {
+      "city": 16,
+      "name": "Chandpur Dine",
+      "description": "Reliable spot for Chinese-Bangla cuisine.",
+      "cuisine_type": "Chinese-Bangla",
+      "average_price": "500.00",
+      "rating": "4.1"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 49,
+    "fields": {
+      "city": 17,
+      "name": "Grand Sultan Feni",
+      "description": "Modern dining with fast food and grills.",
+      "cuisine_type": "Fast Food",
+      "average_price": "450.00",
+      "rating": "4.3"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 50,
+    "fields": {
+      "city": 17,
+      "name": "Feni Food Garden",
+      "description": "Large menu featuring Desi and Chinese items.",
+      "cuisine_type": "Multi-cuisine",
+      "average_price": "550.00",
+      "rating": "4.2"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 51,
+    "fields": {
+      "city": 17,
+      "name": "Zaman Hotel",
+      "description": "Traditional Bengali breakfast and lunch spot.",
+      "cuisine_type": "Bengali",
+      "average_price": "300.00",
+      "rating": "4.1"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 52,
+    "fields": {
+      "city": 18,
+      "name": "Gawsia Hotel",
+      "description": "Authentic Dinajpur beef and fine rice.",
+      "cuisine_type": "Traditional",
+      "average_price": "250.00",
+      "rating": "4.4"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 53,
+    "fields": {
+      "city": 18,
+      "name": "Dinajpur Kitchen",
+      "description": "Local favorite for home-style cooking.",
+      "cuisine_type": "Bengali",
+      "average_price": "200.00",
+      "rating": "4.2"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 54,
+    "fields": {
+      "city": 18,
+      "name": "Hotel Diamond Restaurant",
+      "description": "Standard city restaurant for families.",
+      "cuisine_type": "Multi-cuisine",
+      "average_price": "450.00",
+      "rating": "4.1"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 55,
+    "fields": {
+      "city": 19,
+      "name": "Foodies Jamalpur",
+      "description": "Trendy spot for burgers and pasta.",
+      "cuisine_type": "Italian",
+      "average_price": "550.00",
+      "rating": "4.1"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 56,
+    "fields": {
+      "city": 19,
+      "name": "Jamalpur Garden Restaurant",
+      "description": "Outdoor dining with local flavors.",
+      "cuisine_type": "Bengali",
+      "average_price": "350.00",
+      "rating": "4.2"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 57,
+    "fields": {
+      "city": 19,
+      "name": "Classic Dine",
+      "description": "Standard restaurant for lunch and dinner.",
+      "cuisine_type": "Multi-cuisine",
+      "average_price": "400.00",
+      "rating": "4.0"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 58,
+    "fields": {
+      "city": 20,
+      "name": "Moitri Restaurant",
+      "description": "Serving local fresh-water prawn dishes.",
+      "cuisine_type": "Seafood",
+      "average_price": "600.00",
+      "rating": "4.5"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 59,
+    "fields": {
+      "city": 20,
+      "name": "Satkhira Food Court",
+      "description": "Busy spot for snacks and light meals.",
+      "cuisine_type": "Fast Food",
+      "average_price": "250.00",
+      "rating": "4.1"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 60,
+    "fields": {
+      "city": 20,
+      "name": "Green View Restaurant",
+      "description": "Offers a range of traditional Bengali food.",
+      "cuisine_type": "Bengali",
+      "average_price": "350.00",
+      "rating": "4.2"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 61,
+    "fields": {
+      "city": 21,
+      "name": "Gorai View Restaurant",
+      "description": "Riverside dining with local Kushtia flavors.",
+      "cuisine_type": "Bengali",
+      "average_price": "400.00",
+      "rating": "4.6"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 62,
+    "fields": {
+      "city": 21,
+      "name": "Lalon Dine",
+      "description": "Themed restaurant inspired by Lalon Shah.",
+      "cuisine_type": "Traditional",
+      "average_price": "350.00",
+      "rating": "4.3"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 63,
+    "fields": {
+      "city": 21,
+      "name": "Kushtia Fast Food",
+      "description": "Popular spot for quick snacks and tea.",
+      "cuisine_type": "Fast Food",
+      "average_price": "200.00",
+      "rating": "4.1"
+    }
+  }
+]

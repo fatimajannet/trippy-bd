@@ -1,29 +1,212 @@
 [
-{"type":"header","version":"5.2.1","comment":"Export to JSON plugin for PHPMyAdmin"},
-{"type":"database","name":"trippybd_db"},
-{"type":"table","name":"cities_city","database":"trippybd_db","data":
-[
-{"id":"1","name":"Dhaka","description":"Capital and largest city of Bangladesh; political and economic hub with extremely high density.","population":"21500000","region":"Dhaka"},
-{"id":"2","name":"Chattogram","description":"Major port city and industrial centre; second-largest urban area in Bangladesh.","population":"5800000","region":"Chattogram"},
-{"id":"3","name":"Sylhet","description":"Northeast regional city; economic hub with tea agriculture and cultural heritage significance.","population":"1100000","region":"Sylhet"},
-{"id":"4","name":"Rajshahi","description":"Northern city known for education and silk production; regional commerce centre.","population":"1030000","region":"Rajshahi"},
-{"id":"5","name":"Bogura","description":"Growing urban centre in the north; commercial and transit node.","population":"1010000","region":"Rajshahi"},
-{"id":"6","name":"Khulna","description":"Industrial and port-adjacent city in the southwest; major jute processing and manufacturing industries.","population":"998000","region":"Khulna"},
-{"id":"7","name":"Comilla","description":"Historical and commercial city near the Indian border; transport hub.","population":"710000","region":"Chattogram"},
-{"id":"8","name":"Barisal","description":"Riverine city in the south; administrative and inland water commerce centre.","population":"581000","region":"Barisal"},
-{"id":"9","name":"Mymensingh","description":"Administrative and educational centre; strong service and agriculture economies.","population":"577000","region":"Mymensingh"},
-{"id":"10","name":"Rangpur","description":"Northern regional capital; agrarian and trade hub with growing industry.","population":"468000","region":"Rangpur"},
-{"id":"11","name":"Gazipur","description":"Rapidly expanding industrial suburb of Dhaka; significant manufacturing base.","population":"2670000","region":"Dhaka"},
-{"id":"12","name":"Narayanganj","description":"Part of Greater Dhaka; commercial port and textile centre.","population":"967000","region":"Dhaka"},
-{"id":"13","name":"Tangail","description":"Large district city; textiles and trade; commuter link to Dhaka.","population":"444000","region":"Dhaka"},
-{"id":"14","name":"Sirajganj","description":"Riverine trade city on the Jamuna; commerce and grain markets.","population":"446000","region":"Rajshahi"},
-{"id":"15","name":"Pabna","description":"Historic market city with agricultural and light industrial activity.","population":"436000","region":"Rajshahi"},
-{"id":"16","name":"Chandpur","description":"City at the confluence of Padma and Meghna rivers; fishery and shipbuilding traditions.","population":"430000","region":"Chattogram"},
-{"id":"17","name":"Feni","description":"Transit junction city near Chattogram; road and rail links to eastern Bangladesh.","population":"401000","region":"Chattogram"},
-{"id":"18","name":"Dinajpur","description":"Northern city with grain markets and logistics; satellite industry.","population":"396000","region":"Rangpur"},
-{"id":"19","name":"Jamalpur","description":"Trade and administrative node; agricultural service town.","population":"345000","region":"Mymensingh"},
-{"id":"20","name":"Satkhira","description":"Border city near Sundarbans; cross-border trade and fisheries.","population":"255000","region":"Khulna"},
-{"id":"21","name":"Kushtia","description":"Western city known for cultural heritage, riverside geography, and growing textile industry.","population":"222000","region":"Khulna"}
-]
-}
+  {
+    "model": "cities.city",
+    "pk": 1,
+    "fields": {
+      "name": "Dhaka",
+      "description": "Capital and largest city of Bangladesh; political and economic hub with extremely high density.",
+      "population": 21500000,
+      "region": "Dhaka"
+    }
+  },
+  {
+    "model": "cities.city",
+    "pk": 2,
+    "fields": {
+      "name": "Chattogram",
+      "description": "Major port city and industrial centre; second-largest urban area in Bangladesh.",
+      "population": 5800000,
+      "region": "Chattogram"
+    }
+  },
+  {
+    "model": "cities.city",
+    "pk": 3,
+    "fields": {
+      "name": "Sylhet",
+      "description": "Northeast regional city; economic hub with tea agriculture and cultural heritage significance.",
+      "population": 1100000,
+      "region": "Sylhet"
+    }
+  },
+  {
+    "model": "cities.city",
+    "pk": 4,
+    "fields": {
+      "name": "Rajshahi",
+      "description": "Northern city known for education and silk production; regional commerce centre.",
+      "population": 1030000,
+      "region": "Rajshahi"
+    }
+  },
+  {
+    "model": "cities.city",
+    "pk": 5,
+    "fields": {
+      "name": "Bogura",
+      "description": "Growing urban centre in the north; commercial and transit node.",
+      "population": 1010000,
+      "region": "Rajshahi"
+    }
+  },
+  {
+    "model": "cities.city",
+    "pk": 6,
+    "fields": {
+      "name": "Khulna",
+      "description": "Industrial and port-adjacent city in the southwest; major jute processing and manufacturing industries.",
+      "population": 998000,
+      "region": "Khulna"
+    }
+  },
+  {
+    "model": "cities.city",
+    "pk": 7,
+    "fields": {
+      "name": "Comilla",
+      "description": "Historical and commercial city near the Indian border; transport hub.",
+      "population": 710000,
+      "region": "Chattogram"
+    }
+  },
+  {
+    "model": "cities.city",
+    "pk": 8,
+    "fields": {
+      "name": "Barisal",
+      "description": "Riverine city in the south; administrative and inland water commerce centre.",
+      "population": 581000,
+      "region": "Barisal"
+    }
+  },
+  {
+    "model": "cities.city",
+    "pk": 9,
+    "fields": {
+      "name": "Mymensingh",
+      "description": "Administrative and educational centre; strong service and agriculture economies.",
+      "population": 577000,
+      "region": "Mymensingh"
+    }
+  },
+  {
+    "model": "cities.city",
+    "pk": 10,
+    "fields": {
+      "name": "Rangpur",
+      "description": "Northern regional capital; agrarian and trade hub with growing industry.",
+      "population": 468000,
+      "region": "Rangpur"
+    }
+  },
+  {
+    "model": "cities.city",
+    "pk": 11,
+    "fields": {
+      "name": "Gazipur",
+      "description": "Rapidly expanding industrial suburb of Dhaka; significant manufacturing base.",
+      "population": 2670000,
+      "region": "Dhaka"
+    }
+  },
+  {
+    "model": "cities.city",
+    "pk": 12,
+    "fields": {
+      "name": "Narayanganj",
+      "description": "Part of Greater Dhaka; commercial port and textile centre.",
+      "population": 967000,
+      "region": "Dhaka"
+    }
+  },
+  {
+    "model": "cities.city",
+    "pk": 13,
+    "fields": {
+      "name": "Tangail",
+      "description": "Large city; textiles and trade; commuter link to Dhaka.",
+      "population": 444000,
+      "region": "Dhaka"
+    }
+  },
+  {
+    "model": "cities.city",
+    "pk": 14,
+    "fields": {
+      "name": "Sirajganj",
+      "description": "Riverine trade city on the Jamuna; commerce and grain markets.",
+      "population": 446000,
+      "region": "Rajshahi"
+    }
+  },
+  {
+    "model": "cities.city",
+    "pk": 15,
+    "fields": {
+      "name": "Pabna",
+      "description": "Historic market city with agricultural and light industrial activity.",
+      "population": 436000,
+      "region": "Rajshahi"
+    }
+  },
+  {
+    "model": "cities.city",
+    "pk": 16,
+    "fields": {
+      "name": "Chandpur",
+      "description": "City at the confluence of Padma and Meghna rivers; fishery and shipbuilding traditions.",
+      "population": 430000,
+      "region": "Chattogram"
+    }
+  },
+  {
+    "model": "cities.city",
+    "pk": 17,
+    "fields": {
+      "name": "Feni",
+      "description": "Transit junction city near Chattogram; road and rail links to eastern Bangladesh.",
+      "population": 401000,
+      "region": "Chattogram"
+    }
+  },
+  {
+    "model": "cities.city",
+    "pk": 18,
+    "fields": {
+      "name": "Dinajpur",
+      "description": "Northern city with grain markets and logistics; satellite industry.",
+      "population": 396000,
+      "region": "Rangpur"
+    }
+  },
+  {
+    "model": "cities.city",
+    "pk": 19,
+    "fields": {
+      "name": "Jamalpur",
+      "description": "Trade and administrative node; agricultural service town.",
+      "population": 345000,
+      "region": "Mymensingh"
+    }
+  },
+  {
+    "model": "cities.city",
+    "pk": 20,
+    "fields": {
+      "name": "Satkhira",
+      "description": "Border city near Sundarbans; cross-border trade and fisheries.",
+      "population": 255000,
+      "region": "Khulna"
+    }
+  },
+  {
+    "model": "cities.city",
+    "pk": 21,
+    "fields": {
+      "name": "Kushtia",
+      "description": "Western city known for cultural heritage, riverside geography, and growing textile industry.",
+      "population": 222000,
+      "region": "Khulna"
+    }
+  }
 ]
