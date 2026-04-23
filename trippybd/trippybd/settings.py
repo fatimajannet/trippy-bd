@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'hotels',
     'restaurants',
     'accounts',
+    'wishlist',
 ]
 
 MIDDLEWARE = [

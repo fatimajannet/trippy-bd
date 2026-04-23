@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block title %}{{ city.name }} — TrIppyBD{% endblock %}
-
 {% block content %}
 <style>
   .detail-hero {
@@ -27,7 +26,6 @@
     border-radius: 50%;
   }
   .detail-hero-content { position: relative; z-index: 2; }
-
   .back-btn {
     display: inline-flex;
     align-items: center;
@@ -43,9 +41,7 @@
     background: rgba(255,255,255,0.04);
   }
   .back-btn:hover { color: #38bdf8; border-color: rgba(56,189,248,0.3); }
-
   .detail-emoji { font-size: 3.5rem; display: block; margin-bottom: 18px; }
-
   .detail-region-tag {
     display: inline-flex;
     align-items: center;
@@ -73,12 +69,11 @@
     max-width: 680px;
     margin-bottom: 32px;
   }
-
-  /* ── STATS ROW ── */
   .hero-stats {
     display: flex;
     gap: 32px;
     flex-wrap: wrap;
+    align-items: center;
   }
   .stat-box {
     background: rgba(255,255,255,0.05);
@@ -91,10 +86,39 @@
   .stat-num { font-size: 1.4rem; font-weight: 700; color: #38bdf8; display: block; }
   .stat-lbl { font-size: 0.75rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.8px; }
 
-  /* ── MAIN SECTION ── */
-  .detail-section { padding: 60px 0 120px; flex: 1; }
+  /* ── WISHLIST BUTTON ── */
+  .wishlist-btn {
+    padding: 12px 26px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 2px solid;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .wishlist-btn.added {
+    background: rgba(239,68,68,0.15);
+    border-color: rgba(239,68,68,0.4);
+    color: #f87171;
+  }
+  .wishlist-btn.added:hover {
+    background: rgba(239,68,68,0.25);
+    border-color: #f87171;
+  }
+  .wishlist-btn.not-added {
+    background: rgba(56,189,248,0.1);
+    border-color: rgba(56,189,248,0.3);
+    color: #38bdf8;
+  }
+  .wishlist-btn.not-added:hover {
+    background: rgba(56,189,248,0.2);
+    border-color: #38bdf8;
+  }
 
-  /* ── INFO CARD ── */
+  .detail-section { padding: 60px 0 120px; flex: 1; }
   .info-card {
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.08);
@@ -133,8 +157,6 @@
   }
   .info-label { font-size: 0.75rem; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
   .info-value { font-size: 0.95rem; font-weight: 600; color: #fff; }
-
-  /* ── HOTEL CARDS ── */
   .hotel-card {
     background: rgba(255,255,255,0.03);
     border: 1px solid rgba(255,255,255,0.07);
@@ -165,8 +187,6 @@
   .hotel-name { font-size: 0.92rem; font-weight: 600; color: #fff; margin-bottom: 3px; }
   .hotel-meta { font-size: 0.78rem; color: rgba(255,255,255,0.4); }
   .hotel-arrow { margin-left: auto; color: rgba(255,255,255,0.2); }
-
-  /* ── EXPLORE CTA ── */
   .explore-cta {
     background: linear-gradient(135deg, rgba(14,165,233,0.08), rgba(37,99,235,0.08));
     border: 1px solid rgba(56,189,248,0.15);
@@ -177,7 +197,6 @@
   }
   .explore-cta h5 { color: #fff; font-weight: 700; margin-bottom: 8px; }
   .explore-cta p  { color: rgba(255,255,255,0.45); font-size: 0.88rem; margin-bottom: 20px; }
-
   .btn-primary-custom {
     display: inline-block;
     background: linear-gradient(135deg, #0ea5e9, #2563eb);
@@ -191,7 +210,6 @@
     margin: 4px;
   }
   .btn-primary-custom:hover { opacity: 0.9; transform: translateY(-2px); color: #fff; }
-
   .btn-outline-custom {
     display: inline-block;
     background: transparent;
@@ -206,8 +224,6 @@
     margin: 4px;
   }
   .btn-outline-custom:hover { background: #38bdf8; color: #0f172a; transform: translateY(-2px); }
-
-  /* ── ATTRACTIONS MINI LIST ── */
   .attraction-mini {
     background: rgba(255,255,255,0.03);
     border: 1px solid rgba(255,255,255,0.07);
@@ -239,15 +255,11 @@
 <!-- ── HERO ── -->
 <div class="detail-hero">
   <div class="container detail-hero-content">
-
     <a href="{% url 'city_list' %}" class="back-btn">← Back to Cities</a>
-
     <span class="detail-emoji">🏙️</span>
     <span class="detail-region-tag">📍 {{ city.region }} Division</span>
-
     <h1 class="detail-title">{{ city.name }}</h1>
     <p class="detail-description">{{ city.description }}</p>
-
     <div class="hero-stats">
       <div class="stat-box">
         <span class="stat-num">{{ city.population|floatformat:0 }}</span>
@@ -261,8 +273,17 @@
         <span class="stat-num">{{ hotels|length }}</span>
         <span class="stat-lbl">Hotels</span>
       </div>
-    </div>
 
+      <!-- Wishlist Button -->
+      {% if user.is_authenticated %}
+      <button id="wishlist-btn"
+              onclick="toggleWishlist()"
+              class="wishlist-btn {% if in_wishlist %}added{% else %}not-added{% endif %}">
+        <span id="wishlist-icon">{% if in_wishlist %}❤️{% else %}🤍{% endif %}</span>
+        <span id="wishlist-text">{% if in_wishlist %}Remove from Wishlist{% else %}Add to Wishlist{% endif %}</span>
+      </button>
+      {% endif %}
+    </div>
   </div>
 </div>
 
@@ -270,14 +291,10 @@
 <div class="detail-section">
   <div class="container">
     <div class="row g-4">
-
       <!-- Left: City Info + Attractions -->
       <div class="col-lg-8">
-
-        <!-- City Details -->
         <div class="info-card">
           <div class="info-card-title">📋 City Information</div>
-
           <div class="info-row">
             <div class="info-icon">🏙️</div>
             <div>
@@ -285,7 +302,6 @@
               <div class="info-value">{{ city.name }}</div>
             </div>
           </div>
-
           <div class="info-row">
             <div class="info-icon">🗺️</div>
             <div>
@@ -293,7 +309,6 @@
               <div class="info-value">{{ city.region }} Division</div>
             </div>
           </div>
-
           <div class="info-row">
             <div class="info-icon">👥</div>
             <div>
@@ -301,10 +316,7 @@
               <div class="info-value">{{ city.population|floatformat:0 }}</div>
             </div>
           </div>
-
         </div>
-
-        <!-- Attractions in this city -->
         <div class="info-card">
           <div class="info-card-title">🎡 Attractions in {{ city.name }}</div>
           {% for attraction in city.attraction_set.all %}
@@ -320,13 +332,9 @@
             <p style="color:rgba(255,255,255,0.35); font-size:0.88rem;">No attractions listed yet.</p>
           {% endfor %}
         </div>
-
       </div>
-
       <!-- Right: Hotels + CTA -->
       <div class="col-lg-4">
-
-        <!-- Hotels -->
         <div class="info-card mb-4">
           <div class="info-card-title">🏨 Hotels in {{ city.name }}</div>
           {% for hotel in hotels %}
@@ -343,18 +351,54 @@
             <p style="color:rgba(255,255,255,0.35); font-size:0.85rem;">No hotels listed yet.</p>
           {% endfor %}
         </div>
-
-        <!-- CTA -->
         <div class="explore-cta">
           <h5>🗺️ Explore More</h5>
           <p>Find restaurants and attractions in {{ city.name }}</p>
           <a href="/attractions/city/{{ city.id }}/" class="btn-primary-custom">🎡 Attractions</a>
           <a href="/restaurants/city/{{ city.id }}/" class="btn-outline-custom">🍽️ Restaurants</a>
         </div>
-
       </div>
     </div>
   </div>
 </div>
 
+<!-- Wishlist Toggle Script -->
+{% if user.is_authenticated %}
+<script>
+function toggleWishlist() {
+    const btn = document.getElementById('wishlist-btn');
+    const icon = document.getElementById('wishlist-icon');
+    const text = document.getElementById('wishlist-text');
+    const isAdded = btn.classList.contains('added');
+
+    const url = isAdded
+        ? "{% url 'wishlist:remove_city_from_wishlist' city.id %}"
+        : "{% url 'wishlist:add_to_wishlist' city.id %}";
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': '{{ csrf_token }}'
+        }
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.status === 'success') {
+            if (data.in_wishlist) {
+                btn.classList.remove('not-added');
+                btn.classList.add('added');
+                icon.textContent = '❤️';
+                text.textContent = 'Remove from Wishlist';
+            } else {
+                btn.classList.remove('added');
+                btn.classList.add('not-added');
+                icon.textContent = '🤍';
+                text.textContent = 'Add to Wishlist';
+            }
+        }
+    });
+}
+</script>
+{% endif %}
 {% endblock %}

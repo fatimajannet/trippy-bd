@@ -27,6 +27,7 @@ urlpatterns = [
     path('hotels/',      include('hotels.urls')),       # ✅ fixed prefix
     path('restaurants/', include('restaurants.urls')),  # ✅ fixed prefix
     path('',             views.home, name='home'),
+    path('wishlist/', include('wishlist.urls', namespace='wishlist')),
 
 ]
 from django.conf import settings
