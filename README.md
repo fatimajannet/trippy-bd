@@ -112,4 +112,5 @@ Each city includes:
 - ER diagram completed
 - Database schema designed
 - GitHub repository setup in progress
+- Five Features added
 
