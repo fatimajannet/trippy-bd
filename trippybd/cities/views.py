@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import City
 from hotels.models import Hotel
 from wishlist.models import Wishlist
+from travel_history.models import TravelHistory
 
 def home(request):
     return render(request, 'index.html')
@@ -27,3 +28,16 @@ def city_details(request, city_id):
         'in_wishlist': in_wishlist,
     }
     return render(request, 'cities/city_details.html', context)
+
+# cities/views.py
+def city_details(request, city_id):
+    city = get_object_or_404(City, id=city_id)
+    is_visited = False
+    if request.user.is_authenticated:
+        is_visited = TravelHistory.objects.filter(user=request.user, city=city).exists()
+    
+    return render(request, 'cities/city_details.html', {
+        'city': city,
+        'is_visited': is_visited,
+        # ... your other context ...
+    })

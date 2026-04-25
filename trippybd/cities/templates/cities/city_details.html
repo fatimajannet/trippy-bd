@@ -250,6 +250,48 @@
     border-radius: 50px;
   }
   .fee-free-tag { color: #4ade80 !important; }
+
+/* ── VISITED BUTTON ── */
+  .visited-btn {
+    padding: 12px 26px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 2px solid;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 10px; /* Space between wishlist and visited */
+  }
+  .visited-btn.is-visited {
+    background: rgba(34, 197, 94, 0.15);
+    border-color: rgba(34, 197, 94, 0.4);
+    color: #4ade80;
+  }
+  .visited-btn.is-visited:hover {
+    background: rgba(34, 197, 94, 0.25);
+    border-color: #4ade80;
+  }
+  .visited-btn.not-visited {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+  }
+  .visited-btn.not-visited:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #fff;
+  }
+
+ /* ── WISHLIST DISABLE ── */ 
+  .wishlist-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(1);
+  }
+  
 </style>
 
 <!-- ── HERO ── -->
@@ -274,14 +316,23 @@
         <span class="stat-lbl">Hotels</span>
       </div>
 
-      <!-- Wishlist Button -->
+      <!-- Button -->
       {% if user.is_authenticated %}
-      <button id="wishlist-btn"
-              onclick="toggleWishlist()"
-              class="wishlist-btn {% if in_wishlist %}added{% else %}not-added{% endif %}">
-        <span id="wishlist-icon">{% if in_wishlist %}❤️{% else %}🤍{% endif %}</span>
-        <span id="wishlist-text">{% if in_wishlist %}Remove from Wishlist{% else %}Add to Wishlist{% endif %}</span>
-      </button>
+      <div class="d-flex align-items-center">
+        <button id="wishlist-btn"
+                onclick="toggleWishlist()"
+                class="wishlist-btn {% if in_wishlist %}added{% else %}not-added{% endif %} {% if is_visited %}disabled{% endif %}">
+          <span id="wishlist-icon">{% if in_wishlist %}❤️{% else %}🤍{% endif %}</span>
+          <span id="wishlist-text">{% if in_wishlist %}Remove from Wishlist{% else %}Add to Wishlist{% endif %}</span>
+        </button>
+
+        <button id="visited-btn"
+                onclick="toggleVisited()"
+                class="visited-btn {% if is_visited %}is-visited{% else %}not-visited{% endif %}">
+          <span id="visited-icon">{% if is_visited %}✅{% else %}🔘{% endif %}</span>
+          <span id="visited-text">{% if is_visited %}Visited{% else %}Mark as Visited{% endif %}</span>
+        </button>
+      </div>
       {% endif %}
     </div>
   </div>
@@ -367,6 +418,14 @@
 <script>
 function toggleWishlist() {
     const btn = document.getElementById('wishlist-btn');
+    const visitedBtn = document.getElementById('visited-btn');
+    
+    // NEW: Prevent action if already visited
+    if (visitedBtn.classList.contains('is-visited')) {
+        alert("You've already visited this city! No need to keep it in your wishlist.");
+        return;
+    }
+
     const icon = document.getElementById('wishlist-icon');
     const text = document.getElementById('wishlist-text');
     const isAdded = btn.classList.contains('added');
@@ -386,19 +445,68 @@ function toggleWishlist() {
     .then(data => {
         if (data.status === 'success') {
             if (data.in_wishlist) {
-                btn.classList.remove('not-added');
-                btn.classList.add('added');
+                btn.classList.replace('not-added', 'added');
                 icon.textContent = '❤️';
                 text.textContent = 'Remove from Wishlist';
             } else {
-                btn.classList.remove('added');
-                btn.classList.add('not-added');
+                btn.classList.replace('added', 'not-added');
                 icon.textContent = '🤍';
                 text.textContent = 'Add to Wishlist';
             }
         }
     });
 }
+
+function toggleVisited() {
+    const btn = document.getElementById('visited-btn');
+    const icon = document.getElementById('visited-icon');
+    const text = document.getElementById('visited-text');
+    const wishBtn = document.getElementById('wishlist-btn'); // Get wishlist button reference
+    
+    const url = "{% url 'travel_history:toggle_visited' city.id %}";
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': '{{ csrf_token }}'
+        }
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.status === 'success') {
+            if (data.is_visited) {
+                // UI for Visited (Active)
+                btn.classList.replace('not-visited', 'is-visited');
+                icon.textContent = '✅';
+                text.textContent = 'Visited';
+
+                // FEATURE: Disable Wishlist button and reset its state
+                if (wishBtn) {
+                    wishBtn.classList.add('disabled');
+                    wishBtn.classList.remove('added');
+                    wishBtn.classList.add('not-added');
+                    document.getElementById('wishlist-icon').textContent = '🤍';
+                    document.getElementById('wishlist-text').textContent = 'Add to Wishlist';
+                }
+            } else {
+                // UI for Not Visited (Inactive)
+                btn.classList.replace('is-visited', 'not-visited');
+                icon.textContent = '🔘';
+                text.textContent = 'Mark as Visited';
+
+                // FEATURE: Re-enable Wishlist button
+                if (wishBtn) {
+                    wishBtn.classList.remove('disabled');
+                }
+            }
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+
+
 </script>
 {% endif %}
 {% endblock %}

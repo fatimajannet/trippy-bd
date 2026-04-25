@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponseForbidden
 from .models import Wishlist
 from cities.models import City
+from travel_history.models import TravelHistory
 
 @login_required
 def wishlist_view(request):
@@ -13,8 +14,25 @@ def wishlist_view(request):
 def add_to_wishlist(request, city_id):
     if request.method != 'POST':
         return HttpResponseForbidden()
+    
     city = get_object_or_404(City, id=city_id)
+    
+    # --- NEW SECURITY CHECK ---
+    # Check if the city is already in the user's travel history
+    is_visited = TravelHistory.objects.filter(user=request.user, city=city).exists()
+    
+    if is_visited:
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({
+                'status': 'error',
+                'message': 'You have already visited this city!',
+                'in_wishlist': False
+            }, status=400) # Sending a 400 error to indicate a bad request
+        return redirect(request.META.get('HTTP_REFERER', '/'))
+    # --------------------------
+
     wishlist_item, created = Wishlist.objects.get_or_create(user=request.user, city=city)
+    
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         return JsonResponse({
             'status': 'success',

@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% block title %}My Travel History - TrippyBD{% endblock %}
+{% block content %}
+<div style="max-width: 900px; margin: 40px auto; padding: 0 20px;">
+    <h1 style="font-size: 28px; margin-bottom: 10px; color: #2c3e50;">
+        🚩 My Travel History
+    </h1>
+
+    {% with entries=history_entries|default:object_list %}
+    {% if entries %}
+    <p style="color: #7f8c8d; margin-bottom: 25px;">
+        You have explored <strong>{{ paginator.count|default:entries.count }}</strong> cities so far.
+    </p>
+
+    <div style="display: grid; gap: 16px;">
+        {% for entry in entries %}
+        <div id="entry-row-{{ entry.id }}" style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            padding: 20px 24px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        ">
+            <div style="display: flex; align-items: center; gap: 20px;">
+                {% if entry.city.image %}
+                <img src="{{ entry.city.image.url }}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
+                {% else %}
+                <div style="width: 60px; height: 60px; background: #f8f9fa; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #ccc;">
+                    🏙️
+                </div>
+                {% endif %}
+
+                <div>
+                    <a href="{% url 'cities:city_details' entry.city.id %}"
+                       style="font-size: 18px; font-weight: 600; color: #2c3e50; text-decoration: none;">
+                        {{ entry.city.name }}
+                    </a>
+                    <div style="color: #27ae60; font-size: 13px; margin-top: 4px; font-weight: 500;">
+                        <span style="background: rgba(39, 174, 96, 0.1); padding: 2px 8px; border-radius: 4px;">
+                            ✓ Visited on {{ entry.visited_at|date:"M d, Y" }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 12px; align-items: center;">
+                <a href="{% url 'cities:city_details' entry.city.id %}" style="
+                    padding: 8px 18px;
+                    background: #f8f9fa;
+                    color: #2c3e50;
+                    text-decoration: none;
+                    border-radius: 20px;
+                    font-size: 14px;
+                    font-weight: 600;
+                    border: 1px solid #eee;
+                ">View City</a>
+
+                <button onclick="openRemoveModal({{ entry.id }}, this)"
+                        style="
+                            padding: 8px 18px;
+                            background: #fff;
+                            color: #e74c3c;
+                            border: 1px solid #fadbd8;
+                            border-radius: 20px;
+                            cursor: pointer;
+                            font-weight: 600;
+                            font-size: 14px;
+                            transition: all 0.2s;
+                        " onmouseover="this.style.background='#fdf2f2'" onmouseout="this.style.background='#fff'">
+                    ✕ Remove
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        {% endif %}
+    {% endwith %}
+</div>
+
+<div id="removeModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.55); z-index: 9999; align-items: center; justify-content: center;">
+    <div style="background: #1e1e2f; color: #fff; padding: 32px 36px; border-radius: 16px; text-align: center; max-width: 380px; width: 90%; box-shadow: 0 12px 40px rgba(0,0,0,0.4);">
+        <div style="font-size: 40px; margin-bottom: 12px;">📍</div>
+        <h3 style="margin: 0 0 8px; font-size: 20px; font-weight: 700;">Unmark Visited?</h3>
+        <p style="color: #aaa; font-size: 14px; margin: 0 0 24px;">Are you sure you want to remove this city from your travel history?</p>
+        <div style="display: flex; gap: 12px; justify-content: center;">
+            <button id="confirmRemoveBtn" style="padding: 10px 28px; background: #e74c3c; color: #fff; border: none; border-radius: 25px; cursor: pointer; font-weight: 700; font-size: 14px;">Yes, Remove</button>
+            <button onclick="closeRemoveModal()" style="padding: 10px 28px; background: #3a3a4f; color: #ccc; border: none; border-radius: 25px; cursor: pointer; font-weight: 600; font-size: 14px;">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script>
+let itemToDelete = null;
+let btnTrigger = null;
+
+function openRemoveModal(entryId, btn) {
+    itemToDelete = entryId;
+    btnTrigger = btn;
+    document.getElementById('removeModal').style.display = 'flex';
+}
+
+function closeRemoveModal() {
+    document.getElementById('removeModal').style.display = 'none';
+    itemToDelete = null;
+    btnTrigger = null;
+}
+
+document.getElementById('confirmRemoveBtn').addEventListener('click', function() {
+    if (!itemToDelete) return;
+    
+    const entryId = itemToDelete;
+    const btn = btnTrigger;
+    closeRemoveModal();
+
+    // Use AJAX (Fetch) to remove so it feels smooth like the Wishlist
+    fetch(`/travel-history/remove/${entryId}/`, {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': '{{ csrf_token }}'
+        }
+    })
+    .then(r => {
+        // Since your view might currently return a redirect, 
+        // we handle both JSON and normal response
+        if (r.ok) {
+            const row = document.getElementById(`entry-row-${entryId}`);
+            row.style.opacity = '0';
+            row.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                row.remove();
+                // If list is empty, refresh to show empty state
+                if (!document.querySelector('[id^="entry-row-"]')) {
+                    location.reload();
+                }
+            }, 300);
+        }
+    });
+});
+
+// Close on backdrop click
+document.getElementById('removeModal').addEventListener('click', function(e) {
+    if (e.target === this) closeRemoveModal();
+});
+</script>
+{% endblock %}

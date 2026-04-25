@@ -28,6 +28,8 @@ urlpatterns = [
     path('restaurants/', include('restaurants.urls')),  # ✅ fixed prefix
     path('',             views.home, name='home'),
     path('wishlist/', include('wishlist.urls', namespace='wishlist')),
+    path('cities/',      include(('cities.urls', 'cities'), namespace='cities')), 
+    path('travel-history/', include(('travel_history.urls', 'travel_history'), namespace='travel_history')),
 
 ]
 from django.conf import settings

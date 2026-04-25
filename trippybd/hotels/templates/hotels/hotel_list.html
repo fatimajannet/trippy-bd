@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block title %}Hotels — TrIppyBD{% endblock %}
 
 {% block content %}
 <style>
+  /* ── PAGE HERO ── */
   .page-hero {
     background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
     padding: 60px 0 40px; border-bottom: 1px solid rgba(255,255,255,0.07);
@@ -24,21 +27,80 @@
   .page-title span { color: #38bdf8; }
   .page-subtitle { color: rgba(255,255,255,0.5); font-size: 1rem; }
 
+  /* ── FILTER BAR ── */
   .filter-bar {
     background: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.07);
     padding: 18px 0; position: sticky; top: 57px; z-index: 100; backdrop-filter: blur(10px);
   }
-  .filter-scroll { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
-  .filter-scroll::-webkit-scrollbar { display: none; }
-  .filter-btn {
-    flex-shrink: 0; padding: 7px 18px; border-radius: 50px; font-size: 0.83rem;
-    font-weight: 500; border: 1px solid rgba(255,255,255,0.12); background: transparent;
-    color: rgba(255,255,255,0.6); cursor: pointer; transition: all 0.2s; white-space: nowrap;
+
+  /* Dropdown Styling */
+  .filter-dropdown-wrap {
+    position: relative;
+    min-width: 200px;
+  }
+  .filter-select {
+    width: 100%;
+    appearance: none;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    color: #fff;
+    padding: 10px 35px 10px 16px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.25s;
     font-family: 'Poppins', sans-serif;
   }
-  .filter-btn:hover { border-color: #38bdf8; color: #38bdf8; }
-  .filter-btn.active { background: #38bdf8; border-color: #38bdf8; color: #0f172a; font-weight: 600; }
+  .filter-select:focus {
+    border-color: #38bdf8;
+    background: rgba(255, 255, 255, 0.09);
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+  }
+  .filter-dropdown-wrap::after {
+    content: '▼';
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.4);
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+  .filter-select option {
+    background-color: #0f172a;
+    color: #fff;
+  }
 
+  /* Search Bar Styling */
+  .search-wrap {
+    position: relative;
+    max-width: 420px;
+  }
+  .search-wrap input {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    color: #fff;
+    padding: 10px 16px 10px 40px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: all 0.25s;
+  }
+  .search-wrap input:focus {
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 3px rgba(56,189,248,0.15);
+  }
+  .search-icon {
+    position: absolute;
+    left: 13px; top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255,255,255,0.3);
+  }
+
+  /* ── HOTEL CARDS ── */
   .hotels-section { padding: 50px 0 120px; flex: 1; }
   .results-info { color: rgba(255,255,255,0.4); font-size: 0.88rem; margin-bottom: 28px; }
   .results-info span { color: #38bdf8; font-weight: 600; }
@@ -74,6 +136,7 @@
   .meta-price span { font-size: 0.75rem; color: rgba(255,255,255,0.35); font-weight: 400; }
   .meta-rating { display: flex; align-items: center; gap: 5px; }
   .rating-num { font-size: 0.88rem; font-weight: 600; color: #fbbf24; }
+  
   .btn-card-detail {
     display: block; text-align: center;
     background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.25);
@@ -86,7 +149,7 @@
 <div class="page-hero">
   <div class="container page-hero-content">
     <div class="page-badge">🏨 Stay</div>
-    <h1 class="page-title">Best <span>Hotels</span></h1>
+    <h1 class="page-title">Best <span>Hotels</span> in Bangladesh</h1>
     <p class="page-subtitle">
       {% if selected_city %}Showing hotels in <strong style="color:#fff;">{{ selected_city.name }}</strong>
       {% else %}Explore {{ hotels|length }} hotels across Bangladesh{% endif %}
@@ -96,12 +159,24 @@
 
 <div class="filter-bar">
   <div class="container">
-    <div class="filter-scroll">
-      <a href="{% url 'hotel_list' %}" class="filter-btn {% if not selected_city %}active{% endif %}">🌍 All Cities</a>
-      {% for city in cities %}
-      <a href="{% url 'hotel_list_by_city' city.id %}"
-         class="filter-btn {% if selected_city.id == city.id %}active{% endif %}">{{ city.name }}</a>
-      {% endfor %}
+    <div class="d-flex align-items-center gap-3 flex-wrap">
+      
+      <div class="filter-dropdown-wrap">
+        <select class="filter-select" onchange="window.location.href=this.value;">
+          <option value="{% url 'hotel_list' %}" {% if not selected_city %}selected{% endif %}>🌍 All Cities</option>
+          {% for city in cities %}
+            <option value="{% url 'hotel_list_by_city' city.id %}" {% if selected_city.id == city.id %}selected{% endif %}>
+              {{ city.name }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="search-wrap ms-auto">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="hotelSearch" placeholder="Search hotels..." oninput="searchHotels()">
+      </div>
+
     </div>
   </div>
 </div>
@@ -109,19 +184,24 @@
 <div class="hotels-section">
   <div class="container">
     <p class="results-info">
-      Showing <span>{{ hotels|length }}</span> hotel{{ hotels|length|pluralize }}
+      Showing <span id="resultCount">{{ hotels|length }}</span> hotel{{ hotels|length|pluralize }}
       {% if selected_city %}in <span>{{ selected_city.name }}</span>{% endif %}
     </p>
-    <div class="row g-4">
+
+    <div class="row g-4" id="hotelsGrid">
       {% for hotel in hotels %}
-      <div class="col-sm-6 col-lg-4">
+      <div class="col-sm-6 col-lg-4 hotel-item" data-name="{{ hotel.name|lower }}">
         <div class="hotel-card h-100">
           <div class="card-top">
             <span class="card-emoji">🏨</span>
             <div class="card-name">{{ hotel.name }}</div>
             <div class="card-tags">
               <span class="tag tag-city">📍 {{ hotel.city.name }}</span>
-              <span class="tag tag-stars">{% for i in "12345" %}{% if forloop.counter <= hotel.stars %}⭐{% endif %}{% endfor %}</span>
+              <span class="tag tag-stars">
+                {% for i in "12345" %}
+                  {% if forloop.counter <= hotel.stars %}⭐{% endif %}
+                {% endfor %}
+              </span>
             </div>
           </div>
           <div class="card-body-custom">
@@ -136,6 +216,33 @@
       </div>
       {% endfor %}
     </div>
+
+    <div id="emptySearch" style="display:none; text-align:center; padding:80px 20px;">
+        <span style="font-size:4rem; display:block;">🔍</span>
+        <h3 style="color:rgba(255,255,255,0.5);">No hotels found</h3>
+        <p style="color:rgba(255,255,255,0.3);">Try adjusting your search terms.</p>
+    </div>
   </div>
 </div>
+
+<script>
+  function searchHotels() {
+    const input = document.getElementById('hotelSearch').value.toLowerCase().trim();
+    const items = document.querySelectorAll('.hotel-item');
+    let count = 0;
+
+    items.forEach(item => {
+      const name = item.getAttribute('data-name');
+      if (name.includes(input)) {
+        item.style.display = '';
+        count++;
+      } else {
+        item.style.display = 'none';
+      }
+    });
+
+    document.getElementById('resultCount').textContent = count;
+    document.getElementById('emptySearch').style.display = (count === 0) ? 'block' : 'none';
+  }
+</script>
 {% endblock %}

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'restaurants',
     'accounts',
     'wishlist',
+    'travel_history',
 ]
 
 MIDDLEWARE = [
@@ -142,7 +143,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
+import os
+
 STATIC_URL = 'static/'
+
+# This line tells Django to look at the root-level static folder
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
