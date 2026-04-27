@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% block title %}Book {{ room.r_type }} — TrIppyBD{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
+
+<style>
+    .booking-container {
+        padding: 80px 0;
+        background: radial-gradient(circle at top, #1e3a8a 0%, #0f172a 100%);
+        min-height: 90vh;
+    }
+    .booking-card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(15px);
+        border-radius: 24px; padding: 40px; color: white;
+    }
+    .form-control-custom {
+        background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1);
+        color: white; border-radius: 12px; padding: 14px; width: 100%; outline: none;
+    }
+    
+    /* Red styling for busy dates */
+    .flatpickr-day.booked-date, 
+    .flatpickr-day.booked-date:hover,
+    .flatpickr-day.flatpickr-disabled.booked-date {
+        background: rgba(239, 68, 68, 0.4) !important;
+        color: #ff4d4d !important;
+        border-color: transparent !important;
+        text-decoration: line-through;
+        opacity: 1 !important;
+    }
+
+    .price-box {
+        background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.2);
+        border-radius: 15px; padding: 20px; margin-top: 20px; display: none;
+    }
+    .btn-book {
+        background: linear-gradient(135deg, #38bdf8, #2563eb);
+        color: white; border: none; border-radius: 12px; padding: 16px;
+        font-weight: 700; width: 100%; margin-top: 20px; transition: 0.2s;
+    }
+    .btn-book:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3); }
+</style>
+
+<div class="booking-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="booking-card">
+                    <div style="border-left: 4px solid #38bdf8; padding-left: 15px;" class="mb-4">
+                        <h2 class="h4 fw-bold mb-1">{{ room.hotel.name }}</h2>
+                        <p class="mb-0 text-white-50 small">{{ room.r_type }} · ৳{{ room.r_price }}/night</p>
+                    </div>
+                    
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="small text-white-50 mb-2">CHECK-IN</label>
+                            <input type="text" name="check_in" id="check_in" class="form-control-custom" placeholder="Select Date" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="small text-white-50 mb-2">CHECK-OUT</label>
+                            <input type="text" name="check_out" id="check_out" class="form-control-custom" placeholder="Select Date" required>
+                        </div>
+
+                        <div id="price-summary" class="price-box">
+                            <div class="d-flex justify-content-between small">
+                                <span>Duration: <span id="nights-count">0</span> Nights</span>
+                                <span class="text-success fw-bold">Total: ৳<span id="total-amount">0</span></span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-book">Confirm Booking</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    const bookedDates = {{ booked_dates_json|safe }};
+    const pricePerNight = parseFloat("{{ room.r_price }}");
+
+    const commonConfig = {
+        dateFormat: "Y-m-d",
+        minDate: "today",
+        disable: bookedDates,
+        onDayCreate: function(dObj, dStr, fp, dayElem) {
+            const date = dayElem.dateObj;
+            const dateStr = date.getFullYear() + "-" + 
+                            String(date.getMonth() + 1).padStart(2, '0') + "-" + 
+                            String(date.getDate()).padStart(2, '0');
+            if (bookedDates.includes(dateStr)) {
+                dayElem.classList.add("booked-date");
+            }
+        }
+    };
+
+    const cinPicker = flatpickr("#check_in", {
+        ...commonConfig,
+        onChange: function(selectedDates) {
+            if (selectedDates[0]) {
+                // Rule: Check-out must be at least the NEXT day
+                let minOut = new Date(selectedDates[0]);
+                minOut.setDate(minOut.getDate() + 1);
+                coutPicker.set("minDate", minOut);
+                
+                if (coutPicker.selectedDates[0] <= selectedDates[0]) {
+                    coutPicker.clear();
+                }
+            }
+            calculate();
+        }
+    });
+
+    const coutPicker = flatpickr("#check_out", {
+        ...commonConfig,
+        onChange: calculate
+    });
+
+    function calculate() {
+        const d1 = cinPicker.selectedDates[0];
+        const d2 = coutPicker.selectedDates[0];
+        if (d1 && d2) {
+            const diff = Math.ceil((d2 - d1) / (1000 * 3600 * 24));
+            if (diff > 0) {
+                document.getElementById('price-summary').style.display = 'block';
+                document.getElementById('nights-count').innerText = diff;
+                document.getElementById('total-amount').innerText = (diff * pricePerNight).toLocaleString();
+            }
+        }
+    }
+</script>
+{% endblock %}

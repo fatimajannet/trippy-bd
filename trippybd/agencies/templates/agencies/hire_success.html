@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Booking Confirmed — TrippyBD{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 100px 0; text-align: center;">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="info-card" style="background: rgb(12, 58, 71); border: 1px solid #001220; padding: 50px;">
+                <div style="font-size: 5rem; margin-bottom: 20px;">🎉</div>
+                <h1 class="text-white mb-3">Booking Confirmed!</h1>
+                <p class="text-white-50 mb-5">Your trip to <strong>{{ hire.guide.agency.city.name }}</strong> just got better. 
+                <strong>{{ hire.guide.g_name }}</strong> is excited to meet you on {{ hire.hire_date }}.</p>
+
+                <div class="p-4 mb-5" style="background: rgba(255,255,255,0.03); border-radius: 12px; text-align: left;">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted small">Guide Name:</span>
+                        <span class="text-white">{{ hire.guide.g_name }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted small">Total Days:</span>
+                        <span class="text-white">{{ hire.days }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span class="text-muted small">Amount Paid:</span>
+                        <span class="text-success" style="font-weight: 700;">৳{{ hire.total_cost }}</span>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-3 justify-content-center">
+                    <a href="{% url 'home' %}" class="btn-outline-custom">Return Home</a>
+                    <a href="{% url 'dashboard' %}" class="btn-primary-custom">View My Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

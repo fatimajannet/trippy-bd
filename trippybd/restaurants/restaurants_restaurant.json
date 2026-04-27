@@ -754,5 +754,41 @@
       "average_price": "200.00",
       "rating": "4.1"
     }
+  },
+    {
+    "model": "restaurants.restaurant",
+    "pk": 64,
+    "fields": {
+      "city": 22,
+      "name": "Poushee Restaurant",
+      "description": "The most famous spot in town for authentic Bengali seafood and varta-bhaat.",
+      "cuisine_type": "Bengali",
+      "average_price": "450.00",
+      "rating": "4.7"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 65,
+    "fields": {
+      "city": 22,
+      "name": "Mermaid Café",
+      "description": "Eco-friendly beach vibe cafe famous for its relaxed atmosphere and wood-fired pizzas.",
+      "cuisine_type": "Italian/Fusion",
+      "average_price": "1200.00",
+      "rating": "4.4"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "pk": 66,
+    "fields": {
+      "city": 22,
+      "name": "Ekyanee Restaurant",
+      "description": "Specializes in traditional indigenous styles of cooking fresh fish and bamboo chicken.",
+      "cuisine_type": "Tribal/Bengali",
+      "average_price": "500.00",
+      "rating": "4.6"
+    }
   }
 ]

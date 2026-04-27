@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Travel Agencies — TrIppyBD{% endblock %}
+
+{% block content %}
+<style>
+  /* ── PAGE HERO ── */
+  .page-hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
+    padding: 60px 0 40px; border-bottom: 1px solid rgba(255,255,255,0.07);
+    position: relative; overflow: hidden;
+  }
+  .page-hero::before {
+    content: ''; position: absolute; width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(56,189,248,0.1) 0%, transparent 70%);
+    top: -100px; right: -100px; border-radius: 50%;
+  }
+  .page-hero-content { position: relative; z-index: 2; }
+  .page-badge {
+    display: inline-block; background: rgba(56,189,248,0.12);
+    border: 1px solid rgba(56,189,248,0.3); color: #38bdf8;
+    font-size: 0.78rem; font-weight: 600; padding: 5px 16px;
+    border-radius: 50px; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 1px;
+  }
+  .page-title { font-size: 2.4rem; font-weight: 800; color: #fff; margin-bottom: 10px; }
+  .page-title span { color: #38bdf8; }
+  .page-subtitle { color: rgba(255,255,255,0.5); font-size: 1rem; }
+
+  /* ── FILTER BAR ── */
+  .filter-bar {
+    background: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.07);
+    padding: 18px 0; position: sticky; top: 57px; z-index: 100; backdrop-filter: blur(10px);
+  }
+
+  /* Dropdown Styling */
+  .filter-dropdown-wrap {
+    position: relative;
+    min-width: 200px;
+  }
+  .filter-select {
+    width: 100%;
+    appearance: none;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    color: #fff;
+    padding: 10px 35px 10px 16px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.25s;
+    font-family: 'Poppins', sans-serif;
+  }
+  .filter-select:focus {
+    border-color: #38bdf8;
+    background: rgba(255, 255, 255, 0.09);
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+  }
+  .filter-dropdown-wrap::after {
+    content: '▼';
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.4);
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+  .filter-select option {
+    background-color: #0f172a;
+    color: #fff;
+  }
+
+  /* ── AGENCY CARDS ── */
+  .agency-section { padding: 50px 0 120px; flex: 1; }
+  .results-info { color: rgba(255,255,255,0.4); font-size: 0.88rem; margin-bottom: 28px; }
+  .results-info span { color: #38bdf8; font-weight: 600; }
+
+  .agency-card {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; overflow: hidden; transition: all 0.3s;
+    height: 100%; display: flex; flex-direction: column;
+  }
+  .agency-card:hover {
+    background: rgba(56,189,248,0.06); border-color: rgba(56,189,248,0.25);
+    transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  }
+  .card-top {
+    background: linear-gradient(135deg, rgba(14,165,233,0.15), rgba(37,99,235,0.15));
+    padding: 26px 22px 18px; border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .card-emoji { font-size: 2rem; display: block; margin-bottom: 10px; }
+  .card-name { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  .tag { display: inline-flex; align-items: center; gap: 4px; font-size: 0.72rem; font-weight: 500; padding: 3px 12px; border-radius: 50px; background: rgba(56,189,248,0.12); border: 1px solid rgba(56,189,248,0.2); color: #38bdf8; }
+
+  .card-body-custom { padding: 18px 22px; flex: 1; display: flex; flex-direction: column; }
+  .card-meta {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 0; border-top: 1px solid rgba(255,255,255,0.06); margin-top: auto;
+  }
+  .guide-count { font-size: 0.85rem; color: rgba(255,255,255,0.5); }
+  .guide-count strong { color: #38bdf8; }
+  .rating-badge { color: #fbbf24; font-weight: 600; font-size: 0.9rem; }
+
+  .btn-card-detail {
+    display: block; text-align: center;
+    background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.25);
+    color: #38bdf8; padding: 10px 0; border-radius: 8px;
+    font-size: 0.85rem; font-weight: 600; text-decoration: none; transition: all 0.2s;
+    margin-top: 10px;
+  }
+  .btn-card-detail:hover { background: #38bdf8; color: #0f172a; }
+</style>
+
+<div class="page-hero">
+  <div class="container page-hero-content">
+    <div class="page-badge">💼 Travel Partners</div>
+    <h1 class="page-title">Trusted <span>Agencies</span></h1>
+    <p class="page-subtitle">Find local experts and professional guides in {{ agencies|length }} agencies</p>
+  </div>
+</div>
+
+<div class="filter-bar">
+  <div class="container">
+    <div class="d-flex align-items-center gap-3 flex-wrap">
+      
+      <div class="filter-dropdown-wrap">
+        <select class="filter-select" id="cityDropdown" onchange="filterAgencies()">
+            <option value="all">🌍 All Cities</option>
+            {% for city in cities %}
+                <option value="{{ city.name|lower }}">{{ city.name }}</option>
+            {% endfor %}
+        </select>
+      </div>
+
+      <div class="search-wrap ms-auto">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="agencySearch" placeholder="Search agencies..." oninput="filterAgencies()">
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="agency-section">
+  <div class="container">
+    <p class="results-info">Showing <span id="resultCount">{{ agencies|length }}</span> agencies</p>
+
+    <div class="row g-4" id="agenciesGrid">
+      {% for agency in agencies %}
+      <div class="col-sm-6 col-lg-4 agency-item" data-name="{{ agency.ag_name|lower }}" data-city="{{ agency.city.name|lower }}">
+        <div class="agency-card h-100">
+          <div class="card-top">
+            <span class="card-emoji">💼</span>
+            <div class="card-name">{{ agency.ag_name }}</div>
+            <span class="tag">📍 {{ agency.city.name }}</span>
+          </div>
+          <div class="card-body-custom">
+            <p class="text-white-50 small mb-4">Official partner agency providing verified tour guides and local travel assistance.</p>
+            <div class="card-meta">
+              <div class="guide-count"><strong>{{ agency.guides.count }}</strong> Guides Available</div>
+              <div class="rating-badge">⭐ {{ agency.ag_rating }}</div>
+            </div>
+            <a href="{% url 'agency_detail' agency.pk %}" class="btn-card-detail">View Local Guides →</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div id="emptySearch" style="display:none; text-align:center; padding:80px 20px;">
+        <span style="font-size:4rem; display:block;">💼</span>
+        <h3 style="color:rgba(255,255,255,0.5);">No agencies found</h3>
+        <p style="color:rgba(255,255,255,0.3);">Try a different city or search term.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function filterAgencies() {
+    // 1. Always pull the LATEST values from both inputs
+    const searchInput = document.getElementById('agencySearch').value.toLowerCase().trim();
+    const cityDropdown = document.querySelector('.filter-select').value.toLowerCase();
+    
+    const items = document.querySelectorAll('.agency-item');
+    let count = 0;
+
+    items.forEach(item => {
+      const name = item.getAttribute('data-name');
+      const city = item.getAttribute('data-city');
+      
+      // 2. Perform the dual-check
+      const matchesSearch = name.includes(searchInput);
+      const matchesCity = (cityDropdown === 'all' || city === cityDropdown);
+
+      if (matchesSearch && matchesCity) {
+        item.style.display = '';
+        count++;
+      } else {
+        item.style.display = 'none';
+      }
+    });
+
+    // 3. Update the UI
+    document.getElementById('resultCount').textContent = count;
+    
+    const emptyState = document.getElementById('emptySearch');
+    if (emptyState) {
+        emptyState.style.display = (count === 0) ? 'block' : 'none';
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', filterAgencies);
+</script>
+{% endblock %}

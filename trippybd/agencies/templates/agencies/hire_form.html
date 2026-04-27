@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block title %}Hire {{ guide.g_name }} — TrIppyBD{% endblock %}
+
+{% block content %}
+<style>
+    .hire-container { padding: 80px 0; min-height: 80vh; background: #0f172a; }
+    .hire-card {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        padding: 40px;
+        backdrop-filter: blur(12px);
+    }
+    .guide-mini-info {
+        background: rgba(56, 189, 248, 0.08);
+        border-radius: 16px;
+        padding: 24px;
+        margin-bottom: 30px;
+        border: 1px solid rgba(56, 189, 248, 0.2);
+    }
+    .price-display {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: #4ade80;
+    }
+    .form-label-custom {
+        color: rgba(255,255,255,0.4);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 10px;
+        display: block;
+    }
+    .input-custom {
+        width: 100%;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 12px;
+        padding: 14px;
+        color: #fff;
+        margin-bottom: 25px;
+        outline: none;
+        transition: 0.2s;
+    }
+    .input-custom:focus { border-color: #38bdf8; background: rgba(255,255,255,0.08); }
+</style>
+
+<div class="hire-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-8">
+                <div class="hire-card">
+                    <h2 class="text-white fw-bold mb-4">Confirm Hiring</h2>
+                    
+                    <div class="guide-mini-info">
+                        <div class="text-white-50 small mb-1">Agency: {{ guide.agency.ag_name }}</div>
+                        <h4 class="text-white fw-bold mb-2">👤 {{ guide.g_name }}</h4>
+                        <div style="color: #fbbf24; font-size: 0.9rem;">⭐ {{ guide.g_rating }} Rating</div>
+                    </div>
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        
+                        <label class="form-label-custom">Travel Date</label>
+                        <input type="date" name="hire_date" id="datePicker" class="input-custom" required>
+
+                        <label class="form-label-custom">Duration (Number of Days)</label>
+                        <input type="number" name="days" id="daysInput" value="1" min="1" max="14" class="input-custom" oninput="updateTotal()">
+
+                        <div class="d-flex justify-content-between align-items-center mt-4 pt-4 border-top border-secondary">
+                            <div>
+                                <div class="form-label-custom mb-0">Total Investment</div>
+                                <div class="price-display" id="totalDisplay">৳{{ guide.price_per_day }}</div>
+                            </div>
+                            <button type="submit" class="btn-primary-custom" style="padding: 12px 30px;">Book Now →</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 1. Prevent selecting dates in the past
+    const dateInput = document.getElementById('datePicker');
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.setAttribute('min', today);
+
+    // 2. Real-time cost calculation
+    function updateTotal() {
+        const days = document.getElementById('daysInput').value;
+        const rate = parseFloat("{{ guide.price_per_day }}");
+        
+        if (days >= 1) {
+            const total = (days * rate).toFixed(2);
+            document.getElementById('totalDisplay').textContent = '৳' + total;
+        }
+    }
+</script>
+{% endblock %}

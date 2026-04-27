@@ -30,6 +30,7 @@ urlpatterns = [
     path('wishlist/', include('wishlist.urls', namespace='wishlist')),
     path('cities/',      include(('cities.urls', 'cities'), namespace='cities')), 
     path('travel-history/', include(('travel_history.urls', 'travel_history'), namespace='travel_history')),
+    path('agencies/', include('agencies.urls')),
 
 ]
 from django.conf import settings

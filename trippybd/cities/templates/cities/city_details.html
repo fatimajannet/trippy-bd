@@ -354,7 +354,7 @@
             </div>
           </div>
           <div class="info-row">
-            <div class="info-icon">🗺️</div>
+            <div class="info-icon">💼</div>
             <div>
               <div class="info-label">Division / Region</div>
               <div class="info-value">{{ city.region }} Division</div>
@@ -386,6 +386,7 @@
       </div>
       <!-- Right: Hotels + CTA -->
       <div class="col-lg-4">
+        
         <div class="info-card mb-4">
           <div class="info-card-title">🏨 Hotels in {{ city.name }}</div>
           {% for hotel in hotels %}
@@ -402,12 +403,32 @@
             <p style="color:rgba(255,255,255,0.35); font-size:0.85rem;">No hotels listed yet.</p>
           {% endfor %}
         </div>
+
+        <div class="info-card mb-4">
+          <div class="info-card-title">💼 Travel Agencies</div>
+          {% for agency in city.agencies.all %}
+          <a href="{% url 'agency_detail' agency.pk %}" class="hotel-link" style="text-decoration: none; color: inherit;">
+            <div class="hotel-card" style="border-left: 3px solid #38bdf8;">
+              <div class="hotel-icon" style="background: rgba(56,189,248,0.15); color: #38bdf8;">💼</div>
+              <div>
+                <div class="hotel-name">{{ agency.ag_name }}</div>
+                <div class="hotel-meta">⭐ {{ agency.ag_rating }} · Local Guides</div>
+              </div>
+              <span class="hotel-arrow">→</span>
+            </div>
+          </a>
+          {% empty %}
+            <p style="color:rgba(255,255,255,0.35); font-size:0.85rem;">No local agencies found.</p>
+          {% endfor %}
+        </div>
+
         <div class="explore-cta">
-          <h5>🗺️ Explore More</h5>
+          <h5>💼 Explore More</h5>
           <p>Find restaurants and attractions in {{ city.name }}</p>
           <a href="/attractions/city/{{ city.id }}/" class="btn-primary-custom">🎡 Attractions</a>
           <a href="/restaurants/city/{{ city.id }}/" class="btn-outline-custom">🍽️ Restaurants</a>
         </div>
+
       </div>
     </div>
   </div>

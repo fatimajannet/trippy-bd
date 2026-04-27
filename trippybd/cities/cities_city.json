@@ -208,5 +208,15 @@
       "population": 222000,
       "region": "Khulna"
     }
+  },
+  {
+    "model": "cities.city",
+    "pk": 22,
+    "fields": {
+      "name": "Cox's Bazar",
+      "description": "Home to the world's longest natural sea beach, Cox's Bazar is the tourism capital of Bangladesh.",
+      "population": 265500,
+      "region": "Chattogram"
+    }
   }
 ]

@@ -25,7 +25,7 @@
   .detail-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
   .dtag { display: inline-flex; align-items: center; gap: 5px; font-size: 0.82rem; font-weight: 600; padding: 5px 14px; border-radius: 50px; }
   .dtag-city { background: rgba(56,189,248,0.12); border: 1px solid rgba(56,189,248,0.25); color: #38bdf8; text-decoration: none; }
-  .dtag-stars { background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.2); color: #fbbf24; }
+  .dtag-amenity { background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.2); color: #4ade80; }
   .detail-title { font-size: 2.5rem; font-weight: 800; color: #fff; margin-bottom: 12px; }
   .detail-description { font-size: 1.05rem; color: rgba(255,255,255,0.55); line-height: 1.85; max-width: 680px; margin-bottom: 28px; }
   .hero-stats { display: flex; gap: 20px; flex-wrap: wrap; }
@@ -88,6 +88,14 @@
     font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: all 0.25s; margin: 4px;
   }
   .btn-outline-custom:hover { background: #38bdf8; color: #0f172a; }
+
+  .room-card {
+    background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 10px; padding: 16px; margin-bottom: 12px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .room-info h6 { color: #fff; font-weight: 600; margin-bottom: 4px; }
+  .room-info p { color: rgba(255,255,255,0.4); font-size: 0.85rem; margin: 0; }
 </style>
 
 <div class="detail-hero">
@@ -96,22 +104,24 @@
     <span class="detail-emoji">🏨</span>
     <div class="detail-tags">
       <a href="/hotels/city/{{ hotel.city.id }}/" class="dtag dtag-city">📍 {{ hotel.city.name }}</a>
-      <span class="dtag dtag-stars">{% for i in "12345" %}{% if forloop.counter <= hotel.stars %}⭐{% endif %}{% endfor %} {{ hotel.stars }} Star</span>
+      {% for amenity in hotel.amenities.all %}
+        <span class="dtag dtag-amenity">✓ {{ amenity.name }}</span>
+      {% endfor %}
     </div>
     <h1 class="detail-title">{{ hotel.name }}</h1>
     <p class="detail-description">{{ hotel.description }}</p>
     <div class="hero-stats">
       <div class="stat-box">
-        <span class="stat-num">৳{{ hotel.price_per_night }}</span>
-        <span class="stat-lbl">Per Night</span>
+        <span class="stat-num">{{ hotel.rooms.count }}</span>
+        <span class="stat-lbl">Rooms Available</span>
       </div>
       <div class="stat-box">
         <span class="stat-num">⭐ {{ hotel.rating }}</span>
         <span class="stat-lbl">Rating</span>
       </div>
       <div class="stat-box">
-        <span class="stat-num">{{ hotel.stars }} ★</span>
-        <span class="stat-lbl">Stars</span>
+        <span class="stat-num">{{ hotel.amenities.count }}</span>
+        <span class="stat-lbl">Amenities</span>
       </div>
     </div>
   </div>
@@ -128,21 +138,31 @@
             <div><div class="info-label">Location</div><div class="info-value">{{ hotel.city.name }}, {{ hotel.city.region }}</div></div>
           </div>
           <div class="info-row">
-            <div class="info-icon">💰</div>
-            <div><div class="info-label">Price Per Night</div><div class="info-value price">৳{{ hotel.price_per_night }}</div></div>
-          </div>
-          <div class="info-row">
             <div class="info-icon">⭐</div>
             <div><div class="info-label">Rating</div><div class="info-value rating">{{ hotel.rating }} / 5.0</div></div>
-          </div>
-          <div class="info-row">
-            <div class="info-icon">🏅</div>
-            <div><div class="info-label">Star Category</div><div class="info-value">{{ hotel.stars }} Star Hotel</div></div>
           </div>
           <div class="info-row">
             <div class="info-icon">🗺️</div>
             <div><div class="info-label">Region</div><div class="info-value">{{ hotel.city.region }} Division</div></div>
           </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-title">🛏️ Available Rooms</div>
+          {% for room in hotel.rooms.all %}
+            <div class="room-card">
+              <div class="room-info">
+                <h6>{{ room.r_type }} (Room {{ room.r_id }})</h6>
+                <p>{{ room.feature }}</p>
+              </div>
+              <div class="text-end">
+                <div class="info-value price" style="margin-bottom: 8px;">৳{{ room.r_price }} / night</div>
+                <a href="{% url 'book_room' room.id %}" class="btn-primary-custom">Book Now</a>
+              </div>
+            </div>
+          {% empty %}
+            <p style="color:rgba(255,255,255,0.4); font-size: 0.9rem;">No rooms are currently listed for this hotel.</p>
+          {% endfor %}
         </div>
       </div>
 
@@ -155,7 +175,7 @@
               <div class="nearby-icon">🏨</div>
               <div>
                 <div class="nearby-name">{{ nearby.name }}</div>
-                <div class="nearby-meta">৳{{ nearby.price_per_night }}/night · ⭐ {{ nearby.rating }}</div>
+                <div class="nearby-meta">⭐ {{ nearby.rating }}</div>
               </div>
               <span class="nearby-arrow">→</span>
             </a>

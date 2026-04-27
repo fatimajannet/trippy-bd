@@ -395,4 +395,38 @@
       "city_id": 21
     }
   }
+  {
+    "model": "attractions.attraction",
+    "pk": 37,
+    "fields": {
+      "name": "Inani Beach",
+      "description": "A beautiful beach famous for its coral stones and blue waters.",
+      "entry_fee": "0.00",
+      "opening_hours": "Open 24 Hours",
+      "city_id": 22
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 38,
+    "fields": {
+      "name": "Laboni Beach",
+      "description": "The main beach point of Cox's Bazar.",
+      "entry_fee": "0.00",
+      "opening_hours": "Open 24 Hours",
+      "city_id": 22
+    }
+  },
+  {
+    "model": "attractions.attraction",
+    "pk": 39,
+    "fields": {
+      "name": "Himchari National Park",
+      "description": "Famous for its beautiful waterfall and hilltop views of the Bay of Bengal.",
+      "entry_fee": "20.00",
+      "opening_hours": "8:00 AM - 6:00 PM",
+      "city_id": 22
+    }
+  }
+
 ]

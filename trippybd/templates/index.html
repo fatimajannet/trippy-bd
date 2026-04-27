@@ -356,6 +356,7 @@
       <div class="d-flex align-items-center gap-2 flex-wrap" id="navLinks">
         <a class="nav-link-custom" href="/cities/">🏙️ Cities</a>
         <a class="nav-link-custom" href="/hotels/">🏨 Hotels</a>
+        <a class="nav-link-custom" href="/agencies/">💼 Agencies</a>
         <a class="nav-link-custom" href="/restaurants/">🍽️ Restaurants</a>
         <a class="nav-link-custom" href="/attractions/">🎡 Attractions</a>
         <div style="width:1px; height:24px; background:rgba(255,255,255,0.12); margin: 0 6px;"></div>
@@ -382,19 +383,27 @@
       </div>
       <div class="hero-stats">
         <div class="stat-item">
-          <span class="stat-num">21+</span>
+          <span class="stat-num">{{ city_count }}</span>
           <span class="stat-label">Cities</span>
         </div>
         <div class="stat-item">
-          <span class="stat-num">100+</span>
+          <span class="stat-num">{{ attraction_count }}</span>
           <span class="stat-label">Attractions</span>
         </div>
         <div class="stat-item">
-          <span class="stat-num">200+</span>
+          <span class="stat-num">{{hotel_count}}</span>
           <span class="stat-label">Hotels</span>
         </div>
         <div class="stat-item">
-          <span class="stat-num">300+</span>
+          <span class="stat-num">{{agency_count}}</span>
+          <span class="stat-label">Agencies</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-num">{{ guide_count }}</span>
+            <span class="stat-label">Tour Guides</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">{{restaurant_count}}</span>
           <span class="stat-label">Restaurants</span>
         </div>
       </div>
@@ -434,6 +443,14 @@
           </a>
         </div>
         <div class="col-md-6 col-lg-3">
+          <a href="/agencies/" class="explore-card">
+            <span class="card-icon">💼</span>
+            <div class="card-title-custom">Agencies</div>
+            <p class="card-desc">Find {{ agency_count }} agencies and {{ guide_count }} expert guides to help you explore.</p>
+            <span class="card-arrow">Find Guides →</span>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-3">
           <a href="/restaurants/" class="explore-card">
             <span class="card-icon">🍽️</span>
             <div class="card-title-custom">Restaurants</div>
@@ -441,6 +458,7 @@
             <span class="card-arrow">Find Restaurants →</span>
           </a>
         </div>
+        
       </div>
     </div>
   </section>
@@ -449,7 +467,7 @@
   <section class="auth-cta-section">
     <div class="container">
       <div class="auth-cta-card">
-        <div style="font-size:3rem; margin-bottom:16px;">🗺️</div>
+        <div style="font-size:3rem; margin-bottom:16px;">💼</div>
         <h2>Start Your Journey Today</h2>
         <p>Create a free account to save your favourite cities, hotels and attractions.
            Your personalised travel dashboard is just one click away.</p>

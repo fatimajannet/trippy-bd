@@ -1,70 +1,213 @@
 {% extends 'base.html' %}
+{% block title %}My Dashboard — TrIppyBD{% endblock %}
+
 {% block content %}
-<div class="container mt-5">
-  <h2>Welcome, {{ user.fname }} 👋</h2>
+<style>
+    :root {
+        --glass-bg: rgba(255, 255, 255, 0.03);
+        --glass-border: rgba(255, 255, 255, 0.08);
+        --accent-blue: #38bdf8;
+        --accent-green: #4ade80;
+    }
 
-  <div class="row mt-4">
-    <div class="col-md-5">
-      <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white">
-          <h5 class="mb-0">My Profile</h5>
-        </div>
-        <div class="card-body">
-          <table class="table table-borderless mb-0">
-            <tr>
-              <th>User ID</th>
-              <td><code>{{ user.u_id }}</code></td>
-            </tr>
-            <tr>
-              <th>Username</th>
-              <td>{{ user.username }}</td>
-            </tr>
-            <tr>
-              <th>Full Name</th>
-              <td>{{ user.get_full_name }}</td>
-            </tr>
-            <tr>
-              <th>Email</th>
-              <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-              <th>Location</th>
-              <td>{{ user.u_location|default:"Not set" }}</td>
-            </tr>
-            <tr>
-              <th>Member Since</th>
-              <td>{{ user.date_joined|date:"M d, Y" }}</td>
-            </tr>
-          </table>
-        </div>
-        <div class="card-footer">
-          <a href="{% url 'update_profile' %}" class="btn btn-sm btn-outline-primary">
-            ✏️ Edit Profile
-          </a>
-          <a href="{% url 'logout' %}" class="btn btn-sm btn-outline-danger float-end">
-            🚪 Logout
-          </a>
-        </div>
-      </div>
-    </div>
+    .dashboard-container { padding: 60px 0 100px; background: #0f172a; min-height: 100vh; color: #fff; }
 
-    <!-- Explore Links -->
-    <div class="col-md-7">
-      <div class="card shadow-sm">
-        <div class="card-header bg-secondary text-white">
-          <h5 class="mb-0">Explore TrIppyBD</h5>
+    /* ── GLASS CARD ── */
+    .glass-card {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        backdrop-filter: blur(12px);
+        border-radius: 24px;
+        padding: 30px;
+        transition: transform 0.3s ease;
+    }
+
+    /* ── PROFILE SIDEBAR ── */
+    .user-avatar {
+        width: 65px; height: 65px;
+        background: linear-gradient(135deg, var(--accent-blue), #2563eb);
+        border-radius: 18px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.8rem; font-weight: 800; margin-bottom: 20px;
+        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+    }
+    .profile-stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; }
+
+    /* ── TABLES (The Fix for the White Box) ── */
+    .table-container {
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 20px;
+        border: 1px solid var(--glass-border);
+        overflow: hidden;
+        margin-bottom: 30px;
+    }
+    .custom-table { width: 100%; border-collapse: separate; border-spacing: 0; color: #fff; }
+    .custom-table thead th {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 18px 25px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--accent-blue);
+        border-bottom: 1px solid var(--glass-border);
+    }
+    .custom-table tbody td {
+        padding: 20px 25px;
+        border-bottom: 1px solid var(--glass-border);
+        vertical-align: middle;
+    }
+    .custom-table tbody tr:last-child td { border-bottom: none; }
+    .custom-table tbody tr:hover { background: rgba(255, 255, 255, 0.03); }
+
+    /* ── STATUS BADGES ── */
+    .badge-pending {
+        background: rgba(251, 191, 36, 0.1);
+        color: #fbbf24;
+        border: 1px solid rgba(251, 191, 36, 0.2);
+        padding: 6px 14px; border-radius: 50px; font-size: 0.75rem; font-weight: 600;
+    }
+    .badge-confirmed {
+        background: rgba(74, 222, 128, 0.1);
+        color: var(--accent-green);
+        border: 1px solid rgba(74, 222, 128, 0.2);
+        padding: 6px 14px; border-radius: 50px; font-size: 0.75rem; font-weight: 600;
+    }
+
+    /* ── WISH-LINKS ── */
+    .wish-nav {
+        text-decoration: none; display: flex; align-items: center; gap: 15px;
+        padding: 15px; border-radius: 15px; background: rgba(255,255,255,0.03);
+        border: 1px solid var(--glass-border); transition: 0.2s;
+    }
+    .wish-nav:hover { background: rgba(56, 189, 248, 0.08); border-color: var(--accent-blue); transform: translateX(5px); }
+</style>
+
+<div class="dashboard-container">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-4">
+                <div class="glass-card">
+                    <div class="user-avatar">{{ user.fname|slice:":1" }}</div>
+                    <h2 class="h4 fw-bold mb-1">{{ user.get_full_name }}</h2>
+                    <p class="text-white-50 small mb-4">@{{ user.username }}</p>
+
+                    <div class="mb-4">
+                        <div class="profile-stat-label">Email Address</div>
+                        <div class="small fw-medium">{{ user.email }}</div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="profile-stat-label">Location</div>
+                        <div class="small fw-medium">{{ user.u_location|default:"Not set" }}</div>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-5">
+                        <a href="{% url 'update_profile' %}" class="btn btn-primary rounded-pill py-2 small">Edit Profile</a>
+                        <a href="{% url 'logout' %}" class="btn btn-link text-danger small opacity-75">Logout</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <h1 class="h3 fw-bold mb-4">Travel <span style="color: var(--accent-blue);">Dashboard</span></h1>
+
+                <div class="section-header d-flex align-items-center gap-2 mb-3">
+                    <span style="font-size: 1.2rem;">🗺️</span>
+                    <h6 class="profile-stat-label mb-0 text-white">Hired Guides</h6>
+                </div>
+                <div class="table-container">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>Guide Details</th>
+                                <th>Travel Date</th>
+                                <th>Cost</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for hire in hired_guides %}
+                            <tr>
+                                <td>
+                                    <div class="fw-bold">{{ hire.guide.g_name }}</div>
+                                    <div class="small text-white-50">{{ hire.guide.agency.ag_name }}</div>
+                                </td>
+                                <td>
+                                    <div class="small fw-medium">{{ hire.hire_date|date:"d M, Y" }}</div>
+                                    <div class="text-white-50" style="font-size: 0.7rem;">{{ hire.days }} Days</div>
+                                </td>
+                                <td class="fw-bold text-info">৳{{ hire.total_cost }}</td>
+                                <td>
+                                    <span class="badge-{% if hire.status == 'Pending' %}pending{% else %}confirmed{% endif %}">
+                                        {{ hire.status }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr><td colspan="4" class="text-center py-5 text-white-50">No guide hires found.</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="section-header d-flex align-items-center gap-2 mb-3 mt-5">
+                    <span style="font-size: 1.2rem;">🏨</span>
+                    <h6 class="profile-stat-label mb-0 text-white">Hotel Bookings</h6>
+                </div>
+                <div class="table-container">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>Hotel & Room</th>
+                                <th>Dates</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for booking in hotel_bookings %}
+                            <tr>
+                                <td>
+                                    <div class="fw-bold">{{ booking.room.hotel.name }}</div>
+                                    <div class="small text-white-50">{{ booking.room.r_type }}</div>
+                                </td>
+                                <td>
+                                    <div class="small fw-medium">{{ booking.check_in|date:"M d" }} - {{ booking.check_out|date:"M d" }}</div>
+                                </td>
+                                <td class="fw-bold" style="color: var(--accent-green);">৳{{ booking.total_price }}</td>
+                                <td><span class="badge-confirmed">Confirmed</span></td>
+                            </tr>
+                            {% empty %}
+                            <tr><td colspan="4" class="text-center py-5 text-white-50">No hotel bookings found.</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="row g-3 mt-4">
+                    <div class="col-md-6">
+                        <a href="{% url 'travel_history:travel_history' %}" class="wish-nav">
+                            <span style="font-size: 1.5rem;">🚩</span>
+                            <div>
+                                <div class="text-white small fw-bold">Travel History</div>
+                                <div class="text-white-50 small">Your past adventures</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{% url 'wishlist:wishlist' %}" class="wish-nav">
+                            <span style="font-size: 1.5rem;">🌍</span>
+                            <div>
+                                <div class="text-white small fw-bold">Wishlist</div>
+                                <div class="text-white-50 small">Saved destinations</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
         </div>
-        <div class="card-body p-0">
-          <div class="list-group list-group-flush">
-            <a href="/cities/"      class="list-group-item list-group-item-action">🏙️ Cities</a>
-            <a href="/hotels/"      class="list-group-item list-group-item-action">🏨 Hotels</a>
-            <a href="/restaurants/" class="list-group-item list-group-item-action">🍽️ Restaurants</a>
-            <a href="/attractions/" class="list-group-item list-group-item-action">🎡 Attractions</a>
-            <a href="{% url 'wishlist:wishlist' %}" class="list-group-item list-group-item-action">🗺️ My Wishlist</a>
-            <a href="{% url 'travel_history:travel_history' %}" class="list-group-item list-group-item-action">🚩 My Travel History</a></div>
-        </div>
-      </div>
     </div>
-  </div>
 </div>
 {% endblock %}
