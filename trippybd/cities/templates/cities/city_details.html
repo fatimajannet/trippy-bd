@@ -292,6 +292,23 @@
     filter: grayscale(1);
   }
   
+
+  /* ── NEW: PRICE BADGE SYSTEM ── */
+.price-badge {
+    margin-left: 8px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+/* These maintain your glassmorphism theme */
+.badge-premium { background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+.badge-standard { background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3); }
+.badge-budget { background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
+
+
+
 </style>
 
 <!-- ── HERO ── -->
@@ -314,6 +331,10 @@
       <div class="stat-box">
         <span class="stat-num">{{ hotels|length }}</span>
         <span class="stat-lbl">Hotels</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">{{ city.transportations.count }}</span>
+        <span class="stat-lbl">Transport</span>
       </div>
 
       <!-- Button -->
@@ -383,6 +404,29 @@
             <p style="color:rgba(255,255,255,0.35); font-size:0.88rem;">No attractions listed yet.</p>
           {% endfor %}
         </div>
+        <div class="info-card">
+          <div class="info-card-title">🍽️ Restaurants in {{ city.name }}</div>
+          {% for restaurant in city.restaurant_set.all %}
+            <a href="{% url 'restaurant_detail' restaurant.pk %}" class="attraction-mini">
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <span class="attraction-mini-name">🍽️ {{ restaurant.name }}</span>
+                <span class="price-badge {% if restaurant.avg_cost > 1500 %}badge-premium{% elif restaurant.avg_cost > 700 %}badge-standard{% else %}badge-budget{% endif %}" style="font-size: 0.65rem; padding: 1px 6px;">
+                  {% if restaurant.avg_cost > 1500 %}৳৳৳{% elif restaurant.avg_cost > 700 %}৳৳{% else %}৳{% endif %}
+                </span>
+              </div>
+              
+              <span class="attraction-mini-fee">
+                {% if restaurant.rating %}
+                  ⭐ {{ restaurant.rating }}
+                {% else %}
+                  New
+                {% endif %}
+              </span>
+            </a>
+          {% empty %}
+            <p style="color:rgba(255,255,255,0.35); font-size:0.88rem; padding: 10px;">No restaurants listed yet.</p>
+          {% endfor %}
+        </div>
       </div>
       <!-- Right: Hotels + CTA -->
       <div class="col-lg-4">
@@ -408,11 +452,16 @@
           <div class="info-card-title">💼 Travel Agencies</div>
           {% for agency in city.agencies.all %}
           <a href="{% url 'agency_detail' agency.pk %}" class="hotel-link" style="text-decoration: none; color: inherit;">
-            <div class="hotel-card" style="border-left: 3px solid #38bdf8;">
+            <div class="hotel-card">
               <div class="hotel-icon" style="background: rgba(56,189,248,0.15); color: #38bdf8;">💼</div>
               <div>
                 <div class="hotel-name">{{ agency.ag_name }}</div>
-                <div class="hotel-meta">⭐ {{ agency.ag_rating }} · Local Guides</div>
+                <div class="hotel-meta">
+                  Avg. ৳{{ hotel.avg_price }}
+                  <span class="price-badge {% if hotel.avg_price > 5000 %}badge-premium{% elif hotel.avg_price > 2000 %}badge-standard{% else %}badge-budget{% endif %}">
+                    {% if hotel.avg_price > 5000 %}💎 High-end{% elif hotel.avg_price > 2000 %}✨ Mid{% else %}💰 Budget{% endif %}
+                  </span>
+                </div>
               </div>
               <span class="hotel-arrow">→</span>
             </div>
@@ -421,14 +470,42 @@
             <p style="color:rgba(255,255,255,0.35); font-size:0.85rem;">No local agencies found.</p>
           {% endfor %}
         </div>
-
-        <div class="explore-cta">
-          <h5>💼 Explore More</h5>
-          <p>Find restaurants and attractions in {{ city.name }}</p>
-          <a href="/attractions/city/{{ city.id }}/" class="btn-primary-custom">🎡 Attractions</a>
-          <a href="/restaurants/city/{{ city.id }}/" class="btn-outline-custom">🍽️ Restaurants</a>
+        
+        <div class="info-card mb-4">
+            <div class="info-card-title">🚌 Transportation</div>
+            {% for t in city.transportations.all %}
+            <a href="{% url 'transportation_list' city.id %}" class="hotel-link" style="text-decoration: none; color: inherit;">
+                <div class="hotel-card">
+                    <div class="hotel-icon" style="background: rgba(56,189,248,0.15); color: #38bdf8;">
+                        {% if 'bus' in t.t_type|lower %}🚌{% elif 'train' in t.t_type|lower %}🚆{% elif 'flight' in t.t_type|lower %}✈️{% else %}🚢{% endif %}
+                    </div>
+                    <div style="flex:1;">
+                        <div class="hotel-name">{{ t.t_type }}</div>
+                        <div class="hotel-meta">
+                            ৳{{ t.apprx_cost }}
+                            <span class="price-badge {% if t.apprx_cost > 3000 %}badge-premium{% elif t.apprx_cost > 1000 %}badge-standard{% else %}badge-budget{% endif %}">
+                                {% if t.apprx_cost > 3000 %}Premium{% elif t.apprx_cost > 1000 %}Standard{% else %}Budget{% endif %}
+                            </span>
+                        </div>
+                    </div>
+                    <span class="hotel-arrow">→</span>
+                </div>
+            </a>
+            {% empty %}
+            <p style="color:rgba(255,255,255,0.35); font-size:0.85rem;">No transportation options found.</p>
+            {% endfor %}
         </div>
 
+      </div>
+      <div class="explore-cta">
+          <h5>💼 Explore More</h5>
+          <p>Find restaurants and attractions in {{ city.name }}</p>
+          <a href="/attractions/city/{{ city.id }}/" class="btn-outline-custom">🎡 Attractions</a>
+          <a href="/restaurants/city/{{ city.id }}/" class="btn-outline-custom">🍽️ Restaurants</a>
+          <a href="{% url 'transportation_list' city.id %}" class="btn-outline-custom">🚌 All Transport</a>
+          <a href="{% url 'budget_planner' %}?city={{ city.id }}" class="btn-primary-custom" style="text-decoration: none; padding: 10px 20px; border-radius: 30px; background: #38bdf8; color: #0f172a; font-weight: bold;">
+    📊 Plan My Budget for {{ city.name }}
+</a>
       </div>
     </div>
   </div>

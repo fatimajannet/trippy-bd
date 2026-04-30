@@ -73,6 +73,34 @@
     color: #fff;
   }
 
+
+  /* ── Searching ── */
+  .search-wrap {
+    position: relative;
+    max-width: 420px;
+  }
+  .search-wrap input {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    color: #fff;
+    padding: 10px 16px 10px 40px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: all 0.25s;
+  }
+  .search-wrap input:focus {
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 3px rgba(56,189,248,0.15);
+  }
+  .search-icon {
+    position: absolute;
+    left: 13px; top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255,255,255,0.3);
+  }
+
   /* ── AGENCY CARDS ── */
   .agency-section { padding: 50px 0 120px; flex: 1; }
   .results-info { color: rgba(255,255,255,0.4); font-size: 0.88rem; margin-bottom: 28px; }

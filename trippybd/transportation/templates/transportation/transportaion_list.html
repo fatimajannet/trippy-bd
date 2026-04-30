@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% block title %}Transport to {{ city.name }} — TrIppyBD{% endblock %}
+
+{% block content %}
+<style>
+  /* Reusing your high-end aesthetics from the main details page */
+  .detail-hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 60%, #0f172a 100%);
+    padding: 60px 0 50px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    position: relative;
+    overflow: hidden;
+  }
+  .detail-hero-content { position: relative; z-index: 2; }
+  
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: rgba(255,255,255,0.45);
+    font-size: 0.85rem;
+    text-decoration: none;
+    margin-bottom: 28px;
+    transition: color 0.2s;
+    padding: 6px 14px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.04);
+  }
+  .detail-title { font-size: 2.6rem; font-weight: 800; color: #fff; margin-bottom: 14px; }
+  
+  .transport-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 24px;
+    padding: 40px 0;
+  }
+
+  /* Maintaining the card style you used for Hotels/Agencies */
+  .transport-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 24px;
+    transition: all 0.3s ease;
+  }
+  .transport-card:hover {
+    background: rgba(56,189,248,0.04);
+    border-color: rgba(56,189,248,0.3);
+    transform: translateY(-5px);
+  }
+
+  .transport-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+  }
+
+  .transport-icon {
+    font-size: 1.5rem;
+    width: 50px; height: 50px;
+    background: rgba(56,189,248,0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .transport-type { color: #fff; font-size: 1.2rem; font-weight: 700; margin-top: 10px; }
+  .transport-desc { color: rgba(255,255,255,0.5); font-size: 0.9rem; line-height: 1.6; margin-bottom: 20px; }
+  
+  .cost-footer {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+</style>
+
+<div class="detail-hero">
+  <div class="container detail-hero-content">
+    <a href="{% url 'city_details' city.id %}" class="back-btn">← Back to {{ city.name }}</a>
+    <span style="font-size: 3rem; display: block; margin-bottom: 15px;">🚢</span>
+    <h1 class="detail-title">Transportation Guide</h1>
+    <p style="color: rgba(255,255,255,0.5); font-size: 1.1rem;">
+        Discover all available ways to reach and travel within <strong>{{ city.name }}</strong>.
+    </p>
+  </div>
+</div>
+
+<div class="container" style="padding-bottom: 100px;">
+  <div class="transport-grid">
+    {% for t in transport_options %}
+    <div class="transport-card">
+      <div class="transport-header">
+        <div class="transport-icon">
+          {% if 'bus' in t.t_type|lower %}🚌{% elif 'train' in t.t_type|lower %}🚆{% elif 'flight' in t.t_type|lower %}✈️{% else %}🚢{% endif %}
+        </div>
+        <span class="price-badge {% if t.apprx_cost > 3000 %}badge-premium{% elif t.apprx_cost > 1000 %}badge-standard{% else %}badge-budget{% endif %}">
+            {% if t.apprx_cost > 3000 %}Premium{% elif t.apprx_cost > 1000 %}Standard{% else %}Budget{% endif %}
+        </span>
+      </div>
+
+      <div class="transport-type">{{ t.t_type }}</div>
+      <p class="transport-desc">{{ t.t_desc }}</p>
+
+      <div class="cost-footer">
+        <span style="color: rgba(255,255,255,0.4); font-size: 0.8rem; text-transform: uppercase;">Approximate Cost</span>
+        <span style="color: #38bdf8; font-weight: 800; font-size: 1.2rem;">৳{{ t.apprx_cost }}</span>
+      </div>
+    </div>
+    {% empty %}
+    <div style="grid-column: 1/-1; text-align: center; padding: 100px 0;">
+        <p style="color: rgba(255,255,255,0.3); font-size: 1.2rem;">No specific transport data available for this route yet.</p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

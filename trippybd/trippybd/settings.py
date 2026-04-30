@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'wishlist',
     'travel_history',
     'agencies',
+    'transportation',
+    'budget',
 ]
 
 MIDDLEWARE = [

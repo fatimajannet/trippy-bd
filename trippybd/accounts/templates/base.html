@@ -25,10 +25,10 @@
     }
     /* ── Navbar ── */
     .navbar-custom {
-      background: rgba(15, 23, 42, 0.95);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      padding: 14px 0;
+      background: rgba(15, 23, 42, 0.98); /* Slightly more opaque for better readability */
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding: 16px 0; /* Increased padding for a more "airy" feel */
     }
     .navbar-brand-custom {
       font-size: 1.5rem;
@@ -41,47 +41,58 @@
       color: #38bdf8;
     }
     .nav-link-custom {
-      color: rgba(255,255,255,0.65) !important;
-      font-size: 0.9rem;
-      font-weight: 500;
-      padding: 6px 14px !important;
-      border-radius: 8px;
-      transition: all 0.2s;
+      color: rgba(255,255,255,0.8) !important; /* Brighter default color */
+      font-size: 0.95rem; /* Increased from 0.9rem */
+      font-weight: 600; /* Bolder font weight */
+      padding: 8px 16px !important; /* Increased padding */
+      border-radius: 10px;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       text-decoration: none;
+      white-space: nowrap; /* Ensures links stay on one line */
     }
     .nav-link-custom:hover {
-      color: #ffffff !important;
-      background: rgba(255,255,255,0.08);
+      color: #38bdf8 !important; /* Accent color on hover */
+      background: rgba(56, 189, 248, 0.1);
+      transform: translateY(-1px);
     }
     .nav-btn-login {
       background: transparent;
-      border: 1px solid #38bdf8;
+      border: 2px solid #38bdf8; /* Thicker border */
       color: #38bdf8 !important;
-      border-radius: 8px;
-      padding: 6px 18px !important;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: all 0.2s;
+      border-radius: 10px;
+      padding: 8px 22px !important; /* Bigger footprint */
+      font-size: 0.95rem;
+      font-weight: 700;
+      transition: all 0.3s ease;
       text-decoration: none;
     }
     .nav-btn-login:hover {
       background: #38bdf8;
       color: #0f172a !important;
     }
+    .nav-btn-login:hover {
+      background: #38bdf8;
+      color: #0f172a !important;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.4); /* Neon glow effect */
+    }
+
     .nav-btn-register {
-      background: linear-gradient(135deg, #0ea5e9, #2563eb);
+      background: linear-gradient(135deg, #38bdf8, #2563eb); /* Brighter gradient */
       border: none;
       color: #ffffff !important;
-      border-radius: 8px;
-      padding: 6px 18px !important;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: all 0.2s;
+      border-radius: 10px;
+      padding: 10px 24px !important; /* Slightly larger than login */
+      font-size: 0.95rem;
+      font-weight: 700;
+      transition: all 0.3s ease;
       text-decoration: none;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
     }
+
     .nav-btn-register:hover {
-      opacity: 0.9;
-      transform: translateY(-1px);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+      filter: brightness(1.1);
     }
     .navbar-toggler {
       border-color: rgba(255,255,255,0.2);
@@ -144,7 +155,7 @@
       padding: 20px 0;
       text-align: center;
       color: rgba(255,255,255,0.35);
-      font-size: 0.82rem;
+      font-size: 1.2rem;
     }
     .footer-custom a {
       color: #38bdf8;
@@ -154,6 +165,15 @@
       text-decoration: underline;
     }
     
+    /* Flag */
+    .flag {
+        height: 14px; /* Matches Poppins text height */
+        width: auto;
+        margin-left: 8px;
+        vertical-align: baseline;
+        border-radius: 2px; /* Slight rounding for that premium feel */
+        box-shadow: 0 0 10px rgba(56, 189, 248, 0.2); /* Subtle glow */
+    }
 
   </style>
 </head>
@@ -175,7 +195,7 @@
             <a class="nav-link-custom" href="/hotels/">🏨 Hotels</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link-custom" href="/agencies/">🗺️ Agencies</a>
+            <a class="nav-link-custom" href="/agencies/">💼 Agencies</a>
           </li>
           <li class="nav-item">
             <a class="nav-link-custom" href="/restaurants/">🍽️ Restaurants</a>
@@ -183,11 +203,14 @@
           <li class="nav-item">
             <a class="nav-link-custom" href="/attractions/">🎡 Attractions</a>
           </li>
+          <li class="nav-item">
+              <a class="nav-link-custom" href="{% url 'budget_planner' %}">📊 Plan Maker</a>
+          </li>
         </ul>
         <!-- Auth Buttons -->
         <div class="d-flex align-items-center gap-2">
           {% if user.is_authenticated %}
-            <a class="nav-link-custom" href="{% url 'dashboard' %}">👤 {{ user.username }}</a>
+            <a class="nav-btn-register" href="{% url 'dashboard' %}">👤 {{ user.username }}</a>
             <a class="nav-btn-login" href="{% url 'logout' %}">Logout</a>
           {% else %}
             <a class="nav-btn-login"    href="{% url 'login' %}">Login</a>
@@ -220,7 +243,9 @@
   <!-- ── Footer ── -->
   <footer class="footer-custom">
     <div class="container">
-      <p>© 2026 <strong>TrIppyBD</strong> — Explore the beauty of Bangladesh 🇧🇩</p>
+      <p>© 2026 <strong>TrIppyBD</strong> — Explore the beauty of Bangladesh <span><img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Flag_of_Bangladesh.svg" 
+                 alt="Bangladesh Flag" 
+                 class="flag"></span></p>
     </div>
   </footer>
   <!-- Bootstrap JS -->

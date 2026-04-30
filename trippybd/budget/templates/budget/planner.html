@@ -1,0 +1,306 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  /* ── GLOBAL PLANNER THEME ── */
+  body { background-color: #0f172a; color: #f8fafc; overflow-x: hidden; }
+
+  .planner-hero {
+    background: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 100%);
+    padding: 100px 0 80px;
+    text-align: center;
+  }
+
+  .glass-form-container {
+    background: rgba(30, 41, 59, 0.6);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 35px;
+    padding: 50px;
+    margin-top: -60px;
+    box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.8);
+    position: relative;
+    z-index: 10;
+  }
+
+  /* ── INPUT STYLING ── */
+  .search-wrapper { position: relative; width: 100%; z-index: 1050; }
+
+  .custom-search-input, .custom-number {
+    background-color: rgba(15, 23, 42, 0.9) !important;
+    border: 2px solid rgba(56, 189, 248, 0.2) !important;
+    color: #fff !important;
+    height: 65px;
+    border-radius: 20px;
+    padding: 0 25px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    width: 100%;
+    transition: all 0.3s ease;
+  }
+
+  .custom-search-input:focus, .custom-number:focus {
+    border-color: #38bdf8 !important;
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.2) !important;
+    transform: translateY(-2px);
+    outline: none;
+  }
+
+  /* ── FIXED DROPDOWN ALIGNMENT ── */
+  .custom-dropdown-list {
+    position: absolute;
+    top: calc(100% + 10px); /* Pushes it below the input field */
+    left: 0; 
+    width: 100%;
+    max-height: 250px; 
+    overflow-y: auto;
+    background: rgba(15, 23, 42, 0.98);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    border-radius: 15px;
+    z-index: 2000; /* Ensure it stays above everything */
+    display: none;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+  }
+
+  .dropdown-item-custom {
+    padding: 15px 25px;
+    color: rgba(255,255,255,0.8);
+    cursor: pointer;
+    font-weight: 700;
+    transition: 0.2s;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .dropdown-item-custom:hover { background: rgba(56, 189, 248, 0.15); color: #38bdf8; padding-left: 35px; }
+
+  /* ── INTERACTIVE PREFERENCE CARDS ── */
+  .preference-section {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    z-index: 5;
+  }
+
+  .pref-card {
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 22px;
+    transition: 0.3s;
+    height: 100%; /* Keeps cards equal height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .pref-card:hover { border-color: #38bdf8; background: rgba(56, 189, 248, 0.05); }
+
+  .custom-select {
+    background: transparent;
+    border: none;
+    color: #38bdf8;
+    font-weight: 800;
+    width: 100%;
+    cursor: pointer;
+    font-size: 1rem;
+    outline: none;
+  }
+  .custom-select option { background: #0f172a; color: #fff; }
+
+  .form-check-input:checked { background-color: #38bdf8; border-color: #38bdf8; }
+
+  /* ── BUTTONS & RESULTS ── */
+  .calculate-btn {
+    background: linear-gradient(135deg, #0ea5e9, #2563eb);
+    color: #fff;
+    font-weight: 800;
+    border: none;
+    border-radius: 20px;
+    height: 65px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.4s;
+    box-shadow: 0 10px 25px rgba(14, 165, 233, 0.3);
+  }
+  .calculate-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(14, 165, 233, 0.5); }
+
+  .result-display {
+    font-size: 4.5rem;
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
+  }
+
+  .breakdown-box {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 24px;
+    padding: 30px;
+  }
+
+  .breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-weight: 600;
+  }
+</style>
+
+<div class="planner-hero">
+  <div class="container">
+    <div class="hero-badge animate__animated animate__fadeInDown">⌯✈︎ Smart Intelligence ⌯✈︎</div>
+    <h1 class="display-3 fw-bold text-white mb-2">Smart <span>Budget</span> Planner</h1>
+    <p class="text-white-50 fs-5">Interactive cost analysis based on your personal preferences.</p>
+  </div>
+</div>
+
+<div class="container mb-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-11">
+      <div class="glass-form-container">
+        <form method="POST" id="plannerForm">
+          {% csrf_token %}
+          
+          <div class="row g-4 align-items-end">
+            <div class="col-md-7">
+              <label class="text-white-50 small fw-bold mb-3 px-2">📍 TARGET DESTINATION</label>
+              <div class="search-wrapper">
+                <input type="text" id="citySearch" name="city_name" class="custom-search-input" 
+                       placeholder="Where are you heading?" 
+                       value="{{ selected_city.name }}" autocomplete="off" required>
+                <div id="cityDropdown" class="custom-dropdown-list">
+                  {% for city in cities %}
+                    <div class="dropdown-item-custom" data-value="{{ city.name }}">{{ city.name }}</div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-5">
+                <label class="text-white-50 small fw-bold mb-3 px-2 d-block">📅 TRIP DURATION</label>
+                <div class="input-group search-wrapper">
+                    <input type="number" name="days" value="{{ days|default:1 }}" min="1" 
+                          class="custom-number form-control border-end-0" 
+                          style="border-top-right-radius: 0; border-bottom-right-radius: 0;" required>
+                    <span class="input-group-text bg-transparent border-start-0 text-white-50 px-4 fw-bold" 
+                          style="background-color: rgba(15, 23, 42, 0.9) !important; 
+                                border: 2px solid rgba(56, 189, 248, 0.2); 
+                                border-left: none !important;
+                                border-top-right-radius: 20px; 
+                                border-bottom-right-radius: 20px;
+                                color: #38bdf8 !important;">
+                        Days
+                    </span>
+                </div>
+            </div>
+          </div>
+
+          <div class="preference-section">
+            <h5 class="text-white mb-4 fw-bold"><i class="fas fa-sliders-h me-2 text-info"></i> Customize Your Trip</h5>
+            <div class="row g-4">
+              
+              <div class="col-md-4">
+                <div class="pref-card d-flex flex-row align-items-center justify-content-between">
+                  <div>
+                    <span class="text-white fw-bold d-block">Tour Guide</span>
+                    <small class="text-white-50">Local expert fee</small>
+                  </div>
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="hire_guide" checked style="transform: scale(1.5); cursor: pointer;">
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="pref-card">
+                  <span class="text-white-50 small fw-bold d-block mb-1 text-uppercase">Transportation</span>
+                  <select name="trans_tier" class="custom-select">
+                    <option value="low">Local/Public</option>
+                    <option value="mid" selected>Private Rental</option>
+                    <option value="high">Luxury Private</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="pref-card">
+                  <span class="text-white-50 small fw-bold d-block mb-1 text-uppercase">Stay Style</span>
+                  <select name="stay_tier" class="custom-select">
+                    <option value="low">Budget</option>
+                    <option value="mid" selected>Comfort</option>
+                    <option value="high">Premium</option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <button type="submit" class="calculate-btn w-100 mt-5">Generate Personal Budget ⚡</button>
+        </form>
+
+        {% if result %}
+        <div class="mt-5 pt-5 border-top border-secondary animate__animated animate__fadeInUp">
+          <div class="row align-items-center">
+            <div class="col-lg-6 text-center text-lg-start mb-4 mb-lg-0">
+              <span class="badge bg-info text-dark fw-bold px-3 py-2 mb-3">PLAN GENERATED</span>
+              <div class="text-white-50 fw-bold text-uppercase mb-1">Estimated Total For {{ days }} Days</div>
+              <div class="result-display">৳{{ result.total }}</div>
+              <p class="text-white-50 mt-3">Calculated for <strong>{{ selected_city.name }}</strong></p>
+            </div>
+            <div class="col-lg-6">
+              <div class="breakdown-box">
+                <h5 class="text-white fw-bold mb-4">Cost Breakdown</h5>
+                {% for label, cost in result.breakdown.items %}
+                <div class="breakdown-row">
+                  <span class="text-white-50">{{ label }}</span>
+                  <span class="text-white">৳{{ cost }}</span>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const sInput = document.getElementById('citySearch');
+  const dList = document.getElementById('cityDropdown');
+  const dItems = dList.getElementsByClassName('dropdown-item-custom');
+
+  sInput.addEventListener('click', (e) => { 
+    e.stopPropagation();
+    dList.style.display = 'block'; 
+  });
+  
+  sInput.addEventListener('input', () => {
+    const filter = sInput.value.toLowerCase();
+    dList.style.display = 'block';
+    let count = 0;
+    Array.from(dItems).forEach(item => {
+      if (item.textContent.toLowerCase().includes(filter)) {
+        item.style.display = 'block';
+        count++;
+      } else {
+        item.style.display = 'none';
+      }
+    });
+    if(count === 0) dList.style.display = 'none';
+  });
+
+  Array.from(dItems).forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.stopPropagation();
+      sInput.value = item.getAttribute('data-value');
+      dList.style.display = 'none';
+    });
+  });
+
+  document.addEventListener('click', () => {
+    dList.style.display = 'none';
+  });
+</script>
+{% endblock %}

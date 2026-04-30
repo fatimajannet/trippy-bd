@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  /* Reuse your Hero background logic */
+  .details-hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    padding: 60px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .glass-card {
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  }
+
+  /* Aesthetic Timeline for the Breakdown */
+  .breakdown-item {
+    display: flex;
+    gap: 20px;
+    padding: 25px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .item-icon {
+    width: 50px; height: 50px;
+    background: rgba(56, 189, 248, 0.15);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #38bdf8;
+    flex-shrink: 0;
+  }
+
+  .item-info { flex-grow: 1; }
+  .item-title { color: #fff; font-weight: 700; font-size: 1.1rem; margin-bottom: 4px; }
+  .item-subtitle { color: rgba(255,255,255,0.5); font-size: 0.9rem; }
+  .item-cost { text-align: right; min-width: 150px; }
+  .cost-calc { font-size: 0.75rem; color: rgba(255,255,255,0.3); text-transform: uppercase; }
+  .cost-final { color: #38bdf8; font-weight: 800; font-size: 1.2rem; }
+
+  /* Total Section */
+  .total-footer {
+    background: rgba(56, 189, 248, 0.05);
+    border-radius: 16px;
+    padding: 25px;
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid rgba(56, 189, 248, 0.2);
+  }
+
+  .back-link {
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: #38bdf8; }
+
+  .badge-tier {
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+  .tier-budget { background: rgba(56, 189, 248, 0.2); color: #38bdf8; }
+  .tier-standard { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
+  .tier-premium { background: rgba(248, 113, 113, 0.2); color: #f87171; }
+</style>
+
+<div class="details-hero">
+    <div class="container text-center">
+        <a href="{% url 'budget_planner' %}" class="back-link mb-4">← Back to Selection</a>
+        <h1 class="text-white fw-bold">Plan Breakdown</h1>
+        <p class="text-white-50">Exploring <strong>{{ city.name }}</strong> for <strong>{{ days }} Days</strong></p>
+        <span class="badge-tier tier-{{ tier }}">{{ tier }} Experience</span>
+    </div>
+</div>
+
+<div class="container pb-5 mt-n4">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <div class="glass-card">
+                
+                <div class="breakdown-item">
+                    <div class="item-icon">🏨</div>
+                    <div class="item-info">
+                        <div class="item-title">{{ room.hotel.name|default:"Hotel Stay" }}</div>
+                        <div class="item-subtitle">{{ room.r_type }} · {{ city.name }}</div>
+                    </div>
+                    <div class="item-cost">
+                        <div class="cost-calc">৳{{ room.r_price|default:0 }} × {{ days }} Nights</div>
+                        <div class="cost-final">৳{{ h_total|floatformat:0 }}</div>
+                    </div>
+                </div>
+
+                <div class="breakdown-item">
+                    <div class="item-icon">🍽️</div>
+                    <div class="item-info">
+                        <div class="item-title">{{ restaurant.name|default:"Daily Meals" }}</div>
+                        <div class="item-subtitle">{{ restaurant.cuisine_type }} Cuisine</div>
+                    </div>
+                    <div class="item-cost">
+                        <div class="cost-calc">3 Meals × ৳{{ restaurant.average_price|default:0 }} × {{ days }} Days</div>
+                        <div class="cost-final">৳{{ f_total|floatformat:0 }}</div>
+                    </div>
+                </div>
+
+                <div class="breakdown-item">
+                    <div class="item-icon">🧭</div>
+                    <div class="item-info">
+                        <div class="item-title">{{ guide.g_name|default:"Professional Guide" }}</div>
+                        <div class="item-subtitle">Provided by {{ guide.agency.ag_name|default:"Local Agency" }}</div>
+                    </div>
+                    <div class="item-cost">
+                        <div class="cost-calc">৳{{ guide.price_per_day|default:0 }} × {{ days }} Days</div>
+                        <div class="cost-final">৳{{ g_total|floatformat:0 }}</div>
+                    </div>
+                </div>
+
+                <div class="breakdown-item">
+                    <div class="item-icon">🚐</div>
+                    <div class="item-info">
+                        <div class="item-title">{{ transport.t_type|default:"Local Transport" }}</div>
+                        <div class="item-subtitle">Approximate arrival & local travel cost</div>
+                    </div>
+                    <div class="item-cost">
+                        <div class="cost-calc">Round Trip / Local Entry</div>
+                        <div class="cost-final">৳{{ t_total|floatformat:0 }}</div>
+                    </div>
+                </div>
+
+                <div class="breakdown-item" style="border:none;">
+                    <div class="item-icon">🎡</div>
+                    <div class="item-info">
+                        <div class="item-title">Sightseeing & Entry Fees</div>
+                        <div class="item-subtitle">Covers {{ attractions.count }} major attractions in {{ city.name }}</div>
+                    </div>
+                    <div class="item-cost">
+                        <div class="cost-calc">Combined Fees</div>
+                        <div class="cost-final">৳{{ a_total|floatformat:0 }}</div>
+                    </div>
+                </div>
+
+                <div class="total-footer">
+                    <div>
+                        <div style="color: rgba(255,255,255,0.4); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">Estimated Trip Cost</div>
+                        <div style="color: #fff; font-size: 1.8rem; font-weight: 800;">৳{{ grand_total|floatformat:0 }}</div>
+                    </div>
+                    <button onclick="window.print()" class="btn btn-info fw-bold px-4 rounded-pill">Download Itinerary 📄</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

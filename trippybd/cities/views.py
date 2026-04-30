@@ -5,6 +5,8 @@ from attractions.models import Attraction
 from hotels.models import Hotel
 from agencies.models import Agency, Guide
 from restaurants.models import Restaurant
+from wishlist.models import Wishlist
+from travel_history.models import TravelHistory
 
 def home(request):
     context = {
@@ -25,12 +27,13 @@ def city_list(request):
 def city_details(request, city_id):
     # 1. Fetch the city or 404
     city = get_object_or_404(City, id=city_id)
-    
+
     # 2. Fetch related data
     # Note: Use 'city.hotel_set.all()' if your Hotel model has a ForeignKey to City
     attractions = city.attraction_set.all()
     hotels = city.hotel_set.all()
-    
+    restaurants = city.restaurant_set.all()
+
     # 3. Initialize user-specific states
     in_wishlist = False
     is_visited = False

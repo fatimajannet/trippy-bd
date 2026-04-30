@@ -207,7 +207,6 @@
           <div class="card-body-custom">
             <p class="card-description">{{ hotel.description }}</p>
             <div class="card-meta">
-              <div class="meta-price">USD {{ hotel.price_per_night }} <span>/night</span></div>
               <div class="meta-rating"><span class="rating-num">⭐ {{ hotel.rating }}</span></div>
             </div>
             <a href="{% url 'hotel_detail' hotel.pk %}" class="btn-card-detail">View Details →</a>
