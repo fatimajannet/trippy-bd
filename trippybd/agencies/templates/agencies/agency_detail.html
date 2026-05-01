@@ -171,4 +171,6 @@
     </div>
   </div>
 </div>
+
+{% include 'includes/_reviews.html' with model_type='agency' object_id=agency.id reviews=reviews %}
 {% endblock %}

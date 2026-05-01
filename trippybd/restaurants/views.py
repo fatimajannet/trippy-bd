@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Restaurant
 from cities.models import City
+from django.contrib.contenttypes.models import ContentType
+from review.models import Review
 
 def restaurant_list(request):
     restaurants = Restaurant.objects.select_related('city').all()
@@ -24,6 +26,10 @@ def restaurant_detail(request, pk):
     restaurant = get_object_or_404(
         Restaurant.objects.select_related('city'), pk=pk
     )
+
+    res_type = ContentType.objects.get_for_model(restaurant)
+    reviews = Review.objects.filter(content_type=res_type, object_id=restaurant.id)
+    
     return render(request, 'restaurants/restaurant_detail.html', {
-        'restaurant': restaurant
+        'restaurant': restaurant, 'reviews': reviews
     })

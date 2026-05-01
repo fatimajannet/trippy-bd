@@ -7,6 +7,9 @@ from agencies.models import Agency, Guide
 from restaurants.models import Restaurant
 from wishlist.models import Wishlist
 from travel_history.models import TravelHistory
+from django.contrib.contenttypes.models import ContentType
+from review.models import Review
+
 
 def home(request):
     context = {
@@ -29,10 +32,15 @@ def city_details(request, city_id):
     city = get_object_or_404(City, id=city_id)
 
     # 2. Fetch related data
-    # Note: Use 'city.hotel_set.all()' if your Hotel model has a ForeignKey to City
     attractions = city.attraction_set.all()
     hotels = city.hotel_set.all()
     restaurants = city.restaurant_set.all()
+
+    # --- NEW REVIEW LOGIC ---
+    # Identify the City model type and fetch reviews linked to this ID
+    city_type = ContentType.objects.get_for_model(city)
+    reviews = Review.objects.filter(content_type=city_type, object_id=city.id)
+    # ------------------------
 
     # 3. Initialize user-specific states
     in_wishlist = False
@@ -48,6 +56,8 @@ def city_details(request, city_id):
         'city': city,
         'attractions': attractions,
         'hotels': hotels,
+        'restaurants': restaurants, # Added this back in for you
+        'reviews': reviews,         # Passed the reviews list
         'in_wishlist': in_wishlist,
         'is_visited': is_visited,
     }

@@ -4,11 +4,18 @@ from django.contrib import messages
 from django.db.models import F, ExpressionWrapper, DateField
 from datetime import timedelta
 from .models import Agency, Guide, GuideHire 
+from django.contrib.contenttypes.models import ContentType
+from review.models import Review
+
 
 def agency_detail(request, agency_id):
     agency = get_object_or_404(Agency, pk=agency_id)
     guides = agency.guides.all()
-    return render(request, 'agencies/agency_detail.html', {'agency': agency, 'guides': guides})
+
+    agency_type = ContentType.objects.get_for_model(agency)
+    reviews = Review.objects.filter(content_type=agency_type, object_id=agency.id)
+
+    return render(request, 'agencies/agency_detail.html', {'agency': agency, 'guides': guides, 'reviews': reviews})
 
 
 @login_required

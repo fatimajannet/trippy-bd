@@ -510,6 +510,7 @@
     </div>
   </div>
 </div>
+{% include 'includes/_reviews.html' with model_type='city' object_id=city.id reviews=reviews %}
 
 <!-- Wishlist Toggle Script -->
 {% if user.is_authenticated %}

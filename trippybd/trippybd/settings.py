@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'agencies',
     'transportation',
     'budget',
+    'review',
 ]
 
 MIDDLEWARE = [

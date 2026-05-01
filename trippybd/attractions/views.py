@@ -1,6 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Attraction
 from cities.models import City
+from django.contrib.contenttypes.models import ContentType
+from review.models import Review
+
 
 def attraction_list(request):
     attractions = Attraction.objects.select_related('city').all()
@@ -24,6 +27,10 @@ def attraction_detail(request, pk):
     attraction = get_object_or_404(
         Attraction.objects.select_related('city'), pk=pk
     )
+
+    attr_type = ContentType.objects.get_for_model(attraction)
+    reviews = Review.objects.filter(content_type=attr_type, object_id=attraction.id)
+
     return render(request, 'attractions/attraction_detail.html', {
-        'attraction': attraction
+        'attraction': attraction, 
     })

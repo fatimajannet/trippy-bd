@@ -33,6 +33,7 @@ urlpatterns = [
     path('agencies/', include('agencies.urls')),
     path('transportation/', include('transportation.urls')),
     path('budget/', include('budget.urls')),
+    path('reviews/', include('review.urls')),
 
 ]
 from django.conf import settings

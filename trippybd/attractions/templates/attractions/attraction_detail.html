@@ -333,4 +333,9 @@
   </div>
 </div>
 
+<div class="row mt-5">
+        <div class="col-12">
+            {% include 'includes/_reviews.html' with model_type='attraction' object_id=attraction.id reviews=reviews %}
+        </div>
+    </div>
 {% endblock %}

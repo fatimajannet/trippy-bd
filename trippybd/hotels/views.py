@@ -1,6 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Hotel
 from cities.models import City
+from django.contrib.contenttypes.models import ContentType
+from review.models import Review
+
 
 def hotel_list(request):
     hotels = Hotel.objects.select_related('city').all()
@@ -25,7 +28,12 @@ def hotel_detail(request, pk):
         Hotel.objects.select_related('city').prefetch_related('amenities', 'rooms'), 
         pk=pk
     )
-    return render(request, 'hotels/hotel_detail.html', {'hotel': hotel})
+    
+    hotel_type = ContentType.objects.get_for_model(hotel)
+
+    reviews = Review.objects.filter(content_type=hotel_type, object_id=hotel.id)
+
+    return render(request, 'hotels/hotel_detail.html', {'hotel': hotel, 'reviews': reviews})
 
 
 
