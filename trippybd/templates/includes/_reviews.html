@@ -1,150 +1,186 @@
 <style>
-  /* ── WRAPPER ── */
+  /* ── MAIN GLASS PANEL (SUBTLE) ── */
   .review-glass-panel {
-    background: linear-gradient(135deg, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.4) 100%);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 40px;
-    padding: 50px 60px;
-    margin: 80px auto; 
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 30px;
+    padding: 40px 50px;
+    margin: 60px auto; 
     max-width: 1000px;
     width: 95%; 
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    position: relative;
+    z-index: 1;
   }
 
   /* ── INPUTS ── */
   .glass-select {
-    background: #0f172a !important;
+    background: #1e293b !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     color: #38bdf8 !important;
-    font-weight: 800;
-    border-radius: 12px;
+    font-weight: 700;
+    border-radius: 10px;
     height: 45px;
   }
 
   .glass-textarea {
-    background: rgba(0, 0, 0, 0.4) !important;
+    background: rgba(15, 23, 42, 0.6) !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     color: #fff !important;
-    border-radius: 15px;
-    padding: 15px;
+    border-radius: 12px;
+    padding: 12px;
     resize: none;
   }
 
   /* ── CARDS ── */
   .review-card-modern {
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 25px;
-    padding: 25px 30px;
-    transition: 0.3s ease;
+    border-radius: 20px;
+    padding: 20px 25px;
+    transition: all 0.3s ease;
   }
 
   .user-badge {
-    width: 45px; height: 45px;
-    background: linear-gradient(135deg, #0ea5e9, #2563eb);
-    color: white;
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 900;
-  }
-
-  .star-box {
-    background: rgba(251, 191, 36, 0.1);
-    color: #fbbf24;
-    padding: 4px 10px;
+    width: 40px; height: 40px;
+    background: #3b82f6;
     border-radius: 8px;
-    font-weight: 800;
-    font-size: 0.9rem;
-    border: 1px solid rgba(251, 191, 36, 0.2);
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-weight: bold;
   }
 
+  /* ── BUTTONS ── */
   .submit-btn-neon {
-    background: linear-gradient(135deg, #38bdf8, #2563eb);
+    background: #2563eb;
     color: white;
-    font-weight: 900;
+    font-weight: 700;
     border: none;
-    padding: 10px 25px;
-    border-radius: 12px;
+    padding: 8px 20px;
+    border-radius: 10px;
     text-transform: uppercase;
     font-size: 0.8rem;
-    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+    transition: 0.2s;
+  }
+  .submit-btn-neon:hover {
+    background: #3b82f6;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+  }
+
+  /* ── DELETE MODAL OVERLAY (WISHLIST STYLE) ── */
+  .review-modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 999999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .review-modal-content {
+    background: #1e1e2f;
+    color: #fff;
+    padding: 32px 36px;
+    border-radius: 16px;
+    text-align: center;
+    max-width: 380px;
+    width: 90%;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .btn-modal-delete {
+    padding: 10px 28px;
+    background: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    transition: 0.2s;
+  }
+  .btn-modal-delete:hover { background: #c0392b; }
+
+  .btn-modal-cancel {
+    padding: 10px 28px;
+    background: #3a3a4f;
+    color: #ccc;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
   }
 </style>
 
 <div class="container">
   <div class="review-glass-panel">
     
-    <div class="d-flex justify-content-between align-items-center mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
       <div>
-        <h2 class="fw-bold text-white mb-0">Community <span style="color: #38bdf8;">Feed</span></h2>
-        <p class="text-white-50 small">Real stories from our explorers.</p>
+        <h2 class="fw-bold text-white mb-0" style="font-size: 1.8rem;">Community <span style="color: #38bdf8;">Feed</span></h2>
+        <p class="text-white-50 small mb-0">Insights from our community.</p>
       </div>
       <div class="text-end text-white">
-        <h3 class="fw-bold m-0">{{ reviews.count }}</h3>
-        <small class="text-info fw-bold">INSIGHTS</small>
+        <h3 class="fw-bold m-0" id="review-count">{{ reviews.count }}</h3>
+        <small class="text-info fw-bold" style="letter-spacing: 1px; font-size: 0.7rem;">REVIEWS</small>
       </div>
     </div>
 
     {% if user.is_authenticated %}
-    <div class="review-input-group bg-dark bg-opacity-25 p-4 rounded-4 mb-5 border border-secondary border-opacity-25">
+    <div class="p-4 rounded-4 mb-5 border border-secondary border-opacity-25" style="background: rgba(30, 41, 59, 0.3);">
       <form action="{% url 'add_review' model_type object_id %}" method="POST">
         {% csrf_token %}
         <div class="row g-3">
           <div class="col-md-3">
             <select name="rating" class="form-select glass-select">
-              <option value="5">Excellent ⭐⭐⭐⭐⭐</option>
-              <option value="4">Great ⭐⭐⭐⭐</option>
-              <option value="3" selected>Average ⭐⭐⭐</option>
-              <option value="2">Poor ⭐⭐</option>
-              <option value="1">Terrible ⭐</option>
+              <option value="5">5 Stars</option>
+              <option value="4">4 Stars</option>
+              <option value="3" selected>3 Stars</option>
+              <option value="2">2 Stars</option>
+              <option value="1">1 Star</option>
             </select>
           </div>
           <div class="col-md-9">
-            <textarea name="comment" class="form-control glass-textarea" rows="2" placeholder="What made this visit special?" required></textarea>
+            <textarea name="comment" class="form-control glass-textarea" rows="2" placeholder="Write a review..." required></textarea>
           </div>
           <div class="col-12 text-end">
-            <button type="submit" class="submit-btn-neon">Post ⚡</button>
+            <button type="submit" class="submit-btn-neon">Post Review</button>
           </div>
         </div>
       </form>
     </div>
     {% endif %}
 
-    <div class="row g-4">
+    <div class="row g-3" id="review-list">
       {% for r in reviews %}
-      <div class="col-12">
-        <div class="review-card-modern" id="review-card-{{ r.id }}">
-          
-          <div class="d-flex justify-content-between align-items-start mb-3">
+      <div class="col-12" id="review-wrapper-{{ r.id }}">
+        <div class="review-card-modern">
+          <div class="d-flex justify-content-between align-items-start mb-2">
             <div class="d-flex align-items-center gap-3">
               <div class="user-badge">{{ r.user.username|slice:":1"|upper }}</div>
               <div>
                 <span class="text-white fw-bold d-block">@{{ r.user.username }}</span>
-                <small class="text-white-50">{{ r.created_at|timesince }} ago</small>
+                <small class="text-white-50" style="font-size: 0.75rem;">{{ r.created_at|timesince }} ago</small>
               </div>
             </div>
 
             <div class="d-flex align-items-center gap-3">
-              <div class="star-box" id="star-display-{{ r.id }}">{{ r.rating }}.0 ⭐</div>
-              
+              <div class="text-warning fw-bold small" id="star-display-{{ r.id }}">{{ r.rating }}.0 ★</div>
               {% if request.user == r.user %}
               <div class="dropdown">
                 <button class="btn btn-link text-white-50 p-0 border-0 shadow-none" data-bs-toggle="dropdown">
                   <i class="fas fa-ellipsis-v"></i>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end border-secondary shadow-lg">
-                  <li>
-                    <button class="dropdown-item py-2" onclick="toggleEdit('{{ r.id }}')">
-                      <i class="fas fa-edit me-2 text-info"></i> Edit
-                    </button>
-                  </li>
-                  <li>
-                    <a class="dropdown-item py-2 text-danger" href="{% url 'delete_review' r.id %}" onclick="return confirm('Delete review?')">
-                      <i class="fas fa-trash-alt me-2"></i> Delete
-                    </a>
-                  </li>
+                  <li><button class="dropdown-item py-2" onclick="toggleEdit('{{ r.id }}')"><i class="fas fa-edit me-2"></i> Edit</button></li>
+                  <li><button class="dropdown-item py-2 text-danger" onclick="showReviewDeleteModal('{{ r.id }}', this)"><i class="fas fa-trash-alt me-2"></i> Delete</button></li>
                 </ul>
               </div>
               {% endif %}
@@ -152,14 +188,14 @@
           </div>
 
           <div id="display-mode-{{ r.id }}">
-            <p class="text-white-50 mb-0">"{{ r.comment }}"</p>
+            <p class="text-white-50 mb-0" style="font-size: 0.95rem; line-height: 1.5;">{{ r.comment }}</p>
           </div>
 
           {% if request.user == r.user %}
           <div id="edit-mode-{{ r.id }}" style="display: none;">
             <form action="{% url 'edit_review' r.id %}" method="POST">
               {% csrf_token %}
-              <div class="row g-3">
+              <div class="row g-2">
                 <div class="col-md-3">
                   <select name="rating" class="form-select glass-select">
                     <option value="5" {% if r.rating == 5 %}selected{% endif %}>5 Stars</option>
@@ -173,31 +209,41 @@
                   <textarea name="comment" class="form-control glass-textarea" rows="3" required>{{ r.comment }}</textarea>
                 </div>
                 <div class="col-12 text-end mt-2">
-                  <button type="button" class="btn btn-sm text-white-50 me-3" onclick="toggleEdit('{{ r.id }}')">Cancel</button>
-                  <button type="submit" class="submit-btn-neon">Save Changes</button>
+                  <button type="button" class="btn btn-sm text-white-50 me-2" onclick="toggleEdit('{{ r.id }}')">Cancel</button>
+                  <button type="submit" class="submit-btn-neon">Save</button>
                 </div>
               </div>
             </form>
           </div>
           {% endif %}
-
         </div>
-      </div>
-      {% empty %}
-      <div class="col-12 text-center py-5 opacity-25">
-        <h5 class="text-white">No reviews yet. Be the first!</h5>
       </div>
       {% endfor %}
     </div>
   </div>
 </div>
 
+<div id="reviewDeleteModal" class="review-modal-overlay">
+    <div class="review-modal-content">
+        <div style="font-size: 40px; margin-bottom: 12px;">🗑️</div>
+        <h3 style="margin: 0 0 8px; font-size: 20px; font-weight: 700;">Remove Review</h3>
+        <p style="color: #aaa; font-size: 14px; margin: 0 0 24px;">Are you sure you want to remove this review? This action cannot be undone.</p>
+        <div style="display: flex; gap: 12px; justify-content: center;">
+            <button id="confirmReviewDeleteBtn" class="btn-modal-delete">Yes, Remove</button>
+            <button onclick="closeReviewModal()" class="btn-modal-cancel">Cancel</button>
+        </div>
+    </div>
+</div>
+
 <script>
+  let pendingReviewId = null;
+  let pendingReviewBtn = null;
+
+  // Toggle Edit Logic
   function toggleEdit(reviewId) {
     const displayDiv = document.getElementById(`display-mode-${reviewId}`);
     const editDiv = document.getElementById(`edit-mode-${reviewId}`);
     const starBox = document.getElementById(`star-display-${reviewId}`);
-
     if (editDiv.style.display === "none") {
       editDiv.style.display = "block";
       displayDiv.style.display = "none";
@@ -208,4 +254,40 @@
       starBox.style.visibility = "visible";
     }
   }
+
+  // Delete Modal Logic
+  function showReviewDeleteModal(reviewId, btn) {
+    pendingReviewId = reviewId;
+    pendingReviewBtn = btn;
+    document.getElementById('reviewDeleteModal').style.display = 'flex';
+  }
+
+  function closeReviewModal() {
+    document.getElementById('reviewDeleteModal').style.display = 'none';
+    pendingReviewId = null;
+  }
+
+  document.getElementById('confirmReviewDeleteBtn').addEventListener('click', function() {
+    if (!pendingReviewId) return;
+    const reviewId = pendingReviewId;
+    closeReviewModal();
+
+    fetch(`/reviews/delete/${reviewId}/`, {
+        method: 'POST',
+        headers: { 'X-Requested-With': 'XMLHttpRequest', 'X-CSRFToken': '{{ csrf_token }}' }
+    })
+    .then(r => {
+        if (r.ok) {
+            const cardWrapper = document.getElementById(`review-wrapper-${reviewId}`);
+            cardWrapper.style.opacity = '0';
+            cardWrapper.style.transform = 'scale(0.9) translateX(50px)';
+            setTimeout(() => cardWrapper.remove(), 300);
+        }
+    });
+  });
+
+  window.addEventListener('click', function(e) {
+    const modal = document.getElementById('reviewDeleteModal');
+    if (e.target === modal) closeReviewModal();
+  });
 </script>

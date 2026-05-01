@@ -2,10 +2,10 @@
 {% block title %}My Wishlist - TrippyBD{% endblock %}
 {% block content %}
 <div style="max-width: 900px; margin: 40px auto; padding: 0 20px;">
-    <h1 style="font-size: 28px; margin-bottom: 25px; color: #2c3e50;">
+    <h1 style="font-size: 28px; margin-bottom: 25px; color: #ffffff;">
         🗺️ My Travel Wishlist
     </h1>
-
+    
     {% if wishlist_items %}
     <div style="display: grid; gap: 16px;">
         {% for item in wishlist_items %}
@@ -13,7 +13,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #fff;
+            background: #142935;
             padding: 20px 24px;
             border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
@@ -21,17 +21,17 @@
         ">
             <div>
                 <a href="{% url 'cities:city_details' item.city.id %}"
-                   style="font-size: 18px; font-weight: 600; color: #2c3e50; text-decoration: none;">
+                   style="font-size: 18px; font-weight: 600; color: #ffffff; text-decoration: none;">
                     {{ item.city.name }}
                 </a>
                 {% if item.city.region %}
-                    <span style="color: #7f8c8d; margin-left: 8px;">— {{ item.city.region }}</span>
+                    <span style="color: #bae1f8; margin-left: 8px;">— {{ item.city.region }}</span>
                 {% endif %}
-                <div style="color: #95a5a6; font-size: 13px; margin-top: 4px;">
+                <div style="color: #9bbbd6; font-size: 13px; margin-top: 4px;">
                     Added {{ item.added_date|timesince }} ago
                 </div>
                 {% if item.notes %}
-                    <div style="color: #555; font-size: 14px; margin-top: 6px;">📝 {{ item.notes }}</div>
+                    <div style="color: #b4cece; font-size: 14px; margin-top: 6px;">📝 {{ item.notes }}</div>
                 {% endif %}
             </div>
 

@@ -56,3 +56,21 @@ def delete_review(request, review_id):
     review.delete()
     messages.success(request, "Review deleted.")
     return redirect(request.META.get('HTTP_REFERER', '/'))
+
+
+from django.http import JsonResponse
+
+@login_required
+def delete_review(request, review_id):
+    review = get_object_or_404(Review, id=review_id, user=request.user)
+    
+    if request.method == "POST":
+        review.delete()
+        # If it's an AJAX request, return JSON
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'status': 'success'})
+            
+        messages.success(request, "Review deleted.")
+        return redirect(request.META.get('HTTP_REFERER', '/'))
+        
+    return JsonResponse({'status': 'error'}, status=400)
