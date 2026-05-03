@@ -28,7 +28,7 @@ class GuideHire(models.Model):
     hire_date = models.DateField()
     days = models.PositiveIntegerField(default=1)
     total_cost = models.DecimalField(max_digits=10, decimal_places=2)
-    status = models.CharField(max_length=20, default='Pending')
+    status = models.CharField(max_length=20, default='Confirmed')
     
     class Meta:
         constraints = [

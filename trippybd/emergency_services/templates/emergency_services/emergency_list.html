@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .emergency-panel {
+        background: rgba(15, 23, 42, 0.75);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 20px;
+        padding: 30px;
+    }
+    .service-row {
+        transition: 0.2s;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .service-row:hover {
+        background: rgba(231, 76, 60, 0.05);
+    }
+    .sos-badge {
+        background: #e74c3c;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-weight: bold;
+        font-size: 0.8rem;
+    }
+</style>
+
+<div class="container my-5">
+    <div class="emergency-panel">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1 class="text-white fw-bold">Emergency <span class="text-danger">Directory</span></h1>
+                <p class="text-white-50">Quick access to essential services across all cities.</p>
+            </div>
+            <div class="sos-badge text-white">24/7 SUPPORT</div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-dark table-borderless align-middle">
+                <thead>
+                    <tr class="text-secondary border-bottom border-secondary">
+                        <th>CITY</th>
+                        <th>SERVICE NAME</th>
+                        <th>CONTACT NUMBER</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for service in services %}
+                    <tr class="service-row">
+                        <td class="text-info fw-bold">{{ service.city.name }}</td>
+                        <td class="text-white">{{ service.es_name }}</td>
+                        <td class="text-white-50 font-monospace">{{ service.es_contact }}</td>
+                        <td>
+                            <a href="tel:{{ service.es_contact }}" class="btn btn-sm btn-outline-danger rounded-pill px-3">
+                                <i class="fas fa-phone-alt me-1"></i> Call
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center py-5 text-white-50">No service data available.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

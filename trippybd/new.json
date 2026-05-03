@@ -1,31 +1,362 @@
 [
-  { "model": "transportation.transportation", "pk": 1, "fields": { "t_type": "AC Bus", "t_desc": "Green Line/Hanif AC sleeper services to all major districts.", "apprx_cost": "1500.00", "city": 1 } },
-  { "model": "transportation.transportation", "pk": 2, "fields": { "t_type": "Domestic Flight", "t_desc": "US-Bangla and Air Astra flights from Hazrat Shahjalal International.", "apprx_cost": "4500.00", "city": 1 } },
-  { "model": "transportation.transportation", "pk": 3, "fields": { "t_type": "Intercity Train", "t_desc": "Subarna Express and Sonar Bangla Express connecting to Dhaka.", "apprx_cost": "800.00", "city": 2 } },
-  { "model": "transportation.transportation", "pk": 4, "fields": { "t_type": "Luxury Ship", "t_desc": "Bay One Cruise and other luxury vessels for deep sea travel.", "apprx_cost": "3500.00", "city": 2 } },
-  { "model": "transportation.transportation", "pk": 5, "fields": { "t_type": "Train", "t_desc": "Parabat and Jayantika Express passing through scenic tea gardens.", "apprx_cost": "450.00", "city": 3 } },
-  { "model": "transportation.transportation", "pk": 6, "fields": { "t_type": "Flight", "t_desc": "Quick travel via Osmani International Airport.", "apprx_cost": "3800.00", "city": 3 } },
-  { "model": "transportation.transportation", "pk": 7, "fields": { "t_type": "Silk City Train", "t_desc": "Fastest rail link connecting the Mango City to the capital.", "apprx_cost": "400.00", "city": 4 } },
-  { "model": "transportation.transportation", "pk": 8, "fields": { "t_type": "AC Bus", "t_desc": "Desh Travels luxury service connecting western Bangladesh.", "apprx_cost": "750.00", "city": 4 } },
-  { "model": "transportation.transportation", "pk": 9, "fields": { "t_type": "Regional Bus", "t_desc": "Main transit node for North Bengal; frequent non-AC bus services.", "apprx_cost": "550.00", "city": 5 } },
-  { "model": "transportation.transportation", "pk": 10, "fields": { "t_type": "Intercity Train", "t_desc": "Sundarban Express connecting the industrial hub to Dhaka.", "apprx_cost": "700.00", "city": 6 } },
-  { "model": "transportation.transportation", "pk": 11, "fields": { "t_type": "Mahanagar Train", "t_desc": "Major rail junction stop on the Dhaka-Chattogram route.", "apprx_cost": "350.00", "city": 7 } },
-  { "model": "transportation.transportation", "pk": 12, "fields": { "t_type": "Luxury Launch", "t_desc": "Manami and Green Line Waterways; the most comfortable way to Barisal.", "apprx_cost": "1200.00", "city": 8 } },
-  { "model": "transportation.transportation", "pk": 13, "fields": { "t_type": "River Rocket", "t_desc": "Historic paddle steamer service for a vintage river journey.", "apprx_cost": "600.00", "city": 8 } },
-  { "model": "transportation.transportation", "pk": 14, "fields": { "t_type": "Teesta Express", "t_desc": "Primary railway connection for administrative and student travel.", "apprx_cost": "300.00", "city": 9 } },
-  { "model": "transportation.transportation", "pk": 15, "fields": { "t_type": "Rangpur Express", "t_desc": "Overnight sleeper train connecting the northern regional capital.", "apprx_cost": "850.00", "city": 10 } },
-  { "model": "transportation.transportation", "pk": 16, "fields": { "t_type": "AC Bus", "t_desc": "Ena and SR Travels luxury services for long-distance comfort.", "apprx_cost": "1100.00", "city": 10 } },
-  { "model": "transportation.transportation", "pk": 17, "fields": { "t_type": "Commuter Train", "t_desc": "Turag and local commuters serving the industrial workforce.", "apprx_cost": "60.00", "city": 11 } },
-  { "model": "transportation.transportation", "pk": 18, "fields": { "t_type": "Local Bus", "t_desc": "Frequent local bus services connecting Narayanganj and Dhaka city.", "apprx_cost": "50.00", "city": 12 } },
-  { "model": "transportation.transportation", "pk": 19, "fields": { "t_type": "Express Bus", "t_desc": "Nirala and other express services via the new Dhaka-Tangail highway.", "apprx_cost": "250.00", "city": 13 } },
-  { "model": "transportation.transportation", "pk": 20, "fields": { "t_type": "Bridge Bus", "t_desc": "Transit via the Bangabandhu Multipurpose Bridge link.", "apprx_cost": "350.00", "city": 14 } },
-  { "model": "transportation.transportation", "pk": 21, "fields": { "t_type": "AC Bus", "t_desc": "Syamoli Paribahan services for agriculture and light industry nodes.", "apprx_cost": "450.00", "city": 15 } },
-  { "model": "transportation.transportation", "pk": 22, "fields": { "t_type": "Speedboat", "t_desc": "Fast river transit through the Padma-Meghna confluence.", "apprx_cost": "300.00", "city": 16 } },
-  { "model": "transportation.transportation", "pk": 23, "fields": { "t_type": "Star Line Bus", "t_desc": "The most efficient road link on the Dhaka-CTG economic corridor.", "apprx_cost": "350.00", "city": 17 } },
-  { "model": "transportation.transportation", "pk": 24, "fields": { "t_type": "Drutojan Train", "t_desc": "Long-distance rail link connecting the northern border regions.", "apprx_cost": "550.00", "city": 18 } },
-  { "model": "transportation.transportation", "pk": 25, "fields": { "t_type": "Agnibeena Train", "t_desc": "Daily rail and non-AC bus services for regional trade.", "apprx_cost": "280.00", "city": 19 } },
-  { "model": "transportation.transportation", "pk": 26, "fields": { "t_type": "Border Bus", "t_desc": "Local bus transit and gateway transport to the Sundarbans.", "apprx_cost": "650.00", "city": 20 } },
-  { "model": "transportation.transportation", "pk": 27, "fields": { "t_type": "Poradaha Train", "t_desc": "Western rail link through a major cultural and textile hub.", "apprx_cost": "420.00", "city": 21 } },
-  { "model": "transportation.transportation", "pk": 28, "fields": { "t_type": "AC Sleeper Bus", "t_desc": "The best way to reach the sea beach from the capital.", "apprx_cost": "1500.00", "city": 22 } },
-  { "model": "transportation.transportation", "pk": 29, "fields": { "t_type": "Flight", "t_desc": "Direct flights to Cox's Bazar International Airport.", "apprx_cost": "4800.00", "city": 22 } }
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 1,
+        "fields": {
+            "city": 1,
+            "es_name": "Dhaka Central Police Station",
+            "es_contact": "999, 01711-000000"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 2,
+        "fields": {
+            "city": 1,
+            "es_name": "Dhaka City Medical College & Hospital",
+            "es_contact": "10666, 01822-111111"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 3,
+        "fields": {
+            "city": 1,
+            "es_name": "Dhaka Fire Service & Civil Defense",
+            "es_contact": "02-9555555, 16163"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 4,
+        "fields": {
+            "city": 1,
+            "es_name": "Dhaka Ambulance Service (Red Crescent)",
+            "es_contact": "01911-222333"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 5,
+        "fields": {
+            "city": 1,
+            "es_name": "Dhaka Tourist Police Helpline",
+            "es_contact": "01320-000000"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 6,
+        "fields": {
+            "city": 2,
+            "es_name": "Chattogram Central Police Station",
+            "es_contact": "999, 01711-000000"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 7,
+        "fields": {
+            "city": 2,
+            "es_name": "Chattogram City Medical College & Hospital",
+            "es_contact": "10666, 01822-111111"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 8,
+        "fields": {
+            "city": 2,
+            "es_name": "Chattogram Fire Service & Civil Defense",
+            "es_contact": "02-9555555, 16163"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 9,
+        "fields": {
+            "city": 2,
+            "es_name": "Chattogram Ambulance Service (Red Crescent)",
+            "es_contact": "01911-222333"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 10,
+        "fields": {
+            "city": 2,
+            "es_name": "Chattogram Tourist Police Helpline",
+            "es_contact": "01320-000000"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 11,
+        "fields": {
+            "city": 3,
+            "es_name": "Sylhet Central Police Station",
+            "es_contact": "999, 01711-000000"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 12,
+        "fields": {
+            "city": 3,
+            "es_name": "Sylhet City Medical College & Hospital",
+            "es_contact": "10666, 01822-111111"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 13,
+        "fields": {
+            "city": 3,
+            "es_name": "Sylhet Fire Service & Civil Defense",
+            "es_contact": "02-9555555, 16163"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 14,
+        "fields": {
+            "city": 3,
+            "es_name": "Sylhet Ambulance Service (Red Crescent)",
+            "es_contact": "01911-222333"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 15,
+        "fields": {
+            "city": 3,
+            "es_name": "Sylhet Tourist Police Helpline",
+            "es_contact": "01320-000000"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 16,
+        "fields": {
+            "city": 4,
+            "es_name": "Rajshahi Central Police Station",
+            "es_contact": "999, 01711-000000"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 17,
+        "fields": {
+            "city": 4,
+            "es_name": "Rajshahi City Medical College & Hospital",
+            "es_contact": "10666, 01822-111111"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 18,
+        "fields": {
+            "city": 4,
+            "es_name": "Rajshahi Fire Service & Civil Defense",
+            "es_contact": "02-9555555, 16163"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 19,
+        "fields": {
+            "city": 4,
+            "es_name": "Rajshahi Ambulance Service (Red Crescent)",
+            "es_contact": "01911-222333"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 20,
+        "fields": {
+            "city": 4,
+            "es_name": "Rajshahi Tourist Police Helpline",
+            "es_contact": "01320-000000"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 21,
+        "fields": {
+            "city": 5,
+            "es_name": "Cox's Bazar Central Police Station",
+            "es_contact": "999, 01711-000000"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 22,
+        "fields": {
+            "city": 5,
+            "es_name": "Cox's Bazar City Medical College & Hospital",
+            "es_contact": "10666, 01822-111111"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 23,
+        "fields": {
+            "city": 5,
+            "es_name": "Cox's Bazar Fire Service & Civil Defense",
+            "es_contact": "02-9555555, 16163"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 24,
+        "fields": {
+            "city": 5,
+            "es_name": "Cox's Bazar Ambulance Service (Red Crescent)",
+            "es_contact": "01911-222333"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 25,
+        "fields": {
+            "city": 5,
+            "es_name": "Cox's Bazar Tourist Police Helpline",
+            "es_contact": "01320-000000"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 26,
+        "fields": {
+            "city": 6,
+            "es_name": "Barishal Central Police Station",
+            "es_contact": "999, 01711-000000"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 27,
+        "fields": {
+            "city": 6,
+            "es_name": "Barishal City Medical College & Hospital",
+            "es_contact": "10666, 01822-111111"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 28,
+        "fields": {
+            "city": 6,
+            "es_name": "Barishal Fire Service & Civil Defense",
+            "es_contact": "02-9555555, 16163"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 29,
+        "fields": {
+            "city": 6,
+            "es_name": "Barishal Ambulance Service (Red Crescent)",
+            "es_contact": "01911-222333"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 30,
+        "fields": {
+            "city": 6,
+            "es_name": "Barishal Tourist Police Helpline",
+            "es_contact": "01320-000000"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 31,
+        "fields": {
+            "city": 7,
+            "es_name": "Khulna Central Police Station",
+            "es_contact": "999, 01711-000000"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 32,
+        "fields": {
+            "city": 7,
+            "es_name": "Khulna City Medical College & Hospital",
+            "es_contact": "10666, 01822-111111"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 33,
+        "fields": {
+            "city": 7,
+            "es_name": "Khulna Fire Service & Civil Defense",
+            "es_contact": "02-9555555, 16163"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 34,
+        "fields": {
+            "city": 7,
+            "es_name": "Khulna Ambulance Service (Red Crescent)",
+            "es_contact": "01911-222333"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 35,
+        "fields": {
+            "city": 7,
+            "es_name": "Khulna Tourist Police Helpline",
+            "es_contact": "01320-000000"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 36,
+        "fields": {
+            "city": 8,
+            "es_name": "Rangpur Central Police Station",
+            "es_contact": "999, 01711-000000"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 37,
+        "fields": {
+            "city": 8,
+            "es_name": "Rangpur City Medical College & Hospital",
+            "es_contact": "10666, 01822-111111"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 38,
+        "fields": {
+            "city": 8,
+            "es_name": "Rangpur Fire Service & Civil Defense",
+            "es_contact": "02-9555555, 16163"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 39,
+        "fields": {
+            "city": 8,
+            "es_name": "Rangpur Ambulance Service (Red Crescent)",
+            "es_contact": "01911-222333"
+        }
+    },
+    {
+        "model": "emergency_services.emergencyservice",
+        "pk": 40,
+        "fields": {
+            "city": 8,
+            "es_name": "Rangpur Tourist Police Helpline",
+            "es_contact": "01320-000000"
+        }
+    }
 ]

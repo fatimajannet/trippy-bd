@@ -1,0 +1,44 @@
+<style>
+    .es-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+        padding: 15px 20px;
+        transition: 0.3s;
+    }
+    .es-card:hover {
+        background: rgba(231, 76, 60, 0.05); /* Subtle red tint for emergency */
+        border-color: rgba(231, 76, 60, 0.2);
+    }
+    .es-icon {
+        width: 40px; height: 40px;
+        background: #e74c3c;
+        border-radius: 10px;
+        display: flex; align-items: center; justify-content: center;
+        color: white; font-size: 1.2rem;
+    }
+</style>
+
+<div class="mt-5">
+    <h3 class="text-white fw-bold mb-4">🆘 Emergency <span style="color: #e74c3c;">Services</span></h3>
+    
+    <div class="row g-3">
+        {% for service in services %}
+        <div class="col-md-6 col-lg-4">
+            <div class="es-card d-flex align-items-center gap-3">
+                <div class="es-icon">
+                    <i class="fas fa-phone-alt"></i>
+                </div>
+                <div>
+                    <strong class="text-white d-block">{{ service.es_name }}</strong>
+                    <a href="tel:{{ service.es_contact }}" class="text-info small text-decoration-none">
+                        {{ service.es_contact }}
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-white-50 small">No emergency contact data available for this city.</p>
+        {% endfor %}
+    </div>
+</div>

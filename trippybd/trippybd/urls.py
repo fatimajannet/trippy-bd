@@ -24,8 +24,8 @@ urlpatterns = [
     path('accounts/',    include('accounts.urls')),
     path('cities/',      include('cities.urls')), 
     path('attractions/', include('attractions.urls')),
-    path('hotels/',      include('hotels.urls')),       # ✅ fixed prefix
-    path('restaurants/', include('restaurants.urls')),  # ✅ fixed prefix
+    path('hotels/',      include('hotels.urls')),       
+    path('restaurants/', include('restaurants.urls')), 
     path('',             views.home, name='home'),
     path('wishlist/', include('wishlist.urls', namespace='wishlist')),
     path('cities/',      include(('cities.urls', 'cities'), namespace='cities')), 
@@ -34,6 +34,7 @@ urlpatterns = [
     path('transportation/', include('transportation.urls')),
     path('budget/', include('budget.urls')),
     path('reviews/', include('review.urls')),
+    path('emergency/', include('emergency_services.urls')),
 
 ]
 from django.conf import settings

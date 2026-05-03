@@ -26,29 +26,23 @@ def hire_guide(request, guide_id):
         hire_date_str = request.POST.get('hire_date')
         days = int(request.POST.get('days'))
         
-        # Convert the string from the form into a Python Date object
         from datetime import datetime
         requested_date = datetime.strptime(hire_date_str, '%Y-%m-%d').date()
 
-        # CHECK FOR CONFLICTS:
-        # We look for any existing booking where the requested date falls 
-        # between the start_date and the end_date (start + days).
-        
-        # Logic: Existing Start Date <= Requested Date < (Existing Start Date + Existing Days)
+
         conflicting_bookings = GuideHire.objects.filter(
             guide=guide,
-            hire_date__lte=requested_date  # Previous booking started on or before requested date
+            hire_date__lte=requested_date 
         )
 
         for booking in conflicting_bookings:
-            # Calculate when that specific booking ends
             end_date = booking.hire_date + timedelta(days=booking.days)
             
             if requested_date < end_date:
                 messages.error(request, f"Sorry, {guide.g_name} is busy from {booking.hire_date} to {end_date - timedelta(days=1)}. Please choose another date.")
                 return render(request, 'agencies/hire_form.html', {'guide': guide})
 
-        # If no conflict was found, proceed to hire
+
         calculated_cost = guide.price_per_day * days
         new_hire = GuideHire.objects.create(
             user=request.user,
@@ -56,7 +50,7 @@ def hire_guide(request, guide_id):
             hire_date=requested_date,
             days=days,
             total_cost=calculated_cost,
-            status='Pending'
+            status='Confirmed'
         )
         
         messages.success(request, f"Hiring request for {guide.g_name} sent!")
@@ -64,22 +58,21 @@ def hire_guide(request, guide_id):
 
     return render(request, 'agencies/hire_form.html', {'guide': guide})
 
-from cities.models import City # Import your City model
-
+from cities.models import City 
 def agency_list(request):
     agencies = Agency.objects.all()
-    cities = City.objects.all() # You MUST fetch the cities here
+    cities = City.objects.all() 
     return render(request, 'agencies/agency_list.html', {
         'agencies': agencies,
-        'cities': cities # Pass them to the template
+        'cities': cities 
     })
 
-# agencies/views.py
+
 def hire_success(request, hire_id):
     hire = get_object_or_404(GuideHire, pk=hire_id, user=request.user)
     return render(request, 'agencies/hire_success.html', {'hire': hire})
 
-# Update your existing hire_guide view:
+
     if request.method == 'POST':
         # ... your existing logic ...
         new_hire = GuideHire.objects.create(...)

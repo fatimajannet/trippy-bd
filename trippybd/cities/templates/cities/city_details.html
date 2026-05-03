@@ -187,6 +187,16 @@
   .hotel-name { font-size: 0.92rem; font-weight: 600; color: #fff; margin-bottom: 3px; }
   .hotel-meta { font-size: 0.78rem; color: rgba(255,255,255,0.4); }
   .hotel-arrow { margin-left: auto; color: rgba(255,255,255,0.2); }
+
+  .es {
+    background: linear-gradient(135deg, rgb(36, 65, 82), rgb(11, 67, 83));
+    border: 1px solid rgba(56,189,248,0.15);
+    border-radius: 16px;
+    padding: 32px;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
   .explore-cta {
     background: linear-gradient(135deg, rgba(14,165,233,0.08), rgba(37,99,235,0.08));
     border: 1px solid rgba(56,189,248,0.15);
@@ -495,7 +505,10 @@
             <p style="color:rgba(255,255,255,0.35); font-size:0.85rem;">No transportation options found.</p>
             {% endfor %}
         </div>
-
+        
+      </div>
+      <div class="es">
+        {% include 'includes/_emergency_services.html' %}
       </div>
       <div class="explore-cta">
           <h5>💼 Explore More</h5>

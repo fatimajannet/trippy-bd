@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'transportation',
     'budget',
     'review',
+    'emergency_services',
 ]
 
 MIDDLEWARE = [

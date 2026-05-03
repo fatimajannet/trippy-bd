@@ -176,6 +176,55 @@
         box-shadow: 0 0 10px rgba(56, 189, 248, 0.2); /* Subtle glow */
     }
 
+    /*sos*/
+  .btn-emergency-main {
+        display: inline-flex;
+        align-items: center;
+        background: rgba(231, 76, 60, 0.15); /* Slightly higher opacity */
+        border: 1px solid rgba(231, 76, 60, 0.4);
+        color: #e74c3c !important;
+        padding: 10px 24px; /* Increased padding */
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 800; /* Bolder font */
+        font-size: 0.9rem; /* Increased font size */
+        letter-spacing: 0.5px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn-emergency-main i {
+        font-size: 1.1rem; /* Larger icon */
+    }
+
+    .btn-emergency-main:hover {
+        background: #e74c3c;
+        color: #fff !important;
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 10px 20px rgba(231, 76, 60, 0.4);
+    }
+
+    /* Animated status pulse */
+    .status-pulse {
+        width: 8px;
+        height: 8px;
+        background: #e74c3c;
+        border-radius: 50%;
+        margin-right: 12px;
+        position: relative;
+        animation: ringPulse 2s infinite;
+    }
+
+    .btn-emergency-main:hover .status-pulse {
+        background: #fff;
+    }
+
+    @keyframes ringPulse {
+        0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.8); }
+        70% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+    }
+</style>
+
   </style>
 </head>
 <body>
@@ -243,10 +292,21 @@
   </main>
   <!-- ── Footer ── -->
   <footer class="footer-custom">
-    <div class="container">
-      <p>© 2026 <strong>TrIppyBD</strong> — Explore the beauty of Bangladesh <span><img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Flag_of_Bangladesh.svg" 
-                 alt="Bangladesh Flag" 
-                 class="flag"></span></p>
+    <div class="container text-center">
+        <div class="d-flex justify-content-center mb-4">
+            <a href="{% url 'emergency_services:list' %}" class="btn-emergency-main">
+                <span class="status-pulse"></span>
+                <i class="fas fa-ambulance me-2"></i>
+                Emergency Services
+            </a>
+        </div>
+
+
+      <div class="container">
+        <p>© 2026 <strong>TrIppyBD</strong> — Explore the beauty of Bangladesh <span><img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Flag_of_Bangladesh.svg" 
+                  alt="Bangladesh Flag" 
+                  class="flag"></span></p>
+      </div>
     </div>
   </footer>
   <!-- Bootstrap JS -->
