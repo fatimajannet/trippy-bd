@@ -24,93 +24,68 @@ Trippy BD provides an all-in-one travel experience where users can:
 
 ---
 
+
 ## ✨ Key Features
 
-###  1. City Exploration
-- Browse a complete list of cities in Bangladesh
-- Search and filter cities by region, population, or category (cultural, coastal, historical, etc.)
+### 🏙️ City Exploration
+- Browse and search cities across Bangladesh.  
+- Filtering cities by region.
+- View detailed city insights.
 
----
+### 📍 Attractions & Places
+- Discover must-visit locations for each city.  
+- Includes parks, historical landmarks, and natural spots.  
+- View descriptions, entry fees, opening hours, and tips.  
 
-###  2. City Overview
-Each city includes:
-- History and cultural background
-- Weather information
-- Local traditions, language, festivals, and etiquette
+### 🏨 Hotel & Room Booking
+- Explore hotels with ratings, amenities, and pricing.  
+- Room-level details including type, features, and cost.  
+- Booking room based on availability.  
 
----
+### 🍽️ Food & Restaurants
+- Discover local food culture and popular dishes.  
+- Browse restaurants with ratings, cuisine type, and pricing.  
+- Budget-based dining recommendations.  
 
-###  3. Must-Visit Places
-- Curated list of attractions per city
-- Historical landmarks, parks, museums, and natural spots
-- Interactive map integration
-- Detailed descriptions, visitor tips, entry fees, and images
+### 🚗 Transportation & Travel Info
+- Available transport options (plane, train, bus, etc.)  
+- Estimated travel costs and descriptions.  
+- Practical travel guidance.  
 
----
+### 🧭 Travel Assistance
+- Emergency services and contacts  
+- Travel agencies and guides  
+- Hiring tour guides based on availability.  
 
-###  4. Hotel Listings
-- Filter hotels by budget, rating, amenities, and location
-- Hotel details include pricing, services, and reviews
-- Optional third-party booking integration
+### 👤 User System
+- User registration and authentication.
+- Password protection via hashing. 
+- Wishlist functionality.  
+- Travel history tracking.  
 
----
+### ⭐ Reviews & Ratings
+- Users can rate and review places.  
+- Store feedback with comments and ratings.  
 
-###  5. Food & Dining Recommendations
-- Local dishes and food culture
-- Restaurant listings (street food to fine dining)
-- Filters by price, rating, and cuisine type
-- Estimated food costs per budget range
+### 💰 Budget Planner
+- Estimate trip costs based on:
+  - Duration (days)  
+  - City selection  
+  - Travel and accommodation expenses
+  - Tour guide preference  
+- Helps users plan cost-effective trips.  
 
----
-
-###  6. Travel Help & Local Tips
-- Transportation guides (rickshaw, bus, taxi, train)
-- Approximate travel costs
-- Tour guides and agencies
-- Emergency contacts and cultural etiquette
-
----
-
-###  7. Dashboard
-- Trending destinations and top-rated places
-- Personalized recommendations (based on user activity)
-- Reviews and ratings system
-- Travel videos and visual content
-
----
-
-###  8. User Accounts & Profiles
-- User authentication system
-- Save favorite cities, hotels, and attractions
-- Wishlist feature
-- Travel history tracking
-
----
-
-###  9. Plan Maker
-- Budget calculator for trips
-- Estimates based on:
-  - City
-  - Accommodation
-  - Food
-  - Activities
-- Helps users plan cost-effective travel
-
----
-
-##  Tech Stack (Planned)
-- Backend: Django
-- Database: MySQL (XAMPP)
-- Frontend: HTML, CSS, JavaScript (Django Templates)
-- Maps: Google Maps API
-
+### 📊 Dashboard
+- Live feed of hired tour guide by users. 
+- Booked hotel details.  
+- Wishlist and Travel History
 ---
 
 ## 📌 Current Status
 
-- Project planning phase
-- ER diagram completed
-- Database schema designed
-- GitHub repository setup in progress
-- Six Features added (Update)
+- Project planning phase ✅
+- ER diagram completed ✅
+- Database schema designed ✅
+- GitHub repository setup in progress ✅
+- Ten Features added (Update) ✅
 
