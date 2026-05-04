@@ -1,10 +1,6 @@
 from django.db import models
 
 class Amenity(models.Model):
-    """
-    Extracted from the multi-valued 'amenities' attribute (double oval).
-    This allows a hotel to have multiple amenities, and multiple hotels to share the same amenity.
-    """
     name = models.CharField(max_length=100)
 
     def __str__(self):
@@ -21,29 +17,22 @@ class Hotel(models.Model):
         return self.name
 
 class Room(models.Model):
-    # Hotel_has relationship: 1 to N mapping (ForeignKey)
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, related_name='rooms')
-    
-    # r_id: Using CharField assuming it might be alphanumeric (e.g., "101A")
     r_id = models.CharField(max_length=50) 
-    
-    # Other room attributes
     r_type = models.CharField(max_length=100)
     r_price = models.DecimalField(max_digits=10, decimal_places=2)
     feature = models.TextField(blank=True, help_text="Specific room features or description")
 
     class Meta:
-        # Enforcing the weak entity logic: r_id is unique ONLY within its specific hotel.
         constraints = [
             models.UniqueConstraint(fields=['hotel', 'r_id'], name='unique_hotel_room_id')
         ]
 
     def __str__(self):
-        # FIXED: Changed self.hotel.h_name to self.hotel.name
         return f"{self.hotel.name} - Room {self.r_id} ({self.r_type})"
     
 
-from django.conf import settings # To link to the logged-in user
+from django.conf import settings 
 
 class Booking(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

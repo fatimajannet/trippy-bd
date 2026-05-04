@@ -99,12 +99,12 @@ pymysql.install_as_MySQLdb()
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',  # Change this to MySQL
-        'NAME': 'trippybd',  # Your MySQL database name
-        'USER': 'root',  # Your MySQL username
-        'PASSWORD': '',  # Your MySQL password
-        'HOST': 'localhost',  # Use 'localhost' for a local database
-        'PORT': '3306',  # Default MySQL port
+        'ENGINE': 'django.db.backends.mysql',  
+        'NAME': 'trippybd',  
+        'USER': 'root', 
+        'PASSWORD': '', 
+        'HOST': 'localhost',  
+        'PORT': '3306',  
         'OPTIONS': {
             'sql_mode': 'STRICT_TRANS_TABLES',
 

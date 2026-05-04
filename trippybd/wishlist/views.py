@@ -17,8 +17,6 @@ def add_to_wishlist(request, city_id):
     
     city = get_object_or_404(City, id=city_id)
     
-    # --- NEW SECURITY CHECK ---
-    # Check if the city is already in the user's travel history
     is_visited = TravelHistory.objects.filter(user=request.user, city=city).exists()
     
     if is_visited:
@@ -27,9 +25,8 @@ def add_to_wishlist(request, city_id):
                 'status': 'error',
                 'message': 'You have already visited this city!',
                 'in_wishlist': False
-            }, status=400) # Sending a 400 error to indicate a bad request
+            }, status=400) 
         return redirect(request.META.get('HTTP_REFERER', '/'))
-    # --------------------------
 
     wishlist_item, created = Wishlist.objects.get_or_create(user=request.user, city=city)
     

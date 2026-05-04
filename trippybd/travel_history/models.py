@@ -1,9 +1,6 @@
 from django.db import models
-
-# Create your models here.
-from django.db import models
 from django.conf import settings
-from cities.models import City  # adjust import if your City model is elsewhere
+from cities.models import City  
 
 
 class TravelHistory(models.Model):
@@ -21,7 +18,6 @@ class TravelHistory(models.Model):
 
     class Meta:
         ordering = ['-visited_at']
-        # Prevent duplicate entries for the same user+city
         unique_together = ('user', 'city')
         verbose_name = 'Travel History'
         verbose_name_plural = 'Travel Histories'

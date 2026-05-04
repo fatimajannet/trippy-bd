@@ -10,7 +10,6 @@ class BudgetPlan(models.Model):
     city = models.ForeignKey(City, on_delete=models.CASCADE)
     days = models.PositiveIntegerField(default=1)
     
-    # These are the "selected" values for the saved plan
     tier_selected = models.CharField(max_length=20, choices=[
         ('budget', 'Budget'),
         ('standard', 'Standard'),

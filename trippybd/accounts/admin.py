@@ -1,6 +1,4 @@
-from django.contrib import admin
 
-# Register your models here.
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import User
@@ -19,3 +17,6 @@ class UserAdmin(BaseUserAdmin):
     readonly_fields = ('date_joined', 'u_id')
 
 admin.site.register(User, UserAdmin)
+
+
+

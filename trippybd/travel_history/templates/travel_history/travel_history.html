@@ -136,16 +136,14 @@ document.getElementById('confirmRemoveBtn').addEventListener('click', function()
             row.style.transform = 'scale(0.9) translateX(50px)';
             setTimeout(() => {
                 row.remove();
-                // Check if any items are left
                 if (!document.querySelector('[id^="entry-row-"]')) {
-                    location.reload(); // Refresh to show the empty state
+                    location.reload(); 
                 }
             }, 300);
         }
     });
 });
 
-// Close on backdrop click
 document.getElementById('removeModal').addEventListener('click', function(e) {
     if (e.target === this) closeRemoveModal();
 });

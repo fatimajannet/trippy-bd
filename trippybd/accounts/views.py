@@ -1,6 +1,3 @@
-from django.shortcuts import render
-
-# Create your views here.
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
@@ -8,7 +5,7 @@ from django.contrib import messages
 from .forms import RegisterForm, UpdateProfileForm
 from agencies.models import GuideHire
 from hotels.models import Booking
-from wishlist.models import Wishlist    # If you want to show saved items
+from wishlist.models import Wishlist    
 
 def register_view(request):
     if request.user.is_authenticated:
@@ -50,13 +47,10 @@ def logout_view(request):
 
 @login_required
 def dashboard_view(request):
-    # 1. Fetch Guide Hires
     hired_guides = GuideHire.objects.filter(user=request.user).order_by('-hire_date')
     
-    # 2. FIX THIS LINE (Line 57): Change RoomBooking to Booking
     hotel_bookings = Booking.objects.filter(user=request.user).order_by('-check_in')
     
-    # 3. Fetch Wishlist
     wishlist_items = Wishlist.objects.filter(user=request.user)
 
     context = {

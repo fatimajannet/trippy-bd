@@ -82,12 +82,10 @@
 </div>
 
 <script>
-    // 1. Prevent selecting dates in the past
     const dateInput = document.getElementById('datePicker');
     const today = new Date().toISOString().split('T')[0];
     dateInput.setAttribute('min', today);
 
-    // 2. Real-time cost calculation
     function updateTotal() {
         const days = document.getElementById('daysInput').value;
         const rate = parseFloat("{{ guide.price_per_day }}");

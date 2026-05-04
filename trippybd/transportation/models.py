@@ -1,8 +1,5 @@
 from django.db import models
 
-# Create your models here.
-from django.db import models
-
 class Transportation(models.Model):
     t_id = models.AutoField(primary_key=True)
     t_type = models.CharField(max_length=50)

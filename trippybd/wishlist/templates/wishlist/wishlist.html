@@ -98,10 +98,10 @@
 
 <script>
 let pendingItemId = null;
-let pendingCityId = null; // Used for visited toggle
+let pendingCityId = null; 
 let pendingBtn = null;
 
-// Generic Close function
+
 function closeModals() {
     document.getElementById('deleteModal').style.display = 'none';
     document.getElementById('visitedModal').style.display = 'none';
@@ -110,21 +110,21 @@ function closeModals() {
     pendingBtn = null;
 }
 
-// Show Drop Modal
+
 function showDeleteModal(itemId, btn) {
     pendingItemId = itemId;
     pendingBtn = btn;
     document.getElementById('deleteModal').style.display = 'flex';
 }
 
-// Show Visited Modal
+
 function showVisitedModal(cityId, btn) {
     pendingCityId = cityId;
     pendingBtn = btn;
     document.getElementById('visitedModal').style.display = 'flex';
 }
 
-// Logic for Drop (Remove)
+
 document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
     if (!pendingItemId) return;
     const itemId = pendingItemId;
@@ -153,7 +153,7 @@ document.getElementById('confirmDeleteBtn').addEventListener('click', function()
     });
 });
 
-// Logic for Visited (Move to History)
+
 document.getElementById('confirmVisitedBtn').addEventListener('click', function() {
     if (!pendingCityId) return;
     const cityId = pendingCityId;
@@ -171,7 +171,7 @@ document.getElementById('confirmVisitedBtn').addEventListener('click', function(
         if (data.status === 'success' || data.status === 'already_exists') {
             const card = btn.closest('[id^="wishlist-item-"]');
             card.style.opacity = '0';
-            card.style.transform = 'translateX(-50px)'; // Slide left for success
+            card.style.transform = 'translateX(-50px)'; 
             setTimeout(() => {
                 card.remove();
                 if (!document.querySelector('[id^="wishlist-item-"]')) {
@@ -182,7 +182,7 @@ document.getElementById('confirmVisitedBtn').addEventListener('click', function(
     });
 });
 
-// Close modals on backdrop click
+
 window.addEventListener('click', function(e) {
     if (e.target.classList.contains('modal-backdrop')) closeModals();
 });

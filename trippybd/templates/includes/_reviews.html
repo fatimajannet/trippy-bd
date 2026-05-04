@@ -1,5 +1,4 @@
 <style>
-  /* ── MAIN GLASS PANEL (SUBTLE) ── */
   .review-glass-panel {
     background: rgba(15, 23, 42, 0.75);
     backdrop-filter: blur(8px);
@@ -15,7 +14,6 @@
     z-index: 1;
   }
 
-  /* ── INPUTS ── */
   .glass-select {
     background: #1e293b !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
@@ -34,7 +32,6 @@
     resize: none;
   }
 
-  /* ── CARDS ── */
   .review-card-modern {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.05);
@@ -51,7 +48,6 @@
     color: white; font-weight: bold;
   }
 
-  /* ── BUTTONS ── */
   .submit-btn-neon {
     background: #2563eb;
     color: white;
@@ -68,7 +64,6 @@
     box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
   }
 
-  /* ── DELETE MODAL OVERLAY (WISHLIST STYLE) ── */
   .review-modal-overlay {
     position: fixed;
     top: 0; left: 0;
@@ -239,7 +234,6 @@
   let pendingReviewId = null;
   let pendingReviewBtn = null;
 
-  // Toggle Edit Logic
   function toggleEdit(reviewId) {
     const displayDiv = document.getElementById(`display-mode-${reviewId}`);
     const editDiv = document.getElementById(`edit-mode-${reviewId}`);
@@ -255,7 +249,6 @@
     }
   }
 
-  // Delete Modal Logic
   function showReviewDeleteModal(reviewId, btn) {
     pendingReviewId = reviewId;
     pendingReviewBtn = btn;

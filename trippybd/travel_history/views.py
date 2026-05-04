@@ -1,21 +1,17 @@
-from django.shortcuts import render
-
-# Create your views here.
-# travel_history/views.py
-
 import json
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.views.generic import ListView
 from django.utils.decorators import method_decorator
-
 from cities.models import City
 from .models import TravelHistory
+from wishlist.models import Wishlist 
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages  
 
 
-from wishlist.models import Wishlist  # Ensure this is imported
 
 @login_required
 def mark_visited(request, city_id):
@@ -24,10 +20,8 @@ def mark_visited(request, city_id):
         is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
 
         try:
-            # 1. Add to Travel History
             TravelHistory.objects.get_or_create(user=request.user, city=city)
             
-            # 2. Remove from Wishlist
             Wishlist.objects.filter(user=request.user, city=city).delete()
 
             if is_ajax:
@@ -65,29 +59,19 @@ def remove_visited(request, entry_id):
     return redirect('travel_history:list')
 
 
-from django.shortcuts import get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
-from django.contrib import messages  # <--- CRITICAL IMPORT
-from cities.models import City
-from .models import TravelHistory
-from wishlist.models import Wishlist
+
 
 @login_required
 def toggle_visited(request, city_id):
     if request.method == 'POST':
         city = get_object_or_404(City, id=city_id)
-        # Check if already in history
         history_item = TravelHistory.objects.filter(user=request.user, city=city)
         
         if history_item.exists():
-            # TOGGLE OFF: Remove from history
             history_item.delete()
             return JsonResponse({'status': 'success', 'is_visited': False})
         else:
-            # TOGGLE ON: Add to history
             TravelHistory.objects.create(user=request.user, city=city)
-            # Remove from wishlist automatically
             Wishlist.objects.filter(user=request.user, city=city).delete()
             return JsonResponse({'status': 'success', 'is_visited': True})
             

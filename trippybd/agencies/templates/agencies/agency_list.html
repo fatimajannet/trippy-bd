@@ -208,7 +208,6 @@
 
 <script>
   function filterAgencies() {
-    // 1. Always pull the LATEST values from both inputs
     const searchInput = document.getElementById('agencySearch').value.toLowerCase().trim();
     const cityDropdown = document.querySelector('.filter-select').value.toLowerCase();
     
@@ -219,7 +218,6 @@
       const name = item.getAttribute('data-name');
       const city = item.getAttribute('data-city');
       
-      // 2. Perform the dual-check
       const matchesSearch = name.includes(searchInput);
       const matchesCity = (cityDropdown === 'all' || city === cityDropdown);
 
@@ -231,7 +229,6 @@
       }
     });
 
-    // 3. Update the UI
     document.getElementById('resultCount').textContent = count;
     
     const emptyState = document.getElementById('emptySearch');

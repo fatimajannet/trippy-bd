@@ -24,7 +24,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     username    = models.CharField(max_length=150, unique=True)
     email       = models.EmailField(unique=True)
 
-    # Composite: u_name
+    
     fname       = models.CharField(max_length=50)
     mname       = models.CharField(max_length=50, blank=True, null=True)
     lname       = models.CharField(max_length=50)
@@ -35,7 +35,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff    = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
 
-    # ✅ Fix: add related_name to avoid clashes with auth.User
+    
     groups = models.ManyToManyField(
         'auth.Group',
         blank=True,

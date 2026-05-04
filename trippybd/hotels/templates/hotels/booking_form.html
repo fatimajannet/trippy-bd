@@ -22,7 +22,6 @@
         color: white; border-radius: 12px; padding: 14px; width: 100%; outline: none;
     }
     
-    /* Red styling for busy dates */
     .flatpickr-day.booked-date, 
     .flatpickr-day.booked-date:hover,
     .flatpickr-day.flatpickr-disabled.booked-date {
@@ -105,7 +104,6 @@
         ...commonConfig,
         onChange: function(selectedDates) {
             if (selectedDates[0]) {
-                // Rule: Check-out must be at least the NEXT day
                 let minOut = new Date(selectedDates[0]);
                 minOut.setDate(minOut.getDate() + 1);
                 coutPicker.set("minDate", minOut);

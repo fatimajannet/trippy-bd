@@ -1,8 +1,5 @@
 from django.db import models
 
-# Create your models here.
-from django.db import models
-
 class Attraction(models.Model):
     city = models.ForeignKey('cities.City', on_delete=models.CASCADE)
     name = models.CharField(max_length=100)

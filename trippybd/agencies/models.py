@@ -2,7 +2,6 @@ from django.db import models
 from django.conf import settings
 
 class Agency(models.Model):
-    # Cross-app relationship
     city = models.ForeignKey('cities.City', on_delete=models.CASCADE, related_name='agencies')
     ag_id = models.CharField(max_length=50, unique=True)
     ag_name = models.CharField(max_length=150)
@@ -21,7 +20,6 @@ class Guide(models.Model):
     def __str__(self):
         return self.g_name
 
-# ADD THIS CLASS TO FIX THE IMPORT ERROR
 class GuideHire(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     guide = models.ForeignKey(Guide, on_delete=models.CASCADE)

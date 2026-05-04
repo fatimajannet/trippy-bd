@@ -1,9 +1,12 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Hotel
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Hotel, Room, Booking
 from cities.models import City
 from django.contrib.contenttypes.models import ContentType
 from review.models import Review
-
+import json
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from datetime import datetime, timedelta
 
 def hotel_list(request):
     hotels = Hotel.objects.select_related('city').all()
@@ -37,25 +40,13 @@ def hotel_detail(request, pk):
 
 
 
-
-
-import json
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from .models import Room, Booking
-from datetime import datetime, timedelta
-
 @login_required
 def book_room(request, room_id):
     room = get_object_or_404(Room, pk=room_id)
-    
-    # 1. Fetch all busy dates for this room
     existing_bookings = Booking.objects.filter(room=room)
     booked_dates = []
     for b in existing_bookings:
         curr = b.check_in
-        # We use < b.check_out so the checkout day remains 'available' for a new check-in
         while curr < b.check_out:
             booked_dates.append(curr.strftime('%Y-%m-%d'))
             curr += timedelta(days=1)
@@ -72,26 +63,22 @@ def book_room(request, room_id):
         except (ValueError, TypeError):
             messages.error(request, "Invalid date format.")
             return redirect('book_room', room_id=room.id)
-
-        # 2. Logic: No same-day check-in/out
+        
         delta = d2 - d1
         if delta.days < 1:
             messages.error(request, "Minimum stay is 1 night. Same-day checkout is not permitted.")
             return render(request, 'hotels/booking_form.html', {'room': room, 'booked_dates_json': booked_dates_json})
 
-        # 3. Logic: Overlap Check
-        # Allows checkout day of one guest to be the checkin day of the next
         overlap = Booking.objects.filter(
             room=room,
-            check_in__lt=d2, # Existing start is before new end
-            check_out__gt=d1  # Existing end is after new start
+            check_in__lt=d2, 
+            check_out__gt=d1  
         ).exists()
 
         if overlap:
             messages.error(request, "This room is already occupied during your selected dates.")
             return render(request, 'hotels/booking_form.html', {'room': room, 'booked_dates_json': booked_dates_json})
 
-        # 4. Save Booking
         Booking.objects.create(
             user=request.user,
             room=room,

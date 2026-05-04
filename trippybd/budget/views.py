@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from cities.models import City
 from hotels.models import Room
 from restaurants.models import Restaurant
@@ -6,8 +6,6 @@ from attractions.models import Attraction
 from transportation.models import Transportation
 from agencies.models import Guide
 from .utils import calculate_custom_budget
-
-from django.shortcuts import render, redirect # Add redirect
 from django.urls import reverse
 
 def budget_planner(request):
@@ -22,13 +20,11 @@ def budget_planner(request):
         selected_city = City.objects.filter(name__iexact=city_name).first()
         
         if selected_city:
-            # Redirect to the details view
-            # We pass the selected tier and the days as a GET parameter
             url = reverse('plan_details', kwargs={
                 'city_id': selected_city.id, 
                 'tier': stay_tier
             })
-            # Include 'days' and 'guide' in the query string
+            
             return redirect(f"{url}?days={days}&guide={hire_guide}")
 
     return render(request, 'budget/planner.html', {'cities': cities})
@@ -36,10 +32,10 @@ def budget_planner(request):
 def plan_details(request, city_id, tier):
     city = get_object_or_404(City, id=city_id)
     days = int(request.GET.get('days', 1))
-    # Capture the guide preference from the URL
+    
     hire_guide = request.GET.get('guide') == 'True'
     
-    # Selection logic based on tier
+    
     if tier == 'budget' or tier == 'low':
         room = Room.objects.filter(hotel__city=city).order_by('r_price').first()
         restaurant = Restaurant.objects.filter(city=city).order_by('average_price').first()
@@ -50,7 +46,7 @@ def plan_details(request, city_id, tier):
         restaurant = Restaurant.objects.filter(city=city).order_by('-average_price').first()
         guide = Guide.objects.filter(agency__city=city).order_by('-price_per_day').first() if hire_guide else None
         transport = Transportation.objects.filter(city=city).order_by('-apprx_cost').first()
-    else: # Standard (Mid-range)
+    else: 
         rooms = Room.objects.filter(hotel__city=city).order_by('r_price')
         room = rooms[len(rooms)//2] if rooms.exists() else None
         rests = Restaurant.objects.filter(city=city).order_by('average_price')
@@ -62,7 +58,7 @@ def plan_details(request, city_id, tier):
 
     attractions = Attraction.objects.filter(city=city)
     
-    # Calculate costs
+    
     h_total = (room.r_price * days) if room else 0
     f_total = (restaurant.average_price * 3 * days) if restaurant else 0
     g_total = (guide.price_per_day * days) if (guide and hire_guide) else 0

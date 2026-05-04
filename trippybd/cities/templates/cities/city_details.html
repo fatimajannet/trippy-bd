@@ -273,7 +273,7 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    margin-left: 10px; /* Space between wishlist and visited */
+    margin-left: 10px; 
   }
   .visited-btn.is-visited {
     background: rgba(34, 197, 94, 0.15);
@@ -303,7 +303,7 @@
   }
   
 
-  /* ── NEW: PRICE BADGE SYSTEM ── */
+  /* PRICE BADGE SYSTEM ── */
 .price-badge {
     margin-left: 8px;
     padding: 2px 8px;
@@ -312,7 +312,8 @@
     font-weight: 700;
     text-transform: uppercase;
 }
-/* These maintain your glassmorphism theme */
+
+/* Glassmorphism theme */
 .badge-premium { background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
 .badge-standard { background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3); }
 .badge-budget { background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
@@ -532,7 +533,6 @@ function toggleWishlist() {
     const btn = document.getElementById('wishlist-btn');
     const visitedBtn = document.getElementById('visited-btn');
     
-    // NEW: Prevent action if already visited
     if (visitedBtn.classList.contains('is-visited')) {
         alert("You've already visited this city! No need to keep it in your wishlist.");
         return;
@@ -573,7 +573,7 @@ function toggleVisited() {
     const btn = document.getElementById('visited-btn');
     const icon = document.getElementById('visited-icon');
     const text = document.getElementById('visited-text');
-    const wishBtn = document.getElementById('wishlist-btn'); // Get wishlist button reference
+    const wishBtn = document.getElementById('wishlist-btn'); 
     
     const url = "{% url 'travel_history:toggle_visited' city.id %}";
 
@@ -588,12 +588,11 @@ function toggleVisited() {
     .then(data => {
         if (data.status === 'success') {
             if (data.is_visited) {
-                // UI for Visited (Active)
                 btn.classList.replace('not-visited', 'is-visited');
                 icon.textContent = '✅';
                 text.textContent = 'Visited';
 
-                // FEATURE: Disable Wishlist button and reset its state
+                
                 if (wishBtn) {
                     wishBtn.classList.add('disabled');
                     wishBtn.classList.remove('added');
@@ -602,12 +601,11 @@ function toggleVisited() {
                     document.getElementById('wishlist-text').textContent = 'Add to Wishlist';
                 }
             } else {
-                // UI for Not Visited (Inactive)
+                
                 btn.classList.replace('is-visited', 'not-visited');
                 icon.textContent = '🔘';
                 text.textContent = 'Mark as Visited';
 
-                // FEATURE: Re-enable Wishlist button
                 if (wishBtn) {
                     wishBtn.classList.remove('disabled');
                 }
